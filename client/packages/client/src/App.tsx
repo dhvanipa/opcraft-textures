@@ -3,27 +3,14 @@ import { useMUD } from "./MUDContext";
 
 export const App = () => {
   const {
-    components: { Counter },
+    components: { },
     systemCalls: { increment },
     network: { singletonEntity },
   } = useMUD();
 
-  const counter = useComponentValue(Counter, singletonEntity);
-
   return (
     <>
-      <div>
-        Counter: <span>{counter?.value ?? "??"}</span>
-      </div>
-      <button
-        type="button"
-        onClick={async (event) => {
-          event.preventDefault();
-          console.log("new counter value:", await increment());
-        }}
-      >
-        Increment
-      </button>
+      <p>T1</p>
     </>
   );
 };
