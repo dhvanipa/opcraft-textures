@@ -10,17 +10,30 @@ import { mudConfig } from "@latticexyz/world/register";
 export default mudConfig({
   tables: {
     Counter: {
-      keySchema: {},
+      keySchema: {}, // TODO: learn what this is. I don't think I saw it in the docs
       schema: "uint32",
     },
+    Name: "string", // This is a shortcut for { schema: "string" }
+    // commented cause not used for now
+    // GameConfig: {
+    //   schema: {
+    //     creativeMode: "bool",
+    //   }
+    // }
+    Item: "uint128",
+    ItemProtoype: "bool",
+    Name: "string",
+    // note: occurance is omitted, since it is a functionBare component. This is just a weird implementation. We'll change it
+    // OwnedBy: "uint256", // not used for now
     Position: {
-      schema: {
+      schema: { // voxelcoord is removed in mud2, so we need to manually specify x,y,z
         x: "int32",
         y: "int32",
         z: "int32"
       }
     },
-    Item: "uint128", // maps uint256 -> VoxelCoord
+    // Recipe: "uint256",
+    // Stake: "unint256"
   },
   enums: {
     BlockDirection: ["None", "Up", "Down", "North", "South", "East", "West"]
