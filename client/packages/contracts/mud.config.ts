@@ -9,10 +9,6 @@ import { mudConfig } from "@latticexyz/world/register";
 // it's also 2023, so we can use 256 bits without worrying about storage costs.
 export default mudConfig({
   tables: {
-    Counter: {
-      keySchema: {}, // TODO: learn what this is. I don't think I saw it in the docs
-      schema: "uint32",
-    },
     Name: "string", // This is a shortcut for { schema: "string" }
     // commented cause not used for now
     // GameConfig: {
@@ -37,5 +33,13 @@ export default mudConfig({
   },
   enums: {
     BlockDirection: ["None", "Up", "Down", "North", "South", "East", "West"]
-  }
+  },
+  // https://v2.mud.dev/ecs: Note: we recommend adding the UniqueEntityModule to your World. It allows system to request a fresh entity ID that hasn't been used before. It is useful when creating new entities dynamically.
+  modules: [
+    {
+      name: "UniqueEntityModule",
+      root: true,
+      args: [],
+    },
+  ],
 });
