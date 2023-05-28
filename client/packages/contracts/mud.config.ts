@@ -6,5 +6,12 @@ export default mudConfig({
       keySchema: {},
       schema: "uint32",
     },
+    Dog: {
+      schema: {
+        owner: "address",
+        name: "string",
+        color: "string",
+      },
+    },
   },
 });
