@@ -9,7 +9,6 @@ import { mudConfig } from "@latticexyz/world/register";
 // it's also 2023, so we can use 256 bits without worrying about storage costs.
 export default mudConfig({
   tables: {
-    Name: "string", // This is a shortcut for { schema: "string" }
     // commented cause not used for now
     // GameConfig: {
     //   schema: {
@@ -18,7 +17,7 @@ export default mudConfig({
     // }
     Item: "uint128",
     ItemProtoype: "bool",
-    Name: "string",
+    Name: "string", // This is a shortcut for { schema: "string" }
     // note: occurance is omitted, since it is a functionBare component. This is just a weird implementation. We'll change it
     // OwnedBy: "uint256", // not used for now
     Position: {
