@@ -11,3 +11,4 @@ gsn/=./node_modules/@opengsn/contracts/src/
 royalty-registry/=./node_modules/@manifoldxyz/royalty-registry-solidity/contracts/
 @openzeppelin/=./node_modules/openzeppelin-solidity/
 memmove/=./node_modules/memmove.git/src/
+abdk-libraries-solidity/=./node_modules/abdk-libraries-solidity/

@@ -1,4 +1,8 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 importers:
 
@@ -133,7 +137,7 @@ importers:
         version: 2.0.0-alpha.1.197(typescript@5.0.4)(zod@3.21.4)
       '@latticexyz/solecs':
         specifier: ^1.43.0
-        version: 1.43.0(@solidstate/contracts@0.0.57)(ds-test@1.0.0)(forge-std@1.2.0)
+        version: 1.43.0(@solidstate/contracts@0.0.57)(ds-test@1.0.0)(forge-std@1.2.0)(memmove@0.0.0)
       '@latticexyz/std-contracts':
         specifier: 2.0.0-alpha.1.197
         version: 2.0.0-alpha.1.197
@@ -152,6 +156,9 @@ importers:
       '@types/node':
         specifier: ^18.15.11
         version: 18.15.11
+      abdk-libraries-solidity:
+        specifier: github:curtischong/abdk-libraries-solidity
+        version: github.com/curtischong/abdk-libraries-solidity/9818a9269dbde3327ed69f99118011fa2c5a8ddd
       ds-test:
         specifier: https://github.com/dapphub/ds-test.git#c9ce3f25bde29fc5eb9901842bf02850dfd2d084
         version: github.com/dapphub/ds-test/c9ce3f25bde29fc5eb9901842bf02850dfd2d084
@@ -1226,7 +1233,7 @@ packages:
       nice-grpc-common: 2.0.2
       protobufjs: 7.2.3
 
-  /@latticexyz/solecs@1.43.0(@solidstate/contracts@0.0.57)(ds-test@1.0.0)(forge-std@1.2.0):
+  /@latticexyz/solecs@1.43.0(@solidstate/contracts@0.0.57)(ds-test@1.0.0)(forge-std@1.2.0)(memmove@0.0.0):
     resolution: {integrity: sha512-6ZMMeKa13exwEInnRbHP9R7gRxxxo3HfAO+xdlPtvqQqnc9HUx2crG/6Tpo+i/LmhPEafC3m6QVrPz+py+AaOQ==}
     peerDependencies:
       '@rari-capital/solmate': https://github.com/Rari-Capital/solmate.git#b6ae78e6ff490f8fec7695c7b65d06e5614f1b65
@@ -1238,6 +1245,7 @@ packages:
       '@solidstate/contracts': 0.0.57
       ds-test: github.com/dapphub/ds-test/c9ce3f25bde29fc5eb9901842bf02850dfd2d084
       forge-std: github.com/foundry-rs/forge-std/b4f121555729b3afb3c5ffccb62ff4b6e2818fd3
+      memmove: github.com/brockelmore/memmove/52761dceb3b565ba3ef572ef81f30564d1a411e2
     dev: true
 
   /@latticexyz/solecs@2.0.0-alpha.1.197:
@@ -5081,8 +5089,14 @@ packages:
 
   github.com/brockelmore/memmove/52761dceb3b565ba3ef572ef81f30564d1a411e2:
     resolution: {tarball: https://codeload.github.com/brockelmore/memmove/tar.gz/52761dceb3b565ba3ef572ef81f30564d1a411e2}
-    name: memmove.git
+    name: memmove
     version: 0.0.0
+    dev: true
+
+  github.com/curtischong/abdk-libraries-solidity/9818a9269dbde3327ed69f99118011fa2c5a8ddd:
+    resolution: {tarball: https://codeload.github.com/curtischong/abdk-libraries-solidity/tar.gz/9818a9269dbde3327ed69f99118011fa2c5a8ddd}
+    name: abdk-libraries-solidity
+    version: 1.0.0
     dev: true
 
   github.com/dapphub/ds-test/c9ce3f25bde29fc5eb9901842bf02850dfd2d084:
