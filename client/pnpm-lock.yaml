@@ -161,6 +161,9 @@ importers:
       forge-std:
         specifier: https://github.com/foundry-rs/forge-std.git#b4f121555729b3afb3c5ffccb62ff4b6e2818fd3
         version: github.com/foundry-rs/forge-std/b4f121555729b3afb3c5ffccb62ff4b6e2818fd3
+      memmove.git:
+        specifier: github:brockelmore/memmove
+        version: github.com/brockelmore/memmove/52761dceb3b565ba3ef572ef81f30564d1a411e2
       prettier:
         specifier: ^2.6.2
         version: 2.6.2
@@ -5075,6 +5078,12 @@ packages:
       react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
+
+  github.com/brockelmore/memmove/52761dceb3b565ba3ef572ef81f30564d1a411e2:
+    resolution: {tarball: https://codeload.github.com/brockelmore/memmove/tar.gz/52761dceb3b565ba3ef572ef81f30564d1a411e2}
+    name: memmove.git
+    version: 0.0.0
+    dev: true
 
   github.com/dapphub/ds-test/c9ce3f25bde29fc5eb9901842bf02850dfd2d084:
     resolution: {tarball: https://codeload.github.com/dapphub/ds-test/tar.gz/c9ce3f25bde29fc5eb9901842bf02850dfd2d084}
