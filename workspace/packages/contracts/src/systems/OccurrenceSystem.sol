@@ -17,154 +17,154 @@ contract OccurrenceSystem is System {
     world = IWorld(_world());
   }
 
-  function execute(bytes memory arguments) public pure returns (bytes memory) {
+  function execute(bytes memory arguments) public view returns (bytes memory) {
     (uint256 blockType, VoxelCoord memory coord) = abi.decode(arguments, (uint256, VoxelCoord));
 
-    if (blockType == GrassID) return abi.encode(Grass(coord));
-    if (blockType == DirtID) return abi.encode(Dirt(coord));
-    if (blockType == LogID) return abi.encode(Log(coord));
-    if (blockType == StoneID) return abi.encode(Stone(coord));
-    if (blockType == SandID) return abi.encode(Sand(coord));
-    if (blockType == WaterID) return abi.encode(Water(coord));
-    if (blockType == DiamondID) return abi.encode(Diamond(coord));
-    if (blockType == CoalID) return abi.encode(Coal(coord));
-    if (blockType == LeavesID) return abi.encode(Leaves(coord));
-    if (blockType == RedFlowerID) return abi.encode(RedFlower(coord));
-    if (blockType == GrassPlantID) return abi.encode(GrassPlant(coord));
-    if (blockType == OrangeFlowerID) return abi.encode(OrangeFlower(coord));
-    if (blockType == MagentaFlowerID) return abi.encode(MagentaFlower(coord));
-    if (blockType == LightBlueFlowerID) return abi.encode(LightBlueFlower(coord));
-    if (blockType == LimeFlowerID) return abi.encode(LimeFlower(coord));
-    if (blockType == PinkFlowerID) return abi.encode(PinkFlower(coord));
-    if (blockType == GrayFlowerID) return abi.encode(GrayFlower(coord));
-    if (blockType == LightGrayFlowerID) return abi.encode(LightGrayFlower(coord));
-    if (blockType == CyanFlowerID) return abi.encode(CyanFlower(coord));
-    if (blockType == PurpleFlowerID) return abi.encode(PurpleFlower(coord));
-    if (blockType == BlueFlowerID) return abi.encode(BlueFlower(coord));
-    if (blockType == GreenFlowerID) return abi.encode(GreenFlower(coord));
-    if (blockType == BlackFlowerID) return abi.encode(BlackFlower(coord));
-    if (blockType == KelpID) return abi.encode(Kelp(coord));
-    if (blockType == WoolID) return abi.encode(Wool(coord));
-    if (blockType == SnowID) return abi.encode(Snow(coord));
-    if (blockType == ClayID) return abi.encode(Clay(coord));
-    if (blockType == BedrockID) return abi.encode(Bedrock(coord));
+    if (blockType == GrassID) return abi.encode(OGrass(coord));
+    if (blockType == DirtID) return abi.encode(ODirt(coord));
+    if (blockType == LogID) return abi.encode(OLog(coord));
+    if (blockType == StoneID) return abi.encode(OStone(coord));
+    if (blockType == SandID) return abi.encode(OSand(coord));
+    if (blockType == WaterID) return abi.encode(OWater(coord));
+    if (blockType == DiamondID) return abi.encode(ODiamond(coord));
+    if (blockType == CoalID) return abi.encode(OCoal(coord));
+    if (blockType == LeavesID) return abi.encode(OLeaves(coord));
+    if (blockType == RedFlowerID) return abi.encode(ORedFlower(coord));
+    if (blockType == GrassPlantID) return abi.encode(OGrassPlant(coord));
+    if (blockType == OrangeFlowerID) return abi.encode(OOrangeFlower(coord));
+    if (blockType == MagentaFlowerID) return abi.encode(OMagentaFlower(coord));
+    if (blockType == LightBlueFlowerID) return abi.encode(OLightBlueFlower(coord));
+    if (blockType == LimeFlowerID) return abi.encode(OLimeFlower(coord));
+    if (blockType == PinkFlowerID) return abi.encode(OPinkFlower(coord));
+    if (blockType == GrayFlowerID) return abi.encode(OGrayFlower(coord));
+    if (blockType == LightGrayFlowerID) return abi.encode(OLightGrayFlower(coord));
+    if (blockType == CyanFlowerID) return abi.encode(OCyanFlower(coord));
+    if (blockType == PurpleFlowerID) return abi.encode(OPurpleFlower(coord));
+    if (blockType == BlueFlowerID) return abi.encode(OBlueFlower(coord));
+    if (blockType == GreenFlowerID) return abi.encode(OGreenFlower(coord));
+    if (blockType == BlackFlowerID) return abi.encode(OBlackFlower(coord));
+    if (blockType == KelpID) return abi.encode(OKelp(coord));
+    if (blockType == WoolID) return abi.encode(OWool(coord));
+    if (blockType == SnowID) return abi.encode(OSnow(coord));
+    if (blockType == ClayID) return abi.encode(OClay(coord));
+    if (blockType == BedrockID) return abi.encode(OBedrock(coord));
     return abi.encode(uint256(0));
   }
 
-  function executeTyped(uint256 blockType, VoxelCoord memory coord) public pure returns (uint256) {
-    return abi.decode(execute(abi.encode(world.blockType, coord)), (uint256));
+  function executeTyped(uint256 blockType, VoxelCoord memory coord) public view returns (uint256) {
+    return abi.decode(execute(abi.encode(blockType, coord)), (uint256));
   }
 
   // Occurence functions
-  function Grass(VoxelCoord memory coord) public pure returns (uint256) {
+  function OGrass(VoxelCoord memory coord) public view returns (uint256) {
     return world.Grass(coord);
   }
 
-  function Dirt(VoxelCoord memory coord) public pure returns (uint256) {
+  function ODirt(VoxelCoord memory coord) public view returns (uint256) {
     return world.Dirt(coord);
   }
 
-  function Log(VoxelCoord memory coord) public pure returns (uint256) {
+  function OLog(VoxelCoord memory coord) public view returns (uint256) {
     return world.Structure(coord);
   }
 
-  function Stone(VoxelCoord memory coord) public pure returns (uint256) {
+  function OStone(VoxelCoord memory coord) public view returns (uint256) {
     return world.Stone(coord);
   }
 
-  function Sand(VoxelCoord memory coord) public pure returns (uint256) {
+  function OSand(VoxelCoord memory coord) public view returns (uint256) {
     return world.Sand(coord);
   }
 
-  function Water(VoxelCoord memory coord) public pure returns (uint256) {
+  function OWater(VoxelCoord memory coord) public view returns (uint256) {
     return world.Water(coord);
   }
 
-  function Diamond(VoxelCoord memory coord) public pure returns (uint256) {
+  function ODiamond(VoxelCoord memory coord) public view returns (uint256) {
     return world.Diamond(coord);
   }
 
-  function Coal(VoxelCoord memory coord) public pure returns (uint256) {
+  function OCoal(VoxelCoord memory coord) public view returns (uint256) {
     return world.Coal(coord);
   }
 
-  function Leaves(VoxelCoord memory coord) public pure returns (uint256) {
+  function OLeaves(VoxelCoord memory coord) public view returns (uint256) {
     return world.Structure(coord);
   }
 
-  function RedFlower(VoxelCoord memory coord) public pure returns (uint256) {
+  function ORedFlower(VoxelCoord memory coord) public view returns (uint256) {
     return world.SmallPlant(coord);
   }
 
-  function GrassPlant(VoxelCoord memory coord) public pure returns (uint256) {
+  function OGrassPlant(VoxelCoord memory coord) public view returns (uint256) {
     return world.SmallPlant(coord);
   }
 
-  function OrangeFlower(VoxelCoord memory coord) public pure returns (uint256) {
+  function OOrangeFlower(VoxelCoord memory coord) public view returns (uint256) {
     return world.SmallPlant(coord);
   }
 
-  function MagentaFlower(VoxelCoord memory coord) public pure returns (uint256) {
+  function OMagentaFlower(VoxelCoord memory coord) public view returns (uint256) {
     return world.SmallPlant(coord);
   }
 
-  function LightBlueFlower(VoxelCoord memory coord) public pure returns (uint256) {
+  function OLightBlueFlower(VoxelCoord memory coord) public view returns (uint256) {
     return world.SmallPlant(coord);
   }
 
-  function LimeFlower(VoxelCoord memory coord) public pure returns (uint256) {
+  function OLimeFlower(VoxelCoord memory coord) public view returns (uint256) {
     return world.SmallPlant(coord);
   }
 
-  function PinkFlower(VoxelCoord memory coord) public pure returns (uint256) {
+  function OPinkFlower(VoxelCoord memory coord) public view returns (uint256) {
     return world.SmallPlant(coord);
   }
 
-  function GrayFlower(VoxelCoord memory coord) public pure returns (uint256) {
+  function OGrayFlower(VoxelCoord memory coord) public view returns (uint256) {
     return world.SmallPlant(coord);
   }
 
-  function LightGrayFlower(VoxelCoord memory coord) public pure returns (uint256) {
+  function OLightGrayFlower(VoxelCoord memory coord) public view returns (uint256) {
     return world.SmallPlant(coord);
   }
 
-  function CyanFlower(VoxelCoord memory coord) public pure returns (uint256) {
+  function OCyanFlower(VoxelCoord memory coord) public view returns (uint256) {
     return world.SmallPlant(coord);
   }
 
-  function PurpleFlower(VoxelCoord memory coord) public pure returns (uint256) {
+  function OPurpleFlower(VoxelCoord memory coord) public view returns (uint256) {
     return world.SmallPlant(coord);
   }
 
-  function BlueFlower(VoxelCoord memory coord) public pure returns (uint256) {
+  function OBlueFlower(VoxelCoord memory coord) public view returns (uint256) {
     return world.SmallPlant(coord);
   }
 
-  function GreenFlower(VoxelCoord memory coord) public pure returns (uint256) {
+  function OGreenFlower(VoxelCoord memory coord) public view returns (uint256) {
     return world.SmallPlant(coord);
   }
 
-  function BlackFlower(VoxelCoord memory coord) public pure returns (uint256) {
+  function OBlackFlower(VoxelCoord memory coord) public view returns (uint256) {
     return world.SmallPlant(coord);
   }
 
-  function Kelp(VoxelCoord memory coord) public pure returns (uint256) {
+  function OKelp(VoxelCoord memory coord) public view returns (uint256) {
     return world.SmallPlant(coord);
   }
 
-  function Wool(VoxelCoord memory coord) public pure returns (uint256) {
+  function OWool(VoxelCoord memory coord) public view returns (uint256) {
     return world.Structure(coord);
   }
 
-  function Snow(VoxelCoord memory coord) public pure returns (uint256) {
+  function OSnow(VoxelCoord memory coord) public view returns (uint256) {
     return world.Snow(coord);
   }
 
-  function Clay(VoxelCoord memory coord) public pure returns (uint256) {
+  function OClay(VoxelCoord memory coord) public view returns (uint256) {
     return world.Clay(coord);
   }
 
-  function Bedrock(VoxelCoord memory coord) public pure returns (uint256) {
+  function OBedrock(VoxelCoord memory coord) public view returns (uint256) {
     return world.Bedrock(coord);
   }
 }
