@@ -30,6 +30,7 @@ export default mudConfig({
     // Recipe: "uint256",
     // Stake: "unint256"
   },
+  // namespace: "tenet",
   systems: {
     LibTerrainSystem: {
       name: "LibTerrainSystem",
