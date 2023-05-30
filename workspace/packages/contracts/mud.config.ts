@@ -1,4 +1,5 @@
 import { mudConfig } from "@latticexyz/world/register";
+import { resolveTableId } from "@latticexyz/config";
 
 // table documentation: https://latticexyz.notion.site/Store-930ed995c2b14782ae9a949e1e3c8fe9
 // we should use fileSelector soon:
@@ -53,6 +54,11 @@ export default mudConfig({
       name: "UniqueEntityModule",
       root: true,
       args: [],
+    },
+    {
+      name: "KeysWithValueModule",
+      root: true,
+      args: [resolveTableId("MyTable")],
     },
   ],
 });
