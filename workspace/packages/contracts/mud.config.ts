@@ -30,6 +30,20 @@ export default mudConfig({
     // Recipe: "uint256",
     // Stake: "unint256"
   },
+  systems: {
+    LibTerrainSystem: {
+      name: "LibTerrainSystem",
+      openAccess: true,
+    },
+    OccurrenceSystem: {
+      name: "OccurrenceSystem",
+      openAccess: true,
+    },
+    PerlinSystem: {
+      name: "PerlinSystem",
+      openAccess: true,
+    },
+  },
   enums: {
     BlockDirection: ["None", "Up", "Down", "North", "South", "East", "West"]
   },

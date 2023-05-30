@@ -9,6 +9,7 @@ import { AirID, GrassID, DirtID, LogID, StoneID, SandID, WaterID, CobblestoneID,
 import { VoxelCoord, Tuple } from "../Types.sol";
 import { div } from "../Utils.sol";
 import { System } from "@latticexyz/world/src/System.sol";
+import { IWorld } from "../codegen/world/IWorld.sol";
 
 int128 constant _0 = 0; // 0 * 2**64
 int128 constant _0_3 = 5534023222112865484; // 0.3 * 2**64
@@ -33,6 +34,11 @@ int128 constant _10 = 10 * 2**64;
 int128 constant _16 = 16 * 2**64;
 
 contract LibTerrainSystem is System {
+  IWorld private world;
+  constructor() {
+    world = IWorld(_world());
+  }
+  
   function getTerrainBlock(VoxelCoord memory coord) public pure returns (uint256) {
     int128[4] memory biome = getBiome(coord.x, coord.z);
     int32 height = getHeight(coord.x, coord.z, biome);
@@ -45,7 +51,7 @@ contract LibTerrainSystem is System {
     int32,
     int32 height,
     int128[4] memory biome
-  ) public pure returns (uint256) {
+  ) internal pure returns (uint256) {
     if (y > height + 1) {
       if (y >= 0) return AirID;
       return WaterID;
@@ -87,7 +93,7 @@ contract LibTerrainSystem is System {
     int32 z,
     int32 height,
     int128[4] memory biomeValues
-  ) public pure returns (uint256) {
+  ) internal pure returns (uint256) {
     uint256 blockID;
 
     blockID = Bedrock(y);
@@ -140,7 +146,7 @@ contract LibTerrainSystem is System {
     int32 x,
     int32 z,
     int128[4] memory biome
-  ) public pure returns (int32) {
+  ) internal pure returns (int32) {
     // Compute perlin height
     int128 perlin999 = world.noise2d(x - 550, z + 550, 999, 64);
     int128 continentalHeight = continentalness(perlin999);
@@ -167,7 +173,7 @@ contract LibTerrainSystem is System {
     return int32(Math.muli(height, 256) - 128);
   }
 
-  function getBiome(int32 x, int32 z) public pure returns (int128[4] memory) {
+  function getBiome(int32 x, int32 z) internal pure returns (int128[4] memory) {
     int128 heat = world.noise2d(x + 222, z + 222, 444, 64);
     int128 humidity = world.noise(z, x, 999, 333, 64);
 
@@ -193,7 +199,7 @@ contract LibTerrainSystem is System {
     return biome;
   }
 
-  function getMaxBiome(int128[4] memory biomeValues) public pure returns (uint8 biome) {
+  function getMaxBiome(int128[4] memory biomeValues) internal pure returns (uint8 biome) {
     int128 maxBiome;
     for (uint256 i; i < biomeValues.length; i++) {
       if (biomeValues[i] > maxBiome) {
@@ -211,12 +217,12 @@ contract LibTerrainSystem is System {
     revert("unknown biome");
   }
 
-  function getCoordHash(int32 x, int32 z) public pure returns (uint16) {
+  function getCoordHash(int32 x, int32 z) internal pure returns (uint16) {
     uint256 hash = uint256(keccak256(abi.encode(x, z)));
     return uint16(hash % 1024);
   }
 
-  function getChunkCoord(int32 x, int32 z) public pure returns (int32, int32) {
+  function getChunkCoord(int32 x, int32 z) internal pure returns (int32, int32) {
     return (div(x, STRUCTURE_CHUNK), div(z, STRUCTURE_CHUNK));
   }
 
@@ -237,7 +243,7 @@ contract LibTerrainSystem is System {
     int32 x,
     int32 y,
     uint8 biome
-  ) public pure returns (uint16) {
+  ) internal pure returns (uint16) {
     return getCoordHash(div(x, 300) + div(y, 300), int32(uint32(biome)));
   }
 
@@ -246,11 +252,11 @@ contract LibTerrainSystem is System {
   //////////////////////////////////////////////////////////////////////////////////////
 
   // return Math.sqrt(Math.pow(a[0] - b[0], 2) + Math.pow(a[1] - b[1], 2));
-  function euclidean(Tuple memory a, Tuple memory b) public pure returns (int128) {
+  function euclidean(Tuple memory a, Tuple memory b) internal pure returns (int128) {
     return Math.sqrt(Math.add(Math.pow(Math.sub(a.x, b.x), 2), Math.pow(Math.sub(a.y, b.y), 2)));
   }
 
-  function euclideanVec(int128[] memory a, int128[] memory b) public pure returns (int128) {
+  function euclideanVec(int128[] memory a, int128[] memory b) internal pure returns (int128) {
     return euclidean(Tuple(a[0], a[1]), Tuple(b[0], b[1]));
   }
 
@@ -259,7 +265,7 @@ contract LibTerrainSystem is System {
     int128 a1,
     int128 b0,
     int128 b1
-  ) public pure returns (int128) {
+  ) internal pure returns (int128) {
     return euclidean(Tuple(a0, a1), Tuple(b0, b1));
   }
 
@@ -294,7 +300,7 @@ contract LibTerrainSystem is System {
     return world.lerp(t, points[0].y, points[1].y);
   }
 
-  function continentalness(int128 x) public pure returns (int128) {
+  function continentalness(int128 x) internal pure returns (int128) {
     Tuple[] memory splines = new Tuple[](3);
     splines[0] = Tuple(_0, _0);
     splines[1] = Tuple(_0_5, _0_5);
@@ -302,7 +308,7 @@ contract LibTerrainSystem is System {
     return applySpline(x, splines);
   }
 
-  function mountains(int128 x) public pure returns (int128) {
+  function mountains(int128 x) internal pure returns (int128) {
     Tuple[] memory splines = new Tuple[](4);
     splines[0] = Tuple(_0, _0);
     splines[1] = Tuple(_0_3, _0_4);
@@ -311,28 +317,28 @@ contract LibTerrainSystem is System {
     return applySpline(x, splines);
   }
 
-  function desert(int128 x) public pure returns (int128) {
+  function desert(int128 x) internal pure returns (int128) {
     Tuple[] memory splines = new Tuple[](2);
     splines[0] = Tuple(_0, _0);
     splines[1] = Tuple(_1, _0_4);
     return applySpline(x, splines);
   }
 
-  function forest(int128 x) public pure returns (int128) {
+  function forest(int128 x) internal pure returns (int128) {
     Tuple[] memory splines = new Tuple[](2);
     splines[0] = Tuple(_0, _0);
     splines[1] = Tuple(_1, _0_5);
     return applySpline(x, splines);
   }
 
-  function savanna(int128 x) public pure returns (int128) {
+  function savanna(int128 x) internal pure returns (int128) {
     Tuple[] memory splines = new Tuple[](2);
     splines[0] = Tuple(_0, _0);
     splines[1] = Tuple(_1, _0_4);
     return applySpline(x, splines);
   }
 
-  function valleys(int128 x) public pure returns (int128) {
+  function valleys(int128 x) internal pure returns (int128) {
     Tuple[] memory splines = new Tuple[](8);
     splines[0] = Tuple(_0, _1);
     splines[1] = Tuple(_0_45, _1);
@@ -349,7 +355,7 @@ contract LibTerrainSystem is System {
   // Block occurrence functions
   //////////////////////////////////////////////////////////////////////////////////////
 
-  function Air(VoxelCoord memory coord) internal pure returns (uint256) {
+  function Air(VoxelCoord memory coord) public pure returns (uint256) {
     int128[4] memory biomeValues = getBiome(coord.x, coord.z);
     int32 height = getHeight(coord.x, coord.z, biomeValues);
     return Air(coord.y, height);
@@ -359,7 +365,7 @@ contract LibTerrainSystem is System {
     if (y >= height + 2 * STRUCTURE_CHUNK) return AirID;
   }
 
-  function Water(VoxelCoord memory coord) internal pure returns (uint256) {
+  function Water(VoxelCoord memory coord) public pure returns (uint256) {
     int128[4] memory biomeValues = getBiome(coord.x, coord.z);
     int32 height = getHeight(coord.x, coord.z, biomeValues);
     return Water(coord.y, height);
@@ -369,7 +375,7 @@ contract LibTerrainSystem is System {
     if (y < 0 && y >= height) return WaterID;
   }
 
-  function Bedrock(VoxelCoord memory coord) internal pure returns (uint256) {
+  function Bedrock(VoxelCoord memory coord) public pure returns (uint256) {
     return Bedrock(coord.y);
   }
 
@@ -377,7 +383,7 @@ contract LibTerrainSystem is System {
     if (y <= -63) return BedrockID;
   }
 
-  function Sand(VoxelCoord memory coord) internal pure returns (uint256) {
+  function Sand(VoxelCoord memory coord) public pure returns (uint256) {
     int128[4] memory biomeValues = getBiome(coord.x, coord.z);
     int32 height = getHeight(coord.x, coord.z, biomeValues);
     uint8 biome = getMaxBiome(biomeValues);
@@ -400,7 +406,7 @@ contract LibTerrainSystem is System {
     if (biome == uint8(Biome.Forest) && distanceFromHeight <= 2) return SandID;
   }
 
-  function Diamond(VoxelCoord memory coord) internal pure returns (uint256) {
+  function Diamond(VoxelCoord memory coord) public pure returns (uint256) {
     int128[4] memory biomeValues = getBiome(coord.x, coord.z);
     int32 height = getHeight(coord.x, coord.z, biomeValues);
     uint8 biome = getMaxBiome(biomeValues);
@@ -426,7 +432,7 @@ contract LibTerrainSystem is System {
     if (hash <= 10) return DiamondID;
   }
 
-  function Coal(VoxelCoord memory coord) internal pure returns (uint256) {
+  function Coal(VoxelCoord memory coord) public pure returns (uint256) {
     int128[4] memory biomeValues = getBiome(coord.x, coord.z);
     int32 height = getHeight(coord.x, coord.z, biomeValues);
     uint8 biome = getMaxBiome(biomeValues);
@@ -452,7 +458,7 @@ contract LibTerrainSystem is System {
     if (hash > 10 && hash <= 50) return CoalID;
   }
 
-  function Snow(VoxelCoord memory coord) internal pure returns (uint256) {
+  function Snow(VoxelCoord memory coord) public pure returns (uint256) {
     int128[4] memory biomeValues = getBiome(coord.x, coord.z);
     int32 height = getHeight(coord.x, coord.z, biomeValues);
     return Snow(coord.y, height, biomeValues[uint8(Biome.Mountains)]);
@@ -467,7 +473,7 @@ contract LibTerrainSystem is System {
     if ((y > 55 || mountainBiome > _0_6) && y == height - 1) return SnowID;
   }
 
-  function Stone(VoxelCoord memory coord) internal pure returns (uint256) {
+  function Stone(VoxelCoord memory coord) public pure returns (uint256) {
     int128[4] memory biomeValues = getBiome(coord.x, coord.z);
     int32 height = getHeight(coord.x, coord.z, biomeValues);
     uint8 biome = getMaxBiome(biomeValues);
@@ -487,7 +493,7 @@ contract LibTerrainSystem is System {
     return StoneID;
   }
 
-  function Clay(VoxelCoord memory coord) internal pure returns (uint256) {
+  function Clay(VoxelCoord memory coord) public pure returns (uint256) {
     int128[4] memory biomeValues = getBiome(coord.x, coord.z);
     int32 height = getHeight(coord.x, coord.z, biomeValues);
     uint8 biome = getMaxBiome(biomeValues);
@@ -504,7 +510,7 @@ contract LibTerrainSystem is System {
     if (biome == uint8(Biome.Savanna) && y < 2 && distanceFromHeight <= 6) return ClayID;
   }
 
-  function Grass(VoxelCoord memory coord) internal pure returns (uint256) {
+  function Grass(VoxelCoord memory coord) public pure returns (uint256) {
     int128[4] memory biomeValues = getBiome(coord.x, coord.z);
     int32 height = getHeight(coord.x, coord.z, biomeValues);
     uint8 biome = getMaxBiome(biomeValues);
@@ -523,7 +529,7 @@ contract LibTerrainSystem is System {
     if (biome == uint8(Biome.Mountains) && y < 40 && y == height - 1) return GrassID;
   }
 
-  function Dirt(VoxelCoord memory coord) internal pure returns (uint256) {
+  function Dirt(VoxelCoord memory coord) public pure returns (uint256) {
     int128[4] memory biomeValues = getBiome(coord.x, coord.z);
     int32 height = getHeight(coord.x, coord.z, biomeValues);
     uint8 biome = getMaxBiome(biomeValues);
@@ -539,7 +545,7 @@ contract LibTerrainSystem is System {
     if (biome == uint8(Biome.Savanna) || biome == uint8(Biome.Forest)) return DirtID;
   }
 
-  function SmallPlant(VoxelCoord memory coord) internal pure returns (uint256) {
+  function SmallPlant(VoxelCoord memory coord) public pure returns (uint256) {
     int128[4] memory biomeValues = getBiome(coord.x, coord.z);
     int32 height = getHeight(coord.x, coord.z, biomeValues);
     uint8 biome = getMaxBiome(biomeValues);
@@ -586,7 +592,7 @@ contract LibTerrainSystem is System {
     }
   }
 
-  function Structure(VoxelCoord memory coord) internal pure returns (uint256) {
+  function Structure(VoxelCoord memory coord) public pure returns (uint256) {
     int128[4] memory biomeValues = getBiome(coord.x, coord.z);
     int32 height = getHeight(coord.x, coord.z, biomeValues);
     uint8 biome = getMaxBiome(biomeValues);
