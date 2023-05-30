@@ -55,7 +55,7 @@ export default mudConfig({
     {
       name: "KeysWithValueModule",
       root: true,
-      args: [resolveTableId("MyTable")],
+      args: [],
     },
   ],
 });

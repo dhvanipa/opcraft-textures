@@ -16,7 +16,7 @@ contract OccurrenceSystem is System {
   }
 
   function execute(bytes memory arguments) public view returns (bytes memory) {
-    (uint256 blockType, VoxelCoord memory coord) = abi.decode(arguments, (uint256, VoxelCoord));
+    (bytes32 blockType, VoxelCoord memory coord) = abi.decode(arguments, (bytes32, VoxelCoord));
 
     if (blockType == GrassID) return abi.encode(OGrass(coord));
     if (blockType == DirtID) return abi.encode(ODirt(coord));
@@ -46,123 +46,123 @@ contract OccurrenceSystem is System {
     if (blockType == SnowID) return abi.encode(OSnow(coord));
     if (blockType == ClayID) return abi.encode(OClay(coord));
     if (blockType == BedrockID) return abi.encode(OBedrock(coord));
-    return abi.encode(uint256(0));
+    return abi.encode(bytes32(0));
   }
 
-  function executeTyped(uint256 blockType, VoxelCoord memory coord) public view returns (uint256) {
-    return abi.decode(execute(abi.encode(blockType, coord)), (uint256));
+  function executeTyped(bytes32 blockType, VoxelCoord memory coord) public view returns (bytes32) {
+    return abi.decode(execute(abi.encode(blockType, coord)), (bytes32));
   }
 
   // Occurence functions
-  function OGrass(VoxelCoord memory coord) public view returns (uint256) {
+  function OGrass(VoxelCoord memory coord) public view returns (bytes32) {
     return world.Grass(coord);
   }
 
-  function ODirt(VoxelCoord memory coord) public view returns (uint256) {
+  function ODirt(VoxelCoord memory coord) public view returns (bytes32) {
     return world.Dirt(coord);
   }
 
-  function OLog(VoxelCoord memory coord) public view returns (uint256) {
+  function OLog(VoxelCoord memory coord) public view returns (bytes32) {
     return world.Structure(coord);
   }
 
-  function OStone(VoxelCoord memory coord) public view returns (uint256) {
+  function OStone(VoxelCoord memory coord) public view returns (bytes32) {
     return world.Stone(coord);
   }
 
-  function OSand(VoxelCoord memory coord) public view returns (uint256) {
+  function OSand(VoxelCoord memory coord) public view returns (bytes32) {
     return world.Sand(coord);
   }
 
-  function OWater(VoxelCoord memory coord) public view returns (uint256) {
+  function OWater(VoxelCoord memory coord) public view returns (bytes32) {
     return world.Water(coord);
   }
 
-  function ODiamond(VoxelCoord memory coord) public view returns (uint256) {
+  function ODiamond(VoxelCoord memory coord) public view returns (bytes32) {
     return world.Diamond(coord);
   }
 
-  function OCoal(VoxelCoord memory coord) public view returns (uint256) {
+  function OCoal(VoxelCoord memory coord) public view returns (bytes32) {
     return world.Coal(coord);
   }
 
-  function OLeaves(VoxelCoord memory coord) public view returns (uint256) {
+  function OLeaves(VoxelCoord memory coord) public view returns (bytes32) {
     return world.Structure(coord);
   }
 
-  function ORedFlower(VoxelCoord memory coord) public view returns (uint256) {
+  function ORedFlower(VoxelCoord memory coord) public view returns (bytes32) {
     return world.SmallPlant(coord);
   }
 
-  function OGrassPlant(VoxelCoord memory coord) public view returns (uint256) {
+  function OGrassPlant(VoxelCoord memory coord) public view returns (bytes32) {
     return world.SmallPlant(coord);
   }
 
-  function OOrangeFlower(VoxelCoord memory coord) public view returns (uint256) {
+  function OOrangeFlower(VoxelCoord memory coord) public view returns (bytes32) {
     return world.SmallPlant(coord);
   }
 
-  function OMagentaFlower(VoxelCoord memory coord) public view returns (uint256) {
+  function OMagentaFlower(VoxelCoord memory coord) public view returns (bytes32) {
     return world.SmallPlant(coord);
   }
 
-  function OLightBlueFlower(VoxelCoord memory coord) public view returns (uint256) {
+  function OLightBlueFlower(VoxelCoord memory coord) public view returns (bytes32) {
     return world.SmallPlant(coord);
   }
 
-  function OLimeFlower(VoxelCoord memory coord) public view returns (uint256) {
+  function OLimeFlower(VoxelCoord memory coord) public view returns (bytes32) {
     return world.SmallPlant(coord);
   }
 
-  function OPinkFlower(VoxelCoord memory coord) public view returns (uint256) {
+  function OPinkFlower(VoxelCoord memory coord) public view returns (bytes32) {
     return world.SmallPlant(coord);
   }
 
-  function OGrayFlower(VoxelCoord memory coord) public view returns (uint256) {
+  function OGrayFlower(VoxelCoord memory coord) public view returns (bytes32) {
     return world.SmallPlant(coord);
   }
 
-  function OLightGrayFlower(VoxelCoord memory coord) public view returns (uint256) {
+  function OLightGrayFlower(VoxelCoord memory coord) public view returns (bytes32) {
     return world.SmallPlant(coord);
   }
 
-  function OCyanFlower(VoxelCoord memory coord) public view returns (uint256) {
+  function OCyanFlower(VoxelCoord memory coord) public view returns (bytes32) {
     return world.SmallPlant(coord);
   }
 
-  function OPurpleFlower(VoxelCoord memory coord) public view returns (uint256) {
+  function OPurpleFlower(VoxelCoord memory coord) public view returns (bytes32) {
     return world.SmallPlant(coord);
   }
 
-  function OBlueFlower(VoxelCoord memory coord) public view returns (uint256) {
+  function OBlueFlower(VoxelCoord memory coord) public view returns (bytes32) {
     return world.SmallPlant(coord);
   }
 
-  function OGreenFlower(VoxelCoord memory coord) public view returns (uint256) {
+  function OGreenFlower(VoxelCoord memory coord) public view returns (bytes32) {
     return world.SmallPlant(coord);
   }
 
-  function OBlackFlower(VoxelCoord memory coord) public view returns (uint256) {
+  function OBlackFlower(VoxelCoord memory coord) public view returns (bytes32) {
     return world.SmallPlant(coord);
   }
 
-  function OKelp(VoxelCoord memory coord) public view returns (uint256) {
+  function OKelp(VoxelCoord memory coord) public view returns (bytes32) {
     return world.SmallPlant(coord);
   }
 
-  function OWool(VoxelCoord memory coord) public view returns (uint256) {
+  function OWool(VoxelCoord memory coord) public view returns (bytes32) {
     return world.Structure(coord);
   }
 
-  function OSnow(VoxelCoord memory coord) public view returns (uint256) {
+  function OSnow(VoxelCoord memory coord) public view returns (bytes32) {
     return world.Snow(coord);
   }
 
-  function OClay(VoxelCoord memory coord) public view returns (uint256) {
+  function OClay(VoxelCoord memory coord) public view returns (bytes32) {
     return world.Clay(coord);
   }
 
-  function OBedrock(VoxelCoord memory coord) public view returns (uint256) {
+  function OBedrock(VoxelCoord memory coord) public view returns (bytes32) {
     return world.Bedrock(coord);
   }
 }

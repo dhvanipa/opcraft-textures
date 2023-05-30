@@ -10,7 +10,7 @@ import { addressToEntityKey } from "../utils.sol";
 
 contract BuildSystem is System {
 
-  function build(bytes32 blockEntity, VoxelCoord memory coord) public returns (uint32) {
+  function build(bytes32 blockEntity, VoxelCoord memory coord) public returns (bytes32) {
 
     // Require block to be owned by caller
     require(OwnedBy.get(blockEntity) == addressToEntityKey(_msgSender()), "block is not owned by player");
@@ -21,6 +21,13 @@ contract BuildSystem is System {
     if (entitiesAtPosition.length == 1) {
       require(Item.get(entitiesAtPosition[0]) == AirID, "can not built at non-empty coord (2)");
     }
+
+    // TODO: check claim in chunk
+
+
+    // Remove block from inventory and place it in the world
+    OwnedBy.deleteRecord(blockEntity);
+    Position.set(blockEntity, coord.x, coord.y, coord.z);
 
     return blockEntity;
   }
