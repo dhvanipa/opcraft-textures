@@ -12,6 +12,7 @@
     "test": "tsc --noEmit"
   },
   "dependencies": {
+    "@babylonjs/core": "^5.0.0-alpha.48",
     "@ethersproject/providers": "^5.7.2",
     "@latticexyz/common": "2.0.0-alpha.1.197+5e6cc0f5",
     "@latticexyz/dev-tools": "2.0.0-alpha.1.197+5e6cc0f5",
@@ -22,6 +23,9 @@
     "@latticexyz/std-client": "2.0.0-alpha.1.197+5e6cc0f5",
     "@latticexyz/utils": "2.0.0-alpha.1.197+5e6cc0f5",
     "@latticexyz/world": "2.0.0-alpha.1.197+5e6cc0f5",
+    "@latticexyz/noise": "2.0.0-alpha.1.197+5e6cc0f5",
+    "@latticexyz/solecs": "2.0.0-alpha.1.197+5e6cc0f5",
+    "@latticexyz/std-contracts": "2.0.0-alpha.1.197+5e6cc0f5",
     "@wagmi/chains": "^0.2.22",
     "contracts": "workspace:*",
     "ethers": "^5.7.2",

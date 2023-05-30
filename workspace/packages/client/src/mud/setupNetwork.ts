@@ -1,13 +1,22 @@
-import { setupMUDV2Network } from "@latticexyz/std-client";
-import { createFastTxExecutor, createFaucetService, getSnapSyncRecords } from "@latticexyz/network";
+import { setupMUDV2Network, createActionSystem } from "@latticexyz/std-client";
+import { createFastTxExecutor, createFaucetService, getSnapSyncRecords, createRelayStream } from "@latticexyz/network";
 import { getNetworkConfig } from "./getNetworkConfig";
 import { defineContractComponents } from "./contractComponents";
 import { world } from "./world";
-import { Contract, Signer, utils } from "ethers";
+import { createPerlin } from "@latticexyz/noise";
+import { BigNumber, Contract, Signer, utils } from "ethers";
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { IWorld__factory } from "contracts/types/ethers-contracts/factories/IWorld__factory";
-import { getTableIds } from "@latticexyz/utils";
+import { getTableIds, awaitPromise, computedToStream, VoxelCoord } from "@latticexyz/utils";
+import { map, timer, combineLatest, BehaviorSubject } from "rxjs";
 import storeConfig from "contracts/mud.config";
+import { BlockIdToKey, BlockType } from "../layers/network/constants"
+import {
+  getECSBlock,
+  getTerrain,
+  getTerrainBlock,
+  getBiome,
+} from "../layers/network/api";
 
 export type SetupNetworkResult = Awaited<ReturnType<typeof setupNetwork>>;
 
@@ -23,13 +32,31 @@ export async function setupNetwork() {
     worldAbi: IWorld__factory.abi,
   });
 
-  // Request drip from faucet
   const signer = result.network.signer.get();
+  const playerAddress = result.network.connectedAddress.get();
+
+  // Relayer setup
+  let relay: Awaited<ReturnType<typeof createRelayStream>> | undefined;
+  try {
+    relay =
+    networkConfig.relayServiceUrl && playerAddress && signer
+        ? await createRelayStream(signer, networkConfig.relayServiceUrl, playerAddress)
+        : undefined;
+  } catch (e) {
+    console.error(e);
+  }
+
+  relay && world.registerDisposer(relay.dispose);
+  if (relay) console.info("[Relayer] Relayer connected: " + networkConfig.relayServiceUrl);
+
+
+  // Request drip from faucet
+  let faucet: any = undefined;
   if (networkConfig.faucetServiceUrl && signer) {
     const address = await signer.getAddress();
     console.info("[Dev Faucet]: Player address -> ", address);
 
-    const faucet = createFaucetService(networkConfig.faucetServiceUrl);
+    faucet = createFaucetService(networkConfig.faucetServiceUrl);
 
     const requestDrip = async () => {
       const balance = await signer.getBalance();
@@ -48,10 +75,29 @@ export async function setupNetwork() {
     setInterval(requestDrip, 20000);
   }
 
+  // TODO: Uncomment once we support plugins
+  // // Set initial component values
+  // if (components.PluginRegistry.entities.length === 0) {
+  //   addPluginRegistry("https://opcraft-plugins.mud.dev");
+  // }
+  // // Enable chat plugin by default
+  // if (
+  //   getEntitiesWithValue(components.Plugin, { host: "https://opcraft-plugins.mud.dev", path: "/chat.js" }).size === 0
+  // ) {
+  //   console.info("Enabling chat plugin by default");
+  //   addPlugin({
+  //     host: "https://opcraft-plugins.mud.dev",
+  //     path: "/chat.js",
+  //     active: true,
+  //     source: "https://github.com/latticexyz/opcraft-plugins",
+  //   });
+  // }
+
   const provider = result.network.providers.get().json;
   const signerOrProvider = signer ?? provider;
   // Create a World contract instance
   const worldContract = IWorld__factory.connect(networkConfig.worldAddress, signerOrProvider);
+  const uniqueWorldId = networkConfig.chainId + networkConfig.worldAddress;
 
   if (networkConfig.snapSync) {
     const currentBlockNumber = await provider.getBlockNumber();
@@ -93,10 +139,66 @@ export async function setupNetwork() {
     };
   }
 
+  // --- ACTION SYSTEM --------------------------------------------------------------
+  const actions = createActionSystem<{
+    actionType: string;
+    coord?: VoxelCoord;
+    blockType?: keyof typeof BlockType;
+  }>(world, result.txReduced$);
+
+  // TODO: How do you do this in MUD2?
+  // Add indexers and optimistic updates
+  // const { withOptimisticUpdates } = actions;
+  // components.Position = createIndexer(withOptimisticUpdates(components.Position));
+  // components.OwnedBy = createIndexer(withOptimisticUpdates(components.OwnedBy));
+  // components.Item = withOptimisticUpdates(components.Item);
+
+  // --- API ------------------------------------------------------------------------
+
+  const perlin = await createPerlin();
+
+  function getTerrainBlockAtPosition(position: VoxelCoord) {
+    return getTerrainBlock(getTerrain(position, perlin), position, perlin);
+  }
+
+  function getECSBlockAtPosition(position: VoxelCoord) {
+    return getECSBlock(terrainContext, position);
+  }
+
+  // --- STREAMS --------------------------------------------------------------------
+  const balanceGwei$ = new BehaviorSubject<number>(1);
+  world.registerDisposer(
+    combineLatest([timer(0, 5000), computedToStream(result.network.signer)])
+      .pipe(
+        map<[number, Signer | undefined], Promise<number>>(async ([, signer]) =>
+          signer
+            ? signer.getBalance().then((v) => v.div(BigNumber.from(10).pow(9)).toNumber())
+            : new Promise((res) => res(0))
+        ),
+        awaitPromise()
+      )
+      .subscribe(balanceGwei$)?.unsubscribe
+  );
+
+  const connectedClients$ = timer(0, 5000).pipe(
+    map(async () => relay?.countConnected() || 0),
+    awaitPromise()
+  );
+
   return {
     ...result,
+    world,
     worldContract,
+    api: {}, // TODO: populate?
     worldSend: bindFastTxExecute(worldContract),
     fastTxExecutor,
+    // dev: setupDevSystems(world, encoders as Promise<any>, systems),
+    streams: { connectedClients$, balanceGwei$ },
+    config: networkConfig,
+    relay,
+    faucet,
+    worldAddress: networkConfig.worldAddress,
+    uniqueWorldId,
+    types: { BlockIdToKey, BlockType },
   };
 }

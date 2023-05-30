@@ -11,6 +11,7 @@ import {
   runQuery,
   HasValue,
   EntityID,
+  Entity,
 } from "@latticexyz/recs";
 import { awaitStreamValue, Coord, isNotEmpty, pickRandom, random, VoxelCoord } from "@latticexyz/utils";
 import { NetworkLayer } from "../network";
