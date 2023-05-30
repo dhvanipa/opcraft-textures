@@ -19,7 +19,7 @@ contract BuildSystem is System {
     bytes32[] memory entitiesAtPosition = getKeysWithValue(PositionTableId, Position.encode(coord.x, coord.y, coord.z));
     require(entitiesAtPosition.length == 0 || entitiesAtPosition.length == 1, "can not built at non-empty coord");
     if (entitiesAtPosition.length == 1) {
-      require(Item.get(uint256(entitiesAtPosition[0])) == AirID, "can not built at non-empty coord (2)");
+      require(Item.get(entitiesAtPosition[0]) == AirID, "can not built at non-empty coord (2)");
     }
 
     return blockEntity;
