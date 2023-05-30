@@ -71,6 +71,9 @@ importers:
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
+      mobx:
+          specifier: ^6.9.0
+          version: 6.9.0
       mobx-react-lite:
         specifier: ^3.4.3
         version: 3.4.3(mobx@6.9.0)(react-dom@18.2.0)(react@18.2.0)
