@@ -32,6 +32,9 @@ importers:
 
   packages/client:
     dependencies:
+      '@babylonjs/core':
+        specifier: ^5.0.0-alpha.48
+        version: 5.0.0-alpha.48
       '@ethersproject/providers':
         specifier: ^5.7.2
         version: 5.7.2
@@ -44,6 +47,9 @@ importers:
       '@latticexyz/network':
         specifier: 2.0.0-alpha.1.197+5e6cc0f5
         version: 2.0.0-alpha.1.197(google-protobuf@3.21.2)(typescript@5.0.4)(zod@3.21.4)
+      '@latticexyz/noise':
+        specifier: 2.0.0-alpha.1.197+5e6cc0f5
+        version: 2.0.0-alpha.1.197
       '@latticexyz/react':
         specifier: 2.0.0-alpha.1.197+5e6cc0f5
         version: 2.0.0-alpha.1.197(typescript@5.0.4)(zod@3.21.4)
@@ -53,9 +59,15 @@ importers:
       '@latticexyz/schema-type':
         specifier: 2.0.0-alpha.1.197+5e6cc0f5
         version: 2.0.0-alpha.1.197(typescript@5.0.4)(zod@3.21.4)
+      '@latticexyz/solecs':
+        specifier: 2.0.0-alpha.1.197+5e6cc0f5
+        version: 2.0.0-alpha.1.197
       '@latticexyz/std-client':
         specifier: 2.0.0-alpha.1.197+5e6cc0f5
         version: 2.0.0-alpha.1.197(@ethersproject/bytes@5.7.0)(google-protobuf@3.21.2)(typescript@5.0.4)(zod@3.21.4)
+      '@latticexyz/std-contracts':
+        specifier: 2.0.0-alpha.1.197+5e6cc0f5
+        version: 2.0.0-alpha.1.197
       '@latticexyz/utils':
         specifier: 2.0.0-alpha.1.197+5e6cc0f5
         version: 2.0.0-alpha.1.197
@@ -72,11 +84,14 @@ importers:
         specifier: ^5.7.2
         version: 5.7.2
       mobx:
-          specifier: ^6.9.0
-          version: 6.9.0
+        specifier: ^6.9.0
+        version: 6.9.0
       mobx-react-lite:
         specifier: ^3.4.3
         version: 3.4.3(mobx@6.9.0)(react-dom@18.2.0)(react@18.2.0)
+      noa-engine:
+        specifier: git+https://github.com/latticexyz/noa.git
+        version: github.com/latticexyz/noa/a8e20fe4d94bbcce16f0933ba4733518288a44af(@babylonjs/core@5.0.0-alpha.48)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -194,9 +209,6 @@ importers:
         version: 8.1.1(typescript@5.0.4)
 
 packages:
-  /abdk-libraries-solidity@3.2.0:
-    resolution: { integrity: sha512-JyedKxyqsszb9qCTX+YCOQHA4m0YAq9p77Qvumiy8LJLLrm1FfA9D3pdSAZN5wrmi3PSv0y3Svy8c/C+8S9K8g== }
-    dev: true
 
   /@adraffy/ens-normalize@1.9.0:
     resolution: {integrity: sha512-iowxq3U30sghZotgl4s/oJRci6WPBfNO5YYgk2cIOMCHr3LeGPcsZjCEr+33Q4N+oV3OABDAtA+pyvWjbvBifQ==}
@@ -429,6 +441,12 @@ packages:
       '@babel/helper-string-parser': 7.21.5
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
+
+  /@babylonjs/core@5.0.0-alpha.48:
+    resolution: {integrity: sha512-NFOIZp+yj1Q+ziogK7I6mbKy+tqh/qTXJrHAcU29CPtNXhxda487ATdWmdlRUOWwbFqE7DY8J1HKGteTEmA/4Q==}
+    dependencies:
+      tslib: 2.5.2
+    dev: false
 
   /@emotion/is-prop-valid@1.2.1:
     resolution: {integrity: sha512-61Mf7Ufx4aDxx1xlDeOm8aFFigGHE4z+0sKCa+IHCeZKiyP9RLD0Mmx7m8b9/Cf37f7NAvQOOJAbQQGVr5uERw==}
@@ -965,6 +983,14 @@ packages:
       browser-headers: 0.4.1
       google-protobuf: 3.21.2
 
+  /@jpweeks/typedarray-pool@2.0.0:
+    resolution: {integrity: sha512-gIVyexWRE9UtiwWWr0bQuO1Odl6jZkVGVzdCVwAl4aCYllOPf+A8pz99ttYtAieXOh5OS3M50qfRYd+yDw6jEw==}
+    dependencies:
+      bit-twiddle: 1.0.2
+      dup: 1.0.0
+      is-buffer: 2.0.5
+    dev: false
+
   /@jridgewell/gen-mapping@0.3.3:
     resolution: {integrity: sha512-HLhSWOLRi875zjjMG/r+Nv0oCW8umGb0BgEhyX3dDX3egwZtB8PqLnjz3yedt8R5StBrzcg4aBpnh8UA9D1BoQ==}
     engines: {node: '>=6.0.0'}
@@ -1180,6 +1206,14 @@ packages:
       '@flatten-js/interval-tree': 1.0.20
       '@types/big-integer': 0.0.31
     dev: true
+
+  /@latticexyz/noise@2.0.0-alpha.1.197:
+    resolution: {integrity: sha512-lt3ww/Dn6IEDxpVWZtIlN/Je1ZSxLbxU1UiSUiFn8vm7c6jL2JtQNdyYVziBvp0bLKYw4CQv9aCwQza+54NOQQ==}
+    dependencies:
+      abdk-libraries-solidity: 3.2.0
+      ds-test: github.com/dapphub/ds-test/c9ce3f25bde29fc5eb9901842bf02850dfd2d084
+      forge-std: github.com/foundry-rs/forge-std/b4f121555729b3afb3c5ffccb62ff4b6e2818fd3
+    dev: false
 
   /@latticexyz/react@2.0.0-alpha.1.197(typescript@5.0.4)(zod@3.21.4):
     resolution: {integrity: sha512-OPI7EUFA0F2VBf8pbHpW1ZJWqozXc+w7xmJItSiGHBH7vRM+UnnTLtFa0eRRCajL/9Cgzl1KL2fTixYyqnDmRg==}
@@ -1808,6 +1842,9 @@ packages:
       typescript: 5.0.4
     dev: false
 
+  /abdk-libraries-solidity@3.2.0:
+    resolution: {integrity: sha512-JyedKxyqsszb9qCTX+YCOQHA4m0YAq9p77Qvumiy8LJLLrm1FfA9D3pdSAZN5wrmi3PSv0y3Svy8c/C+8S9K8g==}
+
   /abitype@0.8.2(typescript@5.0.4)(zod@3.21.4):
     resolution: {integrity: sha512-B1ViNMGpfx/qjVQi0RTc2HEFHuR9uoCoTEkwELT5Y7pBPtBbctYijz9BK6+Kd0hQ3S70FhYTO2dWWk0QNUEXMA==}
     peerDependencies:
@@ -2064,6 +2101,10 @@ packages:
   /binary-extensions@2.2.0:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
     engines: {node: '>=8'}
+
+  /bit-twiddle@1.0.2:
+    resolution: {integrity: sha512-B9UhK0DKFZhoTFcfvAzhqsjStvGJp9vYWf3+6SNTtdSQnvIgfkHbgHrg/e4+TH71N2GDu8tpmCVoyfrL1d7ntA==}
+    dev: false
 
   /bn.js@4.12.0:
     resolution: {integrity: sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==}
@@ -2380,6 +2421,10 @@ packages:
     resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
     engines: {node: '>=12'}
 
+  /dup@1.0.0:
+    resolution: {integrity: sha512-Bz5jxMMC0wgp23Zm15ip1x8IhYRqJvF3nFC0UInJUDkN1z4uNPk9jTnfCUJXbOGiQ1JbXLQsiV41Fb+HXcj5BA==}
+    dev: false
+
   /ejs@3.1.9:
     resolution: {integrity: sha512-rC+QVNMJWv+MtPgkt0y+0rVEIdbtxVADApW9JXrUVlzHetgcyczP/E7DJmWJ4fJCZF2cPcBk0laWO9ZHMG3DmQ==}
     engines: {node: '>=0.10.0'}
@@ -2416,6 +2461,10 @@ packages:
 
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
+
+  /ent-comp@0.10.1:
+    resolution: {integrity: sha512-TfTskUQslZliT6sMoqaOBKZ/5FDbSrC2hRn2cWN2QDYxtT7bBNT1PHgroiW4opDg6KrP37sQDm4jEe3qCAI8sg==}
+    dev: false
 
   /error-ex@1.3.2:
     resolution: {integrity: sha512-7dFHNmqeFSEt2ZBsCriorKnn3Z2pj+fd9kmI6QoWw4//DL+icEBfc0U7qJCisqrTsKTjw4fNFy2pW9OqStD84g==}
@@ -2823,6 +2872,11 @@ packages:
       - utf-8-validate
     dev: true
 
+  /events@3.3.0:
+    resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
+    engines: {node: '>=0.8.x'}
+    dev: false
+
   /execa@7.1.1:
     resolution: {integrity: sha512-wH0eMf/UXckdUYnO21+HDztteVv05rq2GXksxT4fCGeHkBhw1DROXh40wcjMcRqDOWE7iPJ4n3M7e2+YFP+76Q==}
     engines: {node: ^14.18.0 || ^16.14.0 || >=18.0.0}
@@ -2871,6 +2925,10 @@ packages:
   /fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
     dev: true
+
+  /fast-voxel-raycast@0.1.1:
+    resolution: {integrity: sha512-0xL13ln+mxB4NCed3sfmBRhywy/vWYxbimKYvqdy/lV+/3/VPAS6/6kiNT2peFnpgeTGWGMZs05sTkvVktPAUA==}
+    dev: false
 
   /fastq@1.15.0:
     resolution: {integrity: sha512-wBrocU2LCXXa+lWBt8RoIRD89Fi8OdABODa/kEnyeyjS5aZO5/GNvI5sEINADqP/h8M29UHTHUb53sUu5Ihqdw==}
@@ -3016,6 +3074,13 @@ packages:
     resolution: {integrity: sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==}
     dev: true
 
+  /game-inputs@0.5.0:
+    resolution: {integrity: sha512-43YhVJN01mBm7gOZmRpYOvexdwCnQSqM1CshZgJGhH6QljvXHAcKTVI92ebhe9YgLDrAugelqryPrxlClwpSKA==}
+    dependencies:
+      events: 3.3.0
+      vkey: 1.0.1
+    dev: false
+
   /gensync@1.0.0-beta.2:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
     engines: {node: '>=6.9.0'}
@@ -3045,6 +3110,10 @@ packages:
       call-bind: 1.0.2
       get-intrinsic: 1.2.1
     dev: true
+
+  /gl-vec3@1.1.3:
+    resolution: {integrity: sha512-jduKUqT0SGH02l8Yl+mV1yVsDfYgQAJyXGxkJQGyxPLHRiW25DwVIRPt6uvhrEMHftJfqhqKthRcyZqNEl9Xdw==}
+    dev: false
 
   /glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -3278,6 +3347,10 @@ packages:
       side-channel: 1.0.4
     dev: true
 
+  /iota-array@1.0.0:
+    resolution: {integrity: sha512-pZ2xT+LOHckCatGQ3DcG/a+QuEqvoxqkiL7tvE8nn3uuu+f6i1TtpB5/FtWFbxUuVr5PZCx8KskuGatbJDXOWA==}
+    dev: false
+
   /is-array-buffer@3.0.2:
     resolution: {integrity: sha512-y+FyyR/w8vfIRq4eQcM1EYgSTnmHXPqaF+IgzgraytCFq5Xh8lllDVmAZolPJiZttZLeFSINPYMaEJ7/vWUa1w==}
     dependencies:
@@ -3312,6 +3385,11 @@ packages:
 
   /is-buffer@1.1.6:
     resolution: {integrity: sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==}
+    dev: false
+
+  /is-buffer@2.0.5:
+    resolution: {integrity: sha512-i2R6zNFDwgEHJyQUtJEk0XFi1i0dPFn/oqjK3/vPCcDeJvW5NQ83V8QbicfF1SupOaB0h8ntgBC2YiE7dfyctQ==}
+    engines: {node: '>=4'}
     dev: false
 
   /is-callable@1.2.7:
@@ -3613,6 +3691,10 @@ packages:
     engines: {node: '>= 8'}
     dev: true
 
+  /micro-game-shell@0.3.0:
+    resolution: {integrity: sha512-0KQ54z84vXDRBDi6xemve5MOxE09a97nf4Y4xYXZHxdlM0ug4JP3EWrPMCUzErvTYITeLJp8UQBPHrg6197nKA==}
+    dev: false
+
   /micromatch@4.0.5:
     resolution: {integrity: sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==}
     engines: {node: '>=8.6'}
@@ -3705,6 +3787,13 @@ packages:
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
+
+  /ndarray@1.0.19:
+    resolution: {integrity: sha512-B4JHA4vdyZU30ELBw3g7/p9bZupyew5a7tX1Y/gGeF2hafrPaQZhgrGQfsvgfYbgdFZjYwuEcnaobeM/WMW+HQ==}
+    dependencies:
+      iota-array: 1.0.0
+      is-buffer: 1.1.6
+    dev: false
 
   /nice-grpc-common@2.0.2:
     resolution: {integrity: sha512-7RNWbls5kAL1QVUOXvBsv1uO0wPQK3lHv+cY1gwkTzirnG1Nop4cBJZubpgziNbaVc/bl9QJcyvsf/NQxa3rjQ==}
@@ -4914,6 +5003,22 @@ packages:
       fsevents: 2.3.2
     dev: true
 
+  /vkey@1.0.1:
+    resolution: {integrity: sha512-qmeIeB6Y66RzUA1NTi353bu+AhSeQ9/vcFuLLayrz6whAczm1QfOqcw5kCkG0jLOfmgcZeCMHLuUhuWExz9EJA==}
+    dev: false
+
+  /voxel-aabb-sweep@0.5.0:
+    resolution: {integrity: sha512-cnjWJ8Xx03fzke8AqKCqKdDk+QsvGVOp2oAT1e6hcCFyDHAyCWM4o13G9xBofzHvXYAinz2hA8JuHK/G8+QD2w==}
+    dev: false
+
+  /voxel-physics-engine@0.11.1:
+    resolution: {integrity: sha512-bctfbLIBnAJw41XzQOZzo3Uf6MA9Bo3DpWn1MFDUFxKunuDKs0El3+HHBvYGfHj4hFsKJ++YujRfn8IHQzsoPw==}
+    dependencies:
+      aabb-3d: github.com/fenomas/aabb-3d/c5698961161884397c711e8fb533611642a8a487
+      gl-vec3: 1.1.3
+      voxel-aabb-sweep: 0.5.0
+    dev: false
+
   /wait-port@1.0.4:
     resolution: {integrity: sha512-w8Ftna3h6XSFWWc2JC5gZEgp64nz8bnaTp5cvzbJSZ53j+omktWTDdwXxEF0jM8YveviLgFWvNGrSvRHnkyHyw==}
     engines: {node: '>=10'}
@@ -5109,11 +5214,49 @@ packages:
     name: memmove
     version: 0.1.0
 
+  github.com/fenomas/aabb-3d/c5698961161884397c711e8fb533611642a8a487:
+    resolution: {tarball: https://codeload.github.com/fenomas/aabb-3d/tar.gz/c5698961161884397c711e8fb533611642a8a487}
+    name: aabb-3d
+    version: 0.2.1
+    dependencies:
+      gl-vec3: 1.1.3
+    dev: false
+
+  github.com/fenomas/box-intersect/383cb9bef2cf7140ca6ca9b705669fb108d1357f:
+    resolution: {tarball: https://codeload.github.com/fenomas/box-intersect/tar.gz/383cb9bef2cf7140ca6ca9b705669fb108d1357f}
+    name: box-intersect
+    version: 1.0.3
+    dependencies:
+      '@jpweeks/typedarray-pool': 2.0.0
+      bit-twiddle: 1.0.2
+    dev: false
+
   github.com/foundry-rs/forge-std/b4f121555729b3afb3c5ffccb62ff4b6e2818fd3:
     resolution: {tarball: https://codeload.github.com/foundry-rs/forge-std/tar.gz/b4f121555729b3afb3c5ffccb62ff4b6e2818fd3}
     name: forge-std
     version: 1.2.0
-    dev: true
+
+  github.com/latticexyz/noa/a8e20fe4d94bbcce16f0933ba4733518288a44af(@babylonjs/core@5.0.0-alpha.48):
+    resolution: {tarball: https://codeload.github.com/latticexyz/noa/tar.gz/a8e20fe4d94bbcce16f0933ba4733518288a44af}
+    id: github.com/latticexyz/noa/a8e20fe4d94bbcce16f0933ba4733518288a44af
+    name: noa-engine
+    version: 0.32.0
+    peerDependencies:
+      '@babylonjs/core': ^5.0.0-alpha.48
+    dependencies:
+      '@babylonjs/core': 5.0.0-alpha.48
+      aabb-3d: github.com/fenomas/aabb-3d/c5698961161884397c711e8fb533611642a8a487
+      box-intersect: github.com/fenomas/box-intersect/383cb9bef2cf7140ca6ca9b705669fb108d1357f
+      ent-comp: 0.10.1
+      events: 3.3.0
+      fast-voxel-raycast: 0.1.1
+      game-inputs: 0.5.0
+      gl-vec3: 1.1.3
+      micro-game-shell: 0.3.0
+      ndarray: 1.0.19
+      voxel-aabb-sweep: 0.5.0
+      voxel-physics-engine: 0.11.1
+    dev: false
 
   github.com/ricmoo/ens-normalize.js/2d040533e57e4f25f9a7cc4715e219658ad454b5:
     resolution: {tarball: https://codeload.github.com/ricmoo/ens-normalize.js/tar.gz/2d040533e57e4f25f9a7cc4715e219658ad454b5}
