@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.8.0;
+import { IWorld } from "../codegen/world/IWorld.sol";
+import {Occurrence, ItemPrototype} from "../codegen/Tables.sol";
 
 bytes32 constant AirID = bytes32(keccak256("block.Air"));
 bytes32 constant GrassID = bytes32(keccak256("block.Grass"));
@@ -54,3 +56,142 @@ bytes32 constant SnowID = bytes32(keccak256("block.Snow"));
 bytes32 constant ClayID = bytes32(keccak256("block.Clay"));
 bytes32 constant BedrockID = bytes32(keccak256("block.Bedrock"));
 bytes32 constant BricksID = bytes32(keccak256("block.Bricks"));
+
+function defineBlocks(IWorld world) {
+    ItemPrototype.set(bytes32(GrassID), true);
+    Occurrence.set(GrassID, world.OGrass.selector);
+
+    ItemPrototype.set(bytes32(DirtID), true);
+    Occurrence.set(DirtID, world.ODirt.selector);
+
+    ItemPrototype.set(bytes32(LogID), true);
+    Occurrence.set(LogID, world.OLog.selector);
+
+    ItemPrototype.set(bytes32(StoneID), true);
+    Occurrence.set(StoneID, world.OStone.selector);
+
+    ItemPrototype.set(bytes32(SandID), true);
+    Occurrence.set(SandID, world.OSand.selector);
+
+    ItemPrototype.set(bytes32(WaterID), true);
+    Occurrence.set(WaterID, world.OWater.selector);
+
+    ItemPrototype.set(bytes32(DiamondID), true);
+    Occurrence.set(DiamondID, world.ODiamond.selector);
+
+    ItemPrototype.set(bytes32(CoalID), true);
+    Occurrence.set(CoalID, world.OCoal.selector);
+
+    ItemPrototype.set(bytes32(LeavesID), true);
+    Occurrence.set(LeavesID, world.OLeaves.selector);
+
+    ItemPrototype.set(bytes32(WoolID), true);
+    Occurrence.set(WoolID, world.OWool.selector);
+
+    ItemPrototype.set(bytes32(SnowID), true);
+    Occurrence.set(SnowID, world.OSnow.selector);
+
+    ItemPrototype.set(bytes32(ClayID), true);
+    Occurrence.set(ClayID, world.OClay.selector);
+
+    ItemPrototype.set(bytes32(BedrockID), true);
+    Occurrence.set(BedrockID, world.OBedrock.selector);
+
+    ItemPrototype.set(bytes32(RedFlowerID), true);
+    Occurrence.set(
+        RedFlowerID,
+        world.ORedFlower.selector);
+
+    ItemPrototype.set(bytes32(GrassPlantID), true);
+    Occurrence.set(
+        GrassPlantID,
+        world.OGrassPlant.selector);
+
+    ItemPrototype.set(bytes32(OrangeFlowerID), true);
+    Occurrence.set(
+        OrangeFlowerID,
+        world.OOrangeFlower.selector);
+
+    ItemPrototype.set(bytes32(MagentaFlowerID), true);
+    Occurrence.set(
+        MagentaFlowerID,
+        world.OMagentaFlower.selector);
+
+    ItemPrototype.set(bytes32(LightBlueFlowerID), true);
+    Occurrence.set(
+        LightBlueFlowerID,
+        world.OLightBlueFlower.selector);
+
+    ItemPrototype.set(bytes32(LimeFlowerID), true);
+    Occurrence.set(
+        LimeFlowerID,
+        world.OLimeFlower.selector);
+
+    ItemPrototype.set(bytes32(PinkFlowerID), true);
+    Occurrence.set(
+        PinkFlowerID,
+        world.OPinkFlower.selector);
+
+    ItemPrototype.set(bytes32(GrayFlowerID), true);
+    Occurrence.set(
+        GrayFlowerID,
+        world.OGrayFlower.selector);
+
+    ItemPrototype.set(bytes32(LightGrayFlowerID), true);
+    Occurrence.set(
+        LightGrayFlowerID,
+        world.OLightGrayFlower.selector);
+
+    ItemPrototype.set(bytes32(CyanFlowerID), true);
+    Occurrence.set(
+        CyanFlowerID,
+        world.OCyanFlower.selector);
+
+    ItemPrototype.set(bytes32(PurpleFlowerID), true);
+    Occurrence.set(
+        PurpleFlowerID,
+        world.OPurpleFlower.selector);
+
+    ItemPrototype.set(bytes32(BlueFlowerID), true);
+    Occurrence.set(
+        BlueFlowerID,
+        world.OBlueFlower.selector);
+
+    ItemPrototype.set(bytes32(GreenFlowerID), true);
+    Occurrence.set(
+        GreenFlowerID,
+        world.OGreenFlower.selector);
+
+    ItemPrototype.set(bytes32(BlackFlowerID), true);
+    Occurrence.set(
+        BlackFlowerID,
+        world.OBlackFlower.selector);
+
+    ItemPrototype.set(bytes32(KelpID), true);
+    Occurrence.set(KelpID, world.OKelp.selector);
+
+    ItemPrototype.set(bytes32(AirID), true);
+    ItemPrototype.set(bytes32(GlassID), true);
+    ItemPrototype.set(bytes32(SpongeID), true);
+    ItemPrototype.set(bytes32(CobblestoneID), true);
+    ItemPrototype.set(bytes32(CoalID), true);
+    ItemPrototype.set(bytes32(CraftingID), true);
+    ItemPrototype.set(bytes32(IronID), true);
+    ItemPrototype.set(bytes32(GoldID), true);
+    ItemPrototype.set(bytes32(PlanksID), true);
+    ItemPrototype.set(bytes32(OrangeWoolID), true);
+    ItemPrototype.set(bytes32(MagentaWoolID), true);
+    ItemPrototype.set(bytes32(LightBlueWoolID), true);
+    ItemPrototype.set(bytes32(YellowWoolID), true);
+    ItemPrototype.set(bytes32(LimeWoolID), true);
+    ItemPrototype.set(bytes32(PinkWoolID), true);
+    ItemPrototype.set(bytes32(GrayWoolID), true);
+    ItemPrototype.set(bytes32(LightGrayWoolID), true);
+    ItemPrototype.set(bytes32(CyanWoolID), true);
+    ItemPrototype.set(bytes32(PurpleWoolID), true);
+    ItemPrototype.set(bytes32(BlueWoolID), true);
+    ItemPrototype.set(bytes32(BrownWoolID), true);
+    ItemPrototype.set(bytes32(GreenWoolID), true);
+    ItemPrototype.set(bytes32(RedWoolID), true);
+    ItemPrototype.set(bytes32(BlackWoolID), true);
+}
