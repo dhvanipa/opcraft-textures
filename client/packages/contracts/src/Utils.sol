@@ -2,7 +2,8 @@
 pragma solidity >=0.8.0;
 
 import { CHUNK } from "./constants.sol";
-import { Coord, VoxelCoord, BlockDirection } from "./types.sol";
+import { Coord, VoxelCoord } from "./types.sol";
+import {BlockDirection } from "./codegen/types.sol";
 
 // Divide with rounding down like Math.floor(a/b), not rounding towards zero
     function div(int32 a, int32 b) pure returns (int32) {

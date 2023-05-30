@@ -2,10 +2,10 @@
 pragma solidity >=0.8.0;
 import { IWorld } from "@latticexyz/solecs/src/interfaces/IWorld.sol";
 import { getAddressById, addressToEntity } from "solecs/utils.sol";
-import { PositionComponent, ID as PositionComponentID } from "../codegen/tables/Position.sol";
 import { LibTerrain } from "../libraries/LibTerrain.sol";
 import { AirID, GrassID, DirtID, LogID, StoneID, SandID, WaterID, CobblestoneID, CoalID, CraftingID, IronID, GoldID, DiamondID, LeavesID, PlanksID, RedFlowerID, GrassPlantID, OrangeFlowerID, MagentaFlowerID, LightBlueFlowerID, LimeFlowerID, PinkFlowerID, GrayFlowerID, LightGrayFlowerID, CyanFlowerID, PurpleFlowerID, BlueFlowerID, GreenFlowerID, BlackFlowerID, KelpID, WoolID, SnowID, ClayID, BedrockID } from "../prototypes/Blocks.sol";
 import { VoxelCoord } from "../utils.sol";
+import {System} from "@latticexyz/world/src/System.sol";
 
 uint256 constant ID = uint256(keccak256("system.Occurrence"));
 
@@ -13,8 +13,6 @@ uint256 constant ID = uint256(keccak256("system.Occurrence"));
 // For blocks added after deployment of the core contracts, a new contract with a function
 // returning the occurrence of that block can be deployed and linked with the block's Occurrence component.
 contract OccurrenceSystem is System {
-  constructor(IWorld _world, address _components) System(_world, _components) {}
-
   function execute(bytes memory arguments) public pure returns (bytes memory) {
     (uint256 blockType, VoxelCoord memory coord) = abi.decode(arguments, (uint256, VoxelCoord));
 

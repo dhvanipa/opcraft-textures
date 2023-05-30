@@ -16,7 +16,7 @@ export default mudConfig({
     //   }
     // }
     Item: "uint128",
-    ItemProtoype: "bool",
+    ItemPrototype: "bool",
     Name: "string", // This is a shortcut for { schema: "string" }
     // note: occurance is omitted, since it is a functionBare component. This is just a weird implementation. We'll change it
     // OwnedBy: "uint256", // not used for now

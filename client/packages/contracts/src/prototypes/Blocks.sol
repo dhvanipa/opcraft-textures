@@ -3,7 +3,7 @@ pragma solidity >=0.8.0;
 import { IUint256Component } from "solecs/interfaces/IUint256Component.sol";
 import { getAddressById } from "solecs/utils.sol";
 
-import { ItemPrototypeComponent, ItemProtoypeTableId } from "../codegen/tables/ItemPrototype.sol";
+import { ItemPrototype } from "../codegen/tables/ItemPrototype.sol";
 import { OccurrenceComponent, ID as OccurrenceComponentID, FunctionSelector } from "../components/OccurrenceComponent.sol";
 import { OccurrenceSystem, ID as OccurrenceSystemID } from "../systems/OccurrenceSystem.sol";
 
@@ -62,158 +62,157 @@ uint256 constant BedrockID = uint256(keccak256("block.Bedrock"));
 uint256 constant BricksID = uint256(keccak256("block.Bricks"));
 
 function defineBlocks(
-  ItemPrototypeComponent itemPrototypeComponent,
   OccurrenceComponent occurrenceComponent,
   OccurrenceSystem occurrenceSystem
 ) {
-  itemPrototypeComponent.set(GrassID);
+  ItemPrototype.set(bytes32(GrassID), true);
   occurrenceComponent.set(GrassID, FunctionSelector(address(occurrenceSystem), occurrenceSystem.Grass.selector));
 
-  itemPrototypeComponent.set(DirtID);
+  ItemPrototype.set(bytes32(DirtID), true);
   occurrenceComponent.set(DirtID, FunctionSelector(address(occurrenceSystem), occurrenceSystem.Dirt.selector));
 
-  itemPrototypeComponent.set(LogID);
+  ItemPrototype.set(bytes32(LogID), true);
   occurrenceComponent.set(LogID, FunctionSelector(address(occurrenceSystem), occurrenceSystem.Log.selector));
 
-  itemPrototypeComponent.set(StoneID);
+  ItemPrototype.set(bytes32(StoneID), true);
   occurrenceComponent.set(StoneID, FunctionSelector(address(occurrenceSystem), occurrenceSystem.Stone.selector));
 
-  itemPrototypeComponent.set(SandID);
+  ItemPrototype.set(bytes32(SandID), true);
   occurrenceComponent.set(SandID, FunctionSelector(address(occurrenceSystem), occurrenceSystem.Sand.selector));
 
-  itemPrototypeComponent.set(WaterID);
+  ItemPrototype.set(bytes32(WaterID), true);
   occurrenceComponent.set(WaterID, FunctionSelector(address(occurrenceSystem), occurrenceSystem.Water.selector));
 
-  itemPrototypeComponent.set(DiamondID);
+  ItemPrototype.set(bytes32(DiamondID), true);
   occurrenceComponent.set(DiamondID, FunctionSelector(address(occurrenceSystem), occurrenceSystem.Diamond.selector));
 
-  itemPrototypeComponent.set(CoalID);
+  ItemPrototype.set(bytes32(CoalID), true);
   occurrenceComponent.set(CoalID, FunctionSelector(address(occurrenceSystem), occurrenceSystem.Coal.selector));
 
-  itemPrototypeComponent.set(LeavesID);
+  ItemPrototype.set(bytes32(LeavesID), true);
   occurrenceComponent.set(LeavesID, FunctionSelector(address(occurrenceSystem), occurrenceSystem.Leaves.selector));
 
-  itemPrototypeComponent.set(WoolID);
+  ItemPrototype.set(bytes32(WoolID), true);
   occurrenceComponent.set(WoolID, FunctionSelector(address(occurrenceSystem), occurrenceSystem.Wool.selector));
 
-  itemPrototypeComponent.set(SnowID);
+  ItemPrototype.set(bytes32(SnowID), true);
   occurrenceComponent.set(SnowID, FunctionSelector(address(occurrenceSystem), occurrenceSystem.Snow.selector));
 
-  itemPrototypeComponent.set(ClayID);
+  ItemPrototype.set(bytes32(ClayID), true);
   occurrenceComponent.set(ClayID, FunctionSelector(address(occurrenceSystem), occurrenceSystem.Clay.selector));
 
-  itemPrototypeComponent.set(BedrockID);
+  ItemPrototype.set(bytes32(BedrockID), true);
   occurrenceComponent.set(BedrockID, FunctionSelector(address(occurrenceSystem), occurrenceSystem.Bedrock.selector));
 
-  itemPrototypeComponent.set(RedFlowerID);
+  ItemPrototype.set(bytes32(RedFlowerID), true);
   occurrenceComponent.set(
     RedFlowerID,
     FunctionSelector(address(occurrenceSystem), occurrenceSystem.RedFlower.selector)
   );
 
-  itemPrototypeComponent.set(GrassPlantID);
+  ItemPrototype.set(bytes32(GrassPlantID), true);
   occurrenceComponent.set(
     GrassPlantID,
     FunctionSelector(address(occurrenceSystem), occurrenceSystem.GrassPlant.selector)
   );
 
-  itemPrototypeComponent.set(OrangeFlowerID);
+  ItemPrototype.set(bytes32(OrangeFlowerID), true);
   occurrenceComponent.set(
     OrangeFlowerID,
     FunctionSelector(address(occurrenceSystem), occurrenceSystem.OrangeFlower.selector)
   );
 
-  itemPrototypeComponent.set(MagentaFlowerID);
+  ItemPrototype.set(bytes32(MagentaFlowerID), true);
   occurrenceComponent.set(
     MagentaFlowerID,
     FunctionSelector(address(occurrenceSystem), occurrenceSystem.MagentaFlower.selector)
   );
 
-  itemPrototypeComponent.set(LightBlueFlowerID);
+  ItemPrototype.set(bytes32(LightBlueFlowerID), true);
   occurrenceComponent.set(
     LightBlueFlowerID,
     FunctionSelector(address(occurrenceSystem), occurrenceSystem.LightBlueFlower.selector)
   );
 
-  itemPrototypeComponent.set(LimeFlowerID);
+  ItemPrototype.set(bytes32(LimeFlowerID), true);
   occurrenceComponent.set(
     LimeFlowerID,
     FunctionSelector(address(occurrenceSystem), occurrenceSystem.LimeFlower.selector)
   );
 
-  itemPrototypeComponent.set(PinkFlowerID);
+  ItemPrototype.set(bytes32(PinkFlowerID), true);
   occurrenceComponent.set(
     PinkFlowerID,
     FunctionSelector(address(occurrenceSystem), occurrenceSystem.PinkFlower.selector)
   );
 
-  itemPrototypeComponent.set(GrayFlowerID);
+  ItemPrototype.set(bytes32(GrayFlowerID), true);
   occurrenceComponent.set(
     GrayFlowerID,
     FunctionSelector(address(occurrenceSystem), occurrenceSystem.GrayFlower.selector)
   );
 
-  itemPrototypeComponent.set(LightGrayFlowerID);
+  ItemPrototype.set(bytes32(LightGrayFlowerID), true);
   occurrenceComponent.set(
     LightGrayFlowerID,
     FunctionSelector(address(occurrenceSystem), occurrenceSystem.LightGrayFlower.selector)
   );
 
-  itemPrototypeComponent.set(CyanFlowerID);
+  ItemPrototype.set(bytes32(CyanFlowerID), true);
   occurrenceComponent.set(
     CyanFlowerID,
     FunctionSelector(address(occurrenceSystem), occurrenceSystem.CyanFlower.selector)
   );
 
-  itemPrototypeComponent.set(PurpleFlowerID);
+  ItemPrototype.set(bytes32(PurpleFlowerID), true);
   occurrenceComponent.set(
     PurpleFlowerID,
     FunctionSelector(address(occurrenceSystem), occurrenceSystem.PurpleFlower.selector)
   );
 
-  itemPrototypeComponent.set(BlueFlowerID);
+  ItemPrototype.set(bytes32(BlueFlowerID), true);
   occurrenceComponent.set(
     BlueFlowerID,
     FunctionSelector(address(occurrenceSystem), occurrenceSystem.BlueFlower.selector)
   );
 
-  itemPrototypeComponent.set(GreenFlowerID);
+  ItemPrototype.set(bytes32(GreenFlowerID), true);
   occurrenceComponent.set(
     GreenFlowerID,
     FunctionSelector(address(occurrenceSystem), occurrenceSystem.GreenFlower.selector)
   );
 
-  itemPrototypeComponent.set(BlackFlowerID);
+  ItemPrototype.set(bytes32(BlackFlowerID), true);
   occurrenceComponent.set(
     BlackFlowerID,
     FunctionSelector(address(occurrenceSystem), occurrenceSystem.BlackFlower.selector)
   );
 
-  itemPrototypeComponent.set(KelpID);
+  ItemPrototype.set(bytes32(KelpID), true);
   occurrenceComponent.set(KelpID, FunctionSelector(address(occurrenceSystem), occurrenceSystem.Kelp.selector));
 
-  itemPrototypeComponent.set(AirID);
-  itemPrototypeComponent.set(GlassID);
-  itemPrototypeComponent.set(SpongeID);
-  itemPrototypeComponent.set(CobblestoneID);
-  itemPrototypeComponent.set(CoalID);
-  itemPrototypeComponent.set(CraftingID);
-  itemPrototypeComponent.set(IronID);
-  itemPrototypeComponent.set(GoldID);
-  itemPrototypeComponent.set(PlanksID);
-  itemPrototypeComponent.set(OrangeWoolID);
-  itemPrototypeComponent.set(MagentaWoolID);
-  itemPrototypeComponent.set(LightBlueWoolID);
-  itemPrototypeComponent.set(YellowWoolID);
-  itemPrototypeComponent.set(LimeWoolID);
-  itemPrototypeComponent.set(PinkWoolID);
-  itemPrototypeComponent.set(GrayWoolID);
-  itemPrototypeComponent.set(LightGrayWoolID);
-  itemPrototypeComponent.set(CyanWoolID);
-  itemPrototypeComponent.set(PurpleWoolID);
-  itemPrototypeComponent.set(BlueWoolID);
-  itemPrototypeComponent.set(BrownWoolID);
-  itemPrototypeComponent.set(GreenWoolID);
-  itemPrototypeComponent.set(RedWoolID);
-  itemPrototypeComponent.set(BlackWoolID);
+  ItemPrototype.set(bytes32(AirID), true);
+  ItemPrototype.set(bytes32(GlassID), true);
+  ItemPrototype.set(bytes32(SpongeID), true);
+  ItemPrototype.set(bytes32(CobblestoneID), true);
+  ItemPrototype.set(bytes32(CoalID), true);
+  ItemPrototype.set(bytes32(CraftingID), true);
+  ItemPrototype.set(bytes32(IronID), true);
+  ItemPrototype.set(bytes32(GoldID), true);
+  ItemPrototype.set(bytes32(PlanksID), true);
+  ItemPrototype.set(bytes32(OrangeWoolID), true);
+  ItemPrototype.set(bytes32(MagentaWoolID), true);
+  ItemPrototype.set(bytes32(LightBlueWoolID), true);
+  ItemPrototype.set(bytes32(YellowWoolID), true);
+  ItemPrototype.set(bytes32(LimeWoolID), true);
+  ItemPrototype.set(bytes32(PinkWoolID), true);
+  ItemPrototype.set(bytes32(GrayWoolID), true);
+  ItemPrototype.set(bytes32(LightGrayWoolID), true);
+  ItemPrototype.set(bytes32(CyanWoolID), true);
+  ItemPrototype.set(bytes32(PurpleWoolID), true);
+  ItemPrototype.set(bytes32(BlueWoolID), true);
+  ItemPrototype.set(bytes32(BrownWoolID), true);
+  ItemPrototype.set(bytes32(GreenWoolID), true);
+  ItemPrototype.set(bytes32(RedWoolID), true);
+  ItemPrototype.set(bytes32(BlackWoolID), true);
 }
