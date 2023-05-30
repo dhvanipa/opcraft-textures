@@ -5,7 +5,7 @@ import { getAddressById, addressToEntity } from "solecs/utils.sol";
 import { LibTerrain } from "../libraries/LibTerrain.sol";
 import { AirID, GrassID, DirtID, LogID, StoneID, SandID, WaterID, CobblestoneID, CoalID, CraftingID, IronID, GoldID, DiamondID, LeavesID, PlanksID, RedFlowerID, GrassPlantID, OrangeFlowerID, MagentaFlowerID, LightBlueFlowerID, LimeFlowerID, PinkFlowerID, GrayFlowerID, LightGrayFlowerID, CyanFlowerID, PurpleFlowerID, BlueFlowerID, GreenFlowerID, BlackFlowerID, KelpID, WoolID, SnowID, ClayID, BedrockID } from "../prototypes/Blocks.sol";
 import { VoxelCoord } from "../utils.sol";
-import {System} from "@latticexyz/world/src/System.sol";
+import { System } from "@latticexyz/world/src/System.sol";
 
 uint256 constant ID = uint256(keccak256("system.Occurrence"));
 

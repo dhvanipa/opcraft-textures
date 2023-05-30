@@ -7,6 +7,7 @@ pragma solidity ^0.8.0;
 
 // Curtis copied this file over cause mud2 had this error:
 // [MUDError]: Error deploying OccurrenceSystem: invalid bytecode. Note that linking of public libraries is not supported yet, make sure none of your libraries use "external" functions.
+// more context here: https://discord.com/channels/865335009915961364/1029021674605129728/1102634453202903160
 
 /**
  * Smart contract library of mathematical functions operating with signed
@@ -61,7 +62,7 @@ library ABDKMath64x64 {
      * @param x unsigned 256-bit integer number
    * @return signed 64.64-bit fixed point number
    */
-    function fromUInt (uint256 x) internal pure returns (int128) {
+    function fromUInt (uint256 x) public pure returns (int128) {
         unchecked {
             require (x <= 0x7FFFFFFFFFFFFFFF);
             return int128 (int256 (x << 64));
@@ -75,7 +76,7 @@ library ABDKMath64x64 {
      * @param x signed 64.64-bit fixed point number
    * @return unsigned 64-bit integer number
    */
-    function toUInt (int128 x) internal pure returns (uint64) {
+    function toUInt (int128 x) public pure returns (uint64) {
         unchecked {
             require (x >= 0);
             return uint64 (uint128 (x >> 64));
@@ -89,7 +90,7 @@ library ABDKMath64x64 {
      * @param x signed 128.128-bin fixed point number
    * @return signed 64.64-bit fixed point number
    */
-    function from128x128 (int256 x) internal pure returns (int128) {
+    function from128x128 (int256 x) public pure returns (int128) {
         unchecked {
             int256 result = x >> 64;
             require (result >= MIN_64x64 && result <= MAX_64x64);
@@ -104,7 +105,7 @@ library ABDKMath64x64 {
      * @param x signed 64.64-bit fixed point number
    * @return signed 128.128 fixed point number
    */
-    function to128x128 (int128 x) internal pure returns (int256) {
+    function to128x128 (int128 x) public pure returns (int256) {
         unchecked {
             return int256 (x) << 64;
         }
@@ -201,7 +202,7 @@ library ABDKMath64x64 {
    * @param y unsigned 256-bit integer number
    * @return unsigned 256-bit integer number
    */
-    function mulu (int128 x, uint256 y) internal pure returns (uint256) {
+    function mulu (int128 x, uint256 y) public pure returns (uint256) {
         unchecked {
             if (y == 0) return 0;
 
@@ -276,7 +277,7 @@ library ABDKMath64x64 {
    * @param y unsigned 256-bit integer number
    * @return signed 64.64-bit fixed point number
    */
-    function divu (uint256 x, uint256 y) internal pure returns (int128) {
+    function divu (uint256 x, uint256 y) public pure returns (int128) {
         unchecked {
             require (y != 0);
             uint128 result = divuu (x, y);
@@ -304,7 +305,7 @@ library ABDKMath64x64 {
      * @param x signed 64.64-bit fixed point number
    * @return signed 64.64-bit fixed point number
    */
-    function abs (int128 x) internal pure returns (int128) {
+    function abs (int128 x) public pure returns (int128) {
         unchecked {
             require (x != MIN_64x64);
             return x < 0 ? -x : x;
@@ -318,7 +319,7 @@ library ABDKMath64x64 {
      * @param x signed 64.64-bit fixed point number
    * @return signed 64.64-bit fixed point number
    */
-    function inv (int128 x) internal pure returns (int128) {
+    function inv (int128 x) public pure returns (int128) {
         unchecked {
             require (x != 0);
             int256 result = int256 (0x100000000000000000000000000000000) / x;
@@ -334,7 +335,7 @@ library ABDKMath64x64 {
    * @param y signed 64.64-bit fixed point number
    * @return signed 64.64-bit fixed point number
    */
-    function avg (int128 x, int128 y) internal pure returns (int128) {
+    function avg (int128 x, int128 y) public pure returns (int128) {
         unchecked {
             return int128 ((int256 (x) + int256 (y)) >> 1);
         }
@@ -348,7 +349,7 @@ library ABDKMath64x64 {
    * @param y signed 64.64-bit fixed point number
    * @return signed 64.64-bit fixed point number
    */
-    function gavg (int128 x, int128 y) internal pure returns (int128) {
+    function gavg (int128 x, int128 y) public pure returns (int128) {
         unchecked {
             int256 m = int256 (x) * int256 (y);
             require (m >= 0);
@@ -460,7 +461,7 @@ library ABDKMath64x64 {
      * @param x signed 64.64-bit fixed point number
    * @return signed 64.64-bit fixed point number
    */
-    function log_2 (int128 x) internal pure returns (int128) {
+    function log_2 (int128 x) public pure returns (int128) {
         unchecked {
             require (x > 0);
 
@@ -493,7 +494,7 @@ library ABDKMath64x64 {
      * @param x signed 64.64-bit fixed point number
    * @return signed 64.64-bit fixed point number
    */
-    function ln (int128 x) internal pure returns (int128) {
+    function ln (int128 x) public pure returns (int128) {
         unchecked {
             require (x > 0);
 
@@ -508,7 +509,7 @@ library ABDKMath64x64 {
      * @param x signed 64.64-bit fixed point number
    * @return signed 64.64-bit fixed point number
    */
-    function exp_2 (int128 x) internal pure returns (int128) {
+    function exp_2 (int128 x) public pure returns (int128) {
         unchecked {
             require (x < 0x400000000000000000); // Overflow
 
@@ -677,7 +678,7 @@ library ABDKMath64x64 {
    * @param y unsigned 256-bit integer number
    * @return unsigned 64.64-bit fixed point number
    */
-    function divuu (uint256 x, uint256 y) private pure returns (uint128) {
+    function divuu (uint256 x, uint256 y) public pure returns (uint128) {
         unchecked {
             require (y != 0);
 
@@ -725,7 +726,7 @@ library ABDKMath64x64 {
      * @param x unsigned 256-bit integer number
    * @return unsigned 128-bit integer number
    */
-    function sqrtu (uint256 x) private pure returns (uint128) {
+    function sqrtu (uint256 x) public pure returns (uint128) {
         unchecked {
             if (x == 0) return 0;
             else {
