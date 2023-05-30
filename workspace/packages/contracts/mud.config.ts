@@ -9,17 +9,11 @@ import { mudConfig } from "@latticexyz/world/register";
 // it's also 2023, so we can use 256 bits without worrying about storage costs.
 export default mudConfig({
   tables: {
-    // commented cause not used for now
-    // GameConfig: {
-    //   schema: {
-    //     creativeMode: "bool",
-    //   }
-    // }
-    Item: "uint128",
+    Item: "uint256",
     ItemPrototype: "bool",
     Name: "string", // This is a shortcut for { schema: "string" }
     // note: occurance is omitted, since it is a functionBare component. This is just a weird implementation. We'll change it
-    // OwnedBy: "uint256", // not used for now
+    OwnedBy: "uint256",
     Position: {
       schema: { // voxelcoord is removed in mud2, so we need to manually specify x,y,z
         x: "int32",
@@ -27,8 +21,14 @@ export default mudConfig({
         z: "int32"
       }
     },
-    // Recipe: "uint256",
-    // Stake: "unint256"
+    Recipe: "uint256",
+    Stake: "uint32",
+    Claim: {
+      schema: {
+        stake: "uint32",
+        claimer: "uint256",
+      }
+    },
   },
   // systems: {
   //   LibTerrainSystem: {
