@@ -5,7 +5,7 @@ import { resolveTableId } from "@latticexyz/config";
 // we should use fileSelector soon:
 // fileSelector (optional) only used with the World framework: a string: where to create the table in the namespace.
 
-// why not use uint256 when uint64 can be more than enough to store most values (ie.. block types)
+// why use uint256 when uint64 can be more than enough to store most values (ie.. block types)
 // because we are building an AW, it's easier for random people to just get a random ID than to organize a list of IDs (to fit some arbitrary limit)
 // it's also 2023, so we can use 256 bits without worrying about storage costs.
 export default mudConfig({

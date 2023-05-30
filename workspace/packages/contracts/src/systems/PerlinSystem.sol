@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+// Note: This is ported here from "@latticexyz/noise" as a MUD2 limitation
+
 import {ABDKMath64x64 as Math} from "../libraries/ABDKMath64x64.sol";
 import { System } from "@latticexyz/world/src/System.sol";
 import "../codegen/world/IOccurrenceSystem.sol";
