@@ -10,7 +10,11 @@ export default mudConfig({
     Item: "bytes32",
     ItemPrototype: "bool",
     Name: "string", // This is a shortcut for { schema: "string" }
-    // note: occurance is omitted, since it is a functionBare component. This is just a weird implementation. We'll change it
+    Occurrence: { // Each block generates at diff spots in the world, and each block has a function defining where it should appear. This table points to each block's respective generation function.
+      schema: {
+        functionPointer: "bytes4"
+      }
+    },
     OwnedBy: "bytes32",
     Position: {
       schema: { // voxelcoord is removed in mud2, so we need to manually specify x,y,z
