@@ -1,23 +1,23 @@
-import { EntityID } from "@latticexyz/recs";
+import { Entity } from "@latticexyz/recs";
 import { BlockType } from "../../constants";
 import { STRUCTURE_CHUNK, Biome } from "./constants";
 import { getStructureBlock, WoolTree, Tree } from "./structures";
 import { TerrainState } from "./types";
 import { accessState } from "./utils";
 
-export function Water({ coord: { y }, height }: TerrainState): EntityID | undefined {
+export function Water({ coord: { y }, height }: TerrainState): Entity | undefined {
   if (y < 0 && y >= height) return BlockType.Water;
 }
 
-export function Air({ coord: { y }, height }: TerrainState): EntityID | undefined {
+export function Air({ coord: { y }, height }: TerrainState): Entity | undefined {
   if (y >= height + 2 * STRUCTURE_CHUNK) return BlockType.Air;
 }
 
-export function Bedrock({ coord: { y } }: TerrainState): EntityID | undefined {
+export function Bedrock({ coord: { y } }: TerrainState): Entity | undefined {
   if (y <= -63) return BlockType.Bedrock;
 }
 
-export function Sand(state: TerrainState): EntityID | undefined {
+export function Sand(state: TerrainState): Entity | undefined {
   const {
     coord: { y },
     height,
@@ -34,7 +34,7 @@ export function Sand(state: TerrainState): EntityID | undefined {
   if (biome === Biome.Forest && distanceFromHeight <= 2) return BlockType.Sand;
 }
 
-export function Diamond(state: TerrainState): EntityID | undefined {
+export function Diamond(state: TerrainState): Entity | undefined {
   const {
     coord: { y },
     height,
@@ -52,7 +52,7 @@ export function Diamond(state: TerrainState): EntityID | undefined {
   if (hash2 <= 10) return BlockType.Diamond;
 }
 
-export function Coal(state: TerrainState): EntityID | undefined {
+export function Coal(state: TerrainState): Entity | undefined {
   const {
     coord: { y },
     height,
@@ -70,7 +70,7 @@ export function Coal(state: TerrainState): EntityID | undefined {
   if (hash2 > 10 && hash2 <= 50) return BlockType.Coal;
 }
 
-export function Snow(state: TerrainState): EntityID | undefined {
+export function Snow(state: TerrainState): Entity | undefined {
   const {
     coord: { y },
     height,
@@ -81,7 +81,7 @@ export function Snow(state: TerrainState): EntityID | undefined {
   if ((y > 55 || biomeVector[Biome.Mountains] > 0.6) && y === height - 1) return BlockType.Snow;
 }
 
-export function Stone(state: TerrainState): EntityID | undefined {
+export function Stone(state: TerrainState): Entity | undefined {
   const {
     coord: { y },
     height,
@@ -95,7 +95,7 @@ export function Stone(state: TerrainState): EntityID | undefined {
   return BlockType.Stone;
 }
 
-export function Clay(state: TerrainState): EntityID | undefined {
+export function Clay(state: TerrainState): Entity | undefined {
   const {
     coord: { y },
     height,
@@ -108,7 +108,7 @@ export function Clay(state: TerrainState): EntityID | undefined {
   if (biome === Biome.Savanna && y < 2 && distanceFromHeight <= 6) return BlockType.Clay;
 }
 
-export function Grass(state: TerrainState): EntityID | undefined {
+export function Grass(state: TerrainState): Entity | undefined {
   const {
     coord: { y },
     height,
@@ -122,7 +122,7 @@ export function Grass(state: TerrainState): EntityID | undefined {
   if (biome === Biome.Mountains && y < 40 && y === height - 1) return BlockType.Grass;
 }
 
-export function Dirt(state: TerrainState): EntityID | undefined {
+export function Dirt(state: TerrainState): Entity | undefined {
   const {
     coord: { y },
     height,
@@ -134,7 +134,7 @@ export function Dirt(state: TerrainState): EntityID | undefined {
   if ([Biome.Savanna, Biome.Forest].includes(biome)) return BlockType.Dirt;
 }
 
-export function SmallPlant(state: TerrainState): EntityID | undefined {
+export function SmallPlant(state: TerrainState): Entity | undefined {
   const {
     coord: { y },
     height,

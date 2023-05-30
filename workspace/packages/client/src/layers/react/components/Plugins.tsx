@@ -6,7 +6,7 @@ import { Background, Button, Center, Checkbox, Container, Gold, IconButton, Titl
 import {
   clearLocalCache,
   ComponentValue,
-  EntityIndex,
+  Entity,
   getComponentEntities,
   getComponentValueStrict,
   SchemaOf,
@@ -97,7 +97,7 @@ export function registerPlugins() {
       // Compute plugins to show
       const pluginEntities = [...getComponentEntities(Plugin)];
 
-      const pluginData: [EntityIndex, ComponentValue<SchemaOf<typeof Plugin>>][] = pluginEntities.map((entity) => [
+      const pluginData: [Entity, ComponentValue<SchemaOf<typeof Plugin>>][] = pluginEntities.map((entity) => [
         entity,
         getComponentValueStrict(Plugin, entity),
       ]);
@@ -109,7 +109,7 @@ export function registerPlugins() {
             )
           : pluginData;
 
-      const plugins = filteredPluginData.reduce<{ [key: string]: [EntityIndex, string, string, boolean][] }>(
+      const plugins = filteredPluginData.reduce<{ [key: string]: [Entity, string, string, boolean][] }>(
         (acc, curr) => {
           const [entity, value] = curr;
           const { host, path, source, active } = value;

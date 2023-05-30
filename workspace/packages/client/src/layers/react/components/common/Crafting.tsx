@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { GodID } from "@latticexyz/network";
-import { EntityIndex, EntityID, getComponentValue, runQuery, HasValue } from "@latticexyz/recs";
+import { Entity, getComponentValue, runQuery, HasValue } from "@latticexyz/recs";
 import { range } from "@latticexyz/utils";
 import styled from "styled-components";
 import { Layers } from "../../../../types";
@@ -8,8 +8,8 @@ import { Slot } from "./Slot";
 
 export const Crafting: React.FC<{
   layers: Layers;
-  holdingBlock: EntityIndex | undefined;
-  setHoldingBlock: (block: EntityIndex | undefined) => void;
+  holdingBlock: Entity | undefined;
+  setHoldingBlock: (block: Entity | undefined) => void;
   sideLength: number;
 }> = ({ layers, holdingBlock, setHoldingBlock, sideLength }) => {
   const {
@@ -28,7 +28,7 @@ export const Crafting: React.FC<{
   const OptimisticOwnedBy = withOptimisticUpdates(OwnedBy);
 
   function getOverrideId(i: number) {
-    return ("crafting" + i) as EntityID;
+    return ("crafting" + i) as Entity;
   }
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export const Crafting: React.FC<{
     const y = getY(i);
 
     const blockAtIndex = craftingTable[x][y];
-    const blockTypeAtIndex = getComponentValue(Item, blockAtIndex)?.value as EntityID | undefined;
+    const blockTypeAtIndex = getComponentValue(Item, blockAtIndex)?.value as Entity | undefined;
     const blockTypeIndexAtIndex = blockTypeAtIndex && world.entityToIndex.get(blockTypeAtIndex);
 
     // If we are not holding a block but there is a block at this position, grab the block
@@ -114,7 +114,7 @@ export const Crafting: React.FC<{
     const x = getX(index);
     const y = getY(index);
     const blockIndex = craftingTable[x][y];
-    const blockID = getComponentValue(Item, blockIndex)?.value as EntityID | undefined;
+    const blockID = getComponentValue(Item, blockIndex)?.value as Entity | undefined;
     return <Slot key={"crafting-slot" + index} blockID={blockID} onClick={() => handleInput(index)} />;
   });
 

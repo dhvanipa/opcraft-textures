@@ -6,7 +6,7 @@ import { Absolute, AbsoluteBorder, Background, Center, Crafting, Slot, Gold, Red
 import { range } from "@latticexyz/utils";
 import {
   defineQuery,
-  EntityIndex,
+  Entity,
   getComponentValue,
   getEntitiesWithValue,
   Has,
@@ -107,7 +107,7 @@ export function registerInventory() {
       const { getName } = layers.network.api;
       const { playRandomTheme, playNextTheme } = layers.noa.api;
 
-      const [holdingBlock, setHoldingBlock] = useState<EntityIndex | undefined>();
+      const [holdingBlock, setHoldingBlock] = useState<Entity | undefined>();
 
       useEffect(() => {
         if (!show) setHoldingBlock(undefined);
@@ -162,7 +162,7 @@ export function registerInventory() {
 
       // Map each inventory slot to the corresponding block type at this slot index
       const Slots = [...range(INVENTORY_HEIGHT * INVENTORY_WIDTH)].map((i) => {
-        const blockIndex: EntityIndex | undefined = [...getEntitiesWithValue(InventoryIndex, { value: i })][0];
+        const blockIndex: Entity | undefined = [...getEntitiesWithValue(InventoryIndex, { value: i })][0];
         const blockID = blockIndex != null ? world.entities[blockIndex] : undefined;
         const quantity = blockID && ownedByMe[blockID];
         return (

@@ -1,6 +1,6 @@
 import React from "react";
 import { isNetworkComponentUpdateEvent, NetworkComponentUpdate } from "@latticexyz/network";
-import { ComponentValue, EntityID, getComponentValue, SchemaOf } from "@latticexyz/recs";
+import { ComponentValue, Entity, getComponentValue, SchemaOf } from "@latticexyz/recs";
 import { filter, scan, merge, map } from "rxjs";
 import { BlockIdToKey, BlockTypeKey } from "../../network/constants";
 import { registerUIComponent } from "../engine";
@@ -112,8 +112,8 @@ export function registerBlockExplorer() {
 
               // Item component updates correspond to a mined terrain block
               if (componentKey === "Item") {
-                const { value: entityId } = value as ComponentValue<SchemaOf<typeof Item>>;
-                const blockType = BlockIdToKey[entityId as EntityID];
+                const { value: Entity } = value as ComponentValue<SchemaOf<typeof Item>>;
+                const blockType = BlockIdToKey[Entity as Entity];
                 return { blockNumber, blockType, action: "remove" };
               }
 
@@ -124,7 +124,7 @@ export function registerBlockExplorer() {
                 if (!blockTypeId) {
                   return;
                 }
-                const blockType = BlockIdToKey[blockTypeId as EntityID];
+                const blockType = BlockIdToKey[blockTypeId as Entity];
 
                 // If the update includes a position, it corresponds to a placed block
                 if (value) {

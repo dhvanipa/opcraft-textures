@@ -156,6 +156,11 @@ export async function setupNetwork() {
   // --- API ------------------------------------------------------------------------
 
   const perlin = await createPerlin();
+  const terrainContext = {
+    Position: contractComponents.Position,
+    Item: contractComponents.Item,
+    world,
+  };
 
   function getTerrainBlockAtPosition(position: VoxelCoord) {
     return getTerrainBlock(getTerrain(position, perlin), position, perlin);
@@ -189,7 +194,10 @@ export async function setupNetwork() {
     ...result,
     world,
     worldContract,
-    api: {}, // TODO: populate?
+    api: {
+      getTerrainBlockAtPosition,
+      getECSBlockAtPosition,
+    }, // TODO: populate?
     worldSend: bindFastTxExecute(worldContract),
     fastTxExecutor,
     // dev: setupDevSystems(world, encoders as Promise<any>, systems),

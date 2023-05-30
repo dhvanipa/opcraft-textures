@@ -1,7 +1,7 @@
 import { Quaternion, Vector3, Vector4 } from "@babylonjs/core";
 import {
   defineSystem,
-  EntityIndex,
+  Entity,
   Has,
   UpdateType,
   isComponentUpdate,
@@ -49,7 +49,7 @@ export function createPlayerPositionSystem(network: NetworkLayer, context: NoaLa
     components: { Name },
   } = network;
 
-  async function spawnPlayer(entity: EntityIndex) {
+  async function spawnPlayer(entity: Entity) {
     const address = world.entities[entity];
     const name = getComponentValue(Name, entity)?.value ?? address.substring(0, 10);
     const isMappingStored = mudToNoaId.has(entity);
@@ -72,7 +72,7 @@ export function createPlayerPositionSystem(network: NetworkLayer, context: NoaLa
     setComponent(PlayerMesh, entity, { value: true });
   }
 
-  function updateNameTag(entity: EntityIndex) {
+  function updateNameTag(entity: Entity) {
     const address = world.entities[entity];
     const name = getComponentValue(Name, entity)?.value ?? address.substring(0, 10);
     const isMappingStored = mudToNoaId.has(entity);
@@ -89,7 +89,7 @@ export function createPlayerPositionSystem(network: NetworkLayer, context: NoaLa
     }
   }
 
-  function despawnPlayer(entity: EntityIndex) {
+  function despawnPlayer(entity: Entity) {
     const isMappingStored = mudToNoaId.has(entity);
     const noaEntity: number = mudToNoaId.get(entity) ?? noa.entities.add();
     if (!isMappingStored) {

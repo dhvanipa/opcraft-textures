@@ -2,8 +2,8 @@ import { Quaternion } from "@babylonjs/core";
 import { map, timer } from "rxjs";
 import {
   defineRxSystem,
-  EntityID,
-  EntityIndex,
+  Entity,
+  Entity,
   getComponentValueStrict,
   Has,
   HasValue,
@@ -76,7 +76,7 @@ export async function createRelaySystem(network: NetworkLayer, context: NoaLayer
     return;
   }
 
-  function removePlayerComponent(entity: EntityIndex) {
+  function removePlayerComponent(entity: Entity) {
     removeComponent(PlayerPosition, entity);
     removeComponent(PlayerDirection, entity);
     removeComponent(PlayerRelayerChunkPosition, entity);
@@ -145,7 +145,7 @@ export async function createRelaySystem(network: NetworkLayer, context: NoaLayer
     if (address === connectedAddress.get()) return;
     const playerChunk = toChunkCoord({ x, y: z }, RELAY_CHUNK_SIZE);
     if (!visibleChunks.current.has(playerChunk) || !visibleChunks.current.get(playerChunk)) return;
-    const entity = world.registerEntity({ id: address as EntityID });
+    const entity = world.registerEntity({ id: address as Entity });
     setComponent(PlayerPosition, entity, { x, y, z });
     setComponent(PlayerDirection, entity, { qx, qy, qz, qw });
     setComponent(PlayerLastMessage, entity, { value: Date.now() });

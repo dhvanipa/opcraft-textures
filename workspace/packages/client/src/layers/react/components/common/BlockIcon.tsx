@@ -1,9 +1,9 @@
-import { EntityID } from "@latticexyz/recs";
+import { Entity } from "@latticexyz/recs";
 import styled from "styled-components";
 import { BlockIdToKey } from "../../../network/constants";
 import { getBlockIconUrl } from "../../../noa/constants";
 
-export const BlockIcon = styled.div<{ blockID: EntityID; scale: number }>`
+export const BlockIcon = styled.div<{ blockID: Entity; scale: number }>`
   width: ${(p) => 16 * p.scale}px;
   height: ${(p) => 16 * p.scale}px;
   background-image: url("${(p) => getBlockIconUrl(BlockIdToKey[p.blockID]) ?? ""}");

@@ -1,5 +1,5 @@
 import { TxQueue } from "@latticexyz/network";
-import { Component, ComponentValue, defineComponent, EntityIndex, Schema, Type, World } from "@latticexyz/recs";
+import { Component, ComponentValue, defineComponent, EntityID, Schema, Type, World } from "@latticexyz/recs";
 import { keccak256 } from "@latticexyz/utils";
 import { BigNumber } from "ethers";
 import { SystemTypes } from "contracts/types/SystemTypes";
@@ -17,7 +17,7 @@ export function setupDevSystems(
   });
 
   async function setContractComponentValue<T extends Schema>(
-    entity: EntityIndex,
+    entity: EntityID,
     component: Component<T, { contractId: string }>,
     newValue: ComponentValue<T>
   ) {

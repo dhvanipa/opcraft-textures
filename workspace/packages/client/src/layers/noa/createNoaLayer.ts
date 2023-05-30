@@ -1,6 +1,5 @@
 import {
   createIndexer,
-  EntityIndex,
   getComponentValue,
   namespaceWorld,
   removeComponent,
@@ -10,7 +9,6 @@ import {
   getEntitiesWithValue,
   runQuery,
   HasValue,
-  EntityID,
   Entity,
 } from "@latticexyz/recs";
 import { awaitStreamValue, Coord, isNotEmpty, pickRandom, random, VoxelCoord } from "@latticexyz/utils";
@@ -127,18 +125,18 @@ export function createNoaLayer(network: NetworkLayer) {
   setComponent(components.VoxelSelection, SingletonEntity, { points: [] });
 
   // --- API ------------------------------------------------------------------------
-  function setCraftingTable(entities: EntityIndex[][]) {
+  function setCraftingTable(entities: EntityID[][]) {
     setComponent(components.CraftingTable, SingletonEntity, { value: entities.flat().slice(0, 9) });
   }
 
   // Get a 2d representation of the current crafting table
   // -1 corresponds to empty slots
-  function getCraftingTable(): EntityIndex[][] {
+  function getCraftingTable(): EntityID[][] {
     const flatCraftingTable = (getComponentValue(components.CraftingTable, SingletonEntity)?.value || [
       ...EMPTY_CRAFTING_TABLE,
-    ]) as EntityIndex[];
+    ]) as EntityID[];
 
-    const craftingTable: EntityIndex[][] = [];
+    const craftingTable: EntityID[][] = [];
     for (let i = 0; i < CRAFTING_SIDE; i++) {
       craftingTable.push([]);
       for (let j = 0; j < CRAFTING_SIDE; j++) {
@@ -150,9 +148,9 @@ export function createNoaLayer(network: NetworkLayer) {
   }
 
   // Set 2d representation of crafting table
-  function setCraftingTableIndex(index: [number, number], entity: EntityIndex | undefined) {
+  function setCraftingTableIndex(index: [number, number], entity: EntityID | undefined) {
     const craftingTable = getCraftingTable();
-    craftingTable[index[0]][index[1]] = entity ?? (-1 as EntityIndex);
+    craftingTable[index[0]][index[1]] = entity ?? (-1 as EntityID);
     setCraftingTable(craftingTable);
   }
 
@@ -180,17 +178,17 @@ export function createNoaLayer(network: NetworkLayer) {
       }
     }
 
-    if ([minX, minY, maxX, maxY].includes(-1)) return { items: [] as EntityID[][], types: [] as EntityID[][] };
+    if ([minX, minY, maxX, maxY].includes(-1)) return { items: [] as Entity[][], types: [] as Entity[][] };
 
-    const trimmedCraftingTableItems: EntityID[][] = [];
-    const trimmedCraftingTableTypes: EntityID[][] = [];
+    const trimmedCraftingTableItems: Entity[][] = [];
+    const trimmedCraftingTableTypes: Entity[][] = [];
     for (let x = 0; x <= maxX - minX; x++) {
       trimmedCraftingTableItems.push([]);
       trimmedCraftingTableTypes.push([]);
       for (let y = 0; y <= maxY - minY; y++) {
         const blockIndex = craftingTable[x + minX][y + minY];
-        const blockID = ((blockIndex !== -1 && world.entities[blockIndex]) || "0x00") as EntityID;
-        const blockType = ((blockIndex !== -1 && getComponentValue(Item, blockIndex)?.value) || "0x00") as EntityID;
+        const blockID = ((blockIndex !== -1 && world.entities[blockIndex]) || "0x00") as Entity;
+        const blockType = ((blockIndex !== -1 && getComponentValue(Item, blockIndex)?.value) || "0x00") as Entity;
         trimmedCraftingTableItems[x].push(blockID);
         trimmedCraftingTableTypes[x].push(blockType);
       }
@@ -200,7 +198,7 @@ export function createNoaLayer(network: NetworkLayer) {
   }
 
   // Get the block type the current crafting table ingredients hash to
-  function getCraftingResult(): EntityID | undefined {
+  function getCraftingResult(): Entity | undefined {
     const { types } = getTrimmedCraftingTable();
 
     // ABI encode and hash current trimmed crafting table
@@ -245,7 +243,7 @@ export function createNoaLayer(network: NetworkLayer) {
     });
   }
 
-  function getSelectedBlockType(): EntityID | undefined {
+  function getSelectedBlockType(): Entity | undefined {
     const selectedSlot = getComponentValue(components.SelectedSlot, SingletonEntity)?.value;
     if (selectedSlot == null) return;
     const blockIndex = [...getEntitiesWithValue(components.InventoryIndex, { value: selectedSlot })][0];

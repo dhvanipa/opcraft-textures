@@ -1,6 +1,6 @@
 import * as BABYLON from "@babylonjs/core";
 import { Engine } from "noa-engine";
-import { EntityID } from "@latticexyz/recs";
+import { Entity } from "@latticexyz/recs";
 import { Material } from "@babylonjs/core";
 import { BlockIdToKey, BlockTypeKey } from "../../../network/constants";
 import {
@@ -20,7 +20,7 @@ export interface HandComponent {
 
 export const HAND_COMPONENT = "HAND_COMPONENT";
 
-export function registerHandComponent(noa: Engine, getSelectedBlockType: () => EntityID | undefined) {
+export function registerHandComponent(noa: Engine, getSelectedBlockType: () => Entity | undefined) {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   noa.ents.createComponent({

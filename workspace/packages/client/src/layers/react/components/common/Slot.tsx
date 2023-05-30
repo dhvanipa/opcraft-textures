@@ -1,4 +1,4 @@
-import { EntityID } from "@latticexyz/recs";
+import { Entity } from "@latticexyz/recs";
 import React from "react";
 import styled from "styled-components";
 import { BlockIcon } from "./BlockIcon";
@@ -6,7 +6,7 @@ import { AbsoluteBorder } from "./AbsoluteBorder";
 import { Border } from "./Border";
 
 export const Slot: React.FC<{
-  blockID?: EntityID;
+  blockID?: Entity;
   quantity?: number;
   onClick?: () => void;
   selected?: boolean;

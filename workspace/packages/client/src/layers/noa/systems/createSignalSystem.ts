@@ -1,6 +1,6 @@
 import { defineComponentSystem, getComponentValue } from "@latticexyz/recs";
 import { keccak256 } from "@latticexyz/utils";
-import { EntityID } from "@latticexyz/recs";
+import { Entity } from "@latticexyz/recs";
 import { NetworkLayer } from "../../network";
 import { NoaLayer } from "../types";
 
@@ -22,9 +22,9 @@ export async function createSignalSystem(network: NetworkLayer, context: NoaLaye
     if (position !== undefined) {
       if (blockSignalData.isActive) {
         // set block to redflower
-        setBlock(position, keccak256("block.RedFlower") as EntityID);
+        setBlock(position, keccak256("block.RedFlower") as Entity);
       } else {
-        setBlock(position, keccak256("block.CyanFlower") as EntityID);
+        setBlock(position, keccak256("block.CyanFlower") as Entity);
       }
     }
   });

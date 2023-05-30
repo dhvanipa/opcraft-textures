@@ -6,7 +6,7 @@ import * as BABYLON from "@babylonjs/core";
 import { VoxelCoord } from "@latticexyz/utils";
 import { Blocks, Textures } from "../constants";
 import { BlockType, BlockTypeIndex } from "../../network";
-import { EntityID } from "@latticexyz/recs";
+import { Entity } from "@latticexyz/recs";
 import { NoaBlockType } from "../types";
 import { createMeshBlock } from "./utils";
 import { BlockIndexToKey, BlockTypeKey } from "../../network/constants";
@@ -14,8 +14,8 @@ import { setupScene } from "../engine/setupScene";
 import { CHUNK_RENDER_DISTANCE, CHUNK_SIZE, MIN_HEIGHT, SKY_COLOR } from "./constants";
 
 export interface API {
-  getTerrainBlockAtPosition: (coord: VoxelCoord) => EntityID;
-  getECSBlockAtPosition: (coord: VoxelCoord) => EntityID | undefined;
+  getTerrainBlockAtPosition: (coord: VoxelCoord) => Entity;
+  getECSBlockAtPosition: (coord: VoxelCoord) => Entity | undefined;
 }
 
 export function setupNoaEngine(api: API) {
@@ -94,7 +94,7 @@ export function setupNoaEngine(api: API) {
     noa.registry.registerBlock(index, augmentedBlock);
   }
 
-  function setBlock(coord: VoxelCoord | number[], block: EntityID) {
+  function setBlock(coord: VoxelCoord | number[], block: Entity) {
     const index = BlockTypeIndex[block];
     if ("length" in coord) {
       noa.setBlock(index, coord[0], coord[1], coord[2]);
@@ -103,7 +103,7 @@ export function setupNoaEngine(api: API) {
     }
   }
 
-  noa.world.on("worldDataNeeded", function (id, data, x, y, z) {
+  noa.world.on("worldDataNeeded", function (id: any, data: any, x: any, y: any, z: any) {
     // `id` - a unique string id for the chunk
     // `data` - an `ndarray` of voxel ID data (see: https://github.com/scijs/ndarray)
     // `x, y, z` - world coords of the corner of the chunk

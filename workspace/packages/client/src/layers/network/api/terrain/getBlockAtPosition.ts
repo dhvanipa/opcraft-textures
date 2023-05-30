@@ -1,4 +1,4 @@
-import { Component, EntityID, getComponentValue, getEntitiesWithValue, Type, World } from "@latticexyz/recs";
+import { Component, Entity, getComponentValue, getEntitiesWithValue, Type, World } from "@latticexyz/recs";
 import { VoxelCoord } from "@latticexyz/utils";
 import { Perlin } from "@latticexyz/noise";
 import { BlockType } from "../../constants";
@@ -47,10 +47,10 @@ export function getECSBlock(
     world: World;
   },
   coord: VoxelCoord
-): EntityID | undefined {
+): Entity | undefined {
   const entityAtPosition = getEntityAtPosition(context, coord);
   if (entityAtPosition == null) return undefined;
-  return getComponentValue(context.Item, entityAtPosition)?.value as EntityID;
+  return getComponentValue(context.Item, entityAtPosition)?.value as Entity;
 }
 
 export function getBlockAtPosition(
@@ -65,7 +65,7 @@ export function getBlockAtPosition(
   return getECSBlock(context, coord) ?? getTerrainBlock(getTerrain(coord, perlin), coord, perlin);
 }
 
-export function getTerrainBlock({ biome: biomeVector, height }: Terrain, coord: VoxelCoord, perlin: Perlin): EntityID {
+export function getTerrainBlock({ biome: biomeVector, height }: Terrain, coord: VoxelCoord, perlin: Perlin): Entity {
   const state: TerrainState = { biomeVector, height, coord, perlin };
   return (
     Bedrock(state) ||

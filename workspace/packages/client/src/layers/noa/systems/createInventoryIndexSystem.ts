@@ -3,7 +3,7 @@ import {
   HasValue,
   Has,
   getComponentValue,
-  EntityID,
+  Entity,
   hasComponent,
   setComponent,
   defineRxSystem,
@@ -38,7 +38,7 @@ export function createInventoryIndexSystem(network: NetworkLayer, context: NoaLa
   );
 
   defineRxSystem(world, update$, (update) => {
-    const blockID = getComponentValue(Item, update.entity)?.value as EntityID;
+    const blockID = getComponentValue(Item, update.entity)?.value as Entity;
     const blockIndex = blockID && world.entityToIndex.get(blockID);
 
     if (blockIndex == null) return;

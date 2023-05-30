@@ -26,6 +26,7 @@
     "@latticexyz/noise": "2.0.0-alpha.1.197+5e6cc0f5",
     "@latticexyz/solecs": "2.0.0-alpha.1.197+5e6cc0f5",
     "@latticexyz/std-contracts": "2.0.0-alpha.1.197+5e6cc0f5",
+    "noa-engine": "git+https://github.com/latticexyz/noa.git",
     "@wagmi/chains": "^0.2.22",
     "contracts": "workspace:*",
     "ethers": "^5.7.2",

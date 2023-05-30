@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Button, Container, Faded, Title } from "./common";
 import { Coord } from "@latticexyz/utils";
-import { EntityID } from "@latticexyz/recs";
+import { Entity } from "@latticexyz/recs";
 
 export const ChunkExplorer: React.FC<{
   chunk: Coord;
@@ -11,12 +11,12 @@ export const ChunkExplorer: React.FC<{
   api: {
     stake: (chunk: Coord) => void;
     claim: (chunk: Coord) => void;
-    getName: (address: EntityID) => string | undefined;
+    getName: (address: Entity) => string | undefined;
   };
 }> = ({ chunk, claim, stake, api }) => {
   const stakeValue = stake?.value ?? 0;
   const claimValue = claim?.stake ?? 0;
-  const claimer = (claim?.claimer && api.getName(claim.claimer as EntityID)) || claim?.claimer.substring(0, 6) + "...";
+  const claimer = (claim?.claimer && api.getName(claim.claimer as Entity)) || claim?.claimer.substring(0, 6) + "...";
 
   return (
     <ChunkContainer>

@@ -4,7 +4,7 @@ import {
   defineComponentSystem,
   defineRxSystem,
   defineSystem,
-  EntityID,
+  Entity,
   getComponentValue,
   Has,
   isComponentUpdate,
@@ -135,7 +135,7 @@ export function createSoundSystem(network: NetworkLayer, context: NoaLayer) {
       const blockPosVec = new Vector3(...blockPosArr);
 
       // Find sound to play
-      let itemKey = BlockIdToKey[itemType as EntityID];
+      let itemKey = BlockIdToKey[itemType as Entity];
       let updateType = update.type;
 
       // When mining a terrain block, we get an ECS update for an entering air block instead

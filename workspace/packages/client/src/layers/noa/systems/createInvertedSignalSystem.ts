@@ -1,6 +1,6 @@
 import { defineComponentSystem, getComponentValue } from "@latticexyz/recs";
 import { keccak256 } from "@latticexyz/utils";
-import { EntityID } from "@latticexyz/recs";
+import { Entity } from "@latticexyz/recs";
 import { NetworkLayer } from "../../network";
 import { NoaLayer } from "../types";
 
@@ -22,9 +22,9 @@ export async function createInvertedSignalSystem(network: NetworkLayer, context:
     if (position !== undefined) {
       if (blockSignalData.isActive) {
         // set block to redflower
-        setBlock(position, keccak256("block.OrangeFlower") as EntityID);
+        setBlock(position, keccak256("block.OrangeFlower") as Entity);
       } else {
-        setBlock(position, keccak256("block.LimeFlower") as EntityID);
+        setBlock(position, keccak256("block.LimeFlower") as Entity);
       }
     }
   });
