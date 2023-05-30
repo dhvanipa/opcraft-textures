@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.8.0;
 
-//import { Perlin } from "noise/Perlin.sol";
-import { Perlin } from "./Perlin.sol";
-import { ABDKMath64x64 as Math } from "./ABDKMath64x64.sol";
+//import { Perlin } from "noise/world.sol";
+//import { Perlin } from "./Perlin.sol";
+import { ABDKMath64x64 as Math } from "../libraries/ABDKMath64x64.sol";
 import { Biome, STRUCTURE_CHUNK, STRUCTURE_CHUNK_CENTER } from "../constants.sol";
 import { AirID, GrassID, DirtID, LogID, StoneID, SandID, WaterID, CobblestoneID, CoalID, CraftingID, IronID, GoldID, DiamondID, LeavesID, PlanksID, RedFlowerID, GrassPlantID, OrangeFlowerID, MagentaFlowerID, LightBlueFlowerID, LimeFlowerID, PinkFlowerID, GrayFlowerID, LightGrayFlowerID, CyanFlowerID, PurpleFlowerID, BlueFlowerID, GreenFlowerID, BlackFlowerID, KelpID, WoolID, SnowID, ClayID, BedrockID } from "../prototypes/Blocks.sol";
-import { VoxelCoord } from "../Types.sol";
+import { VoxelCoord, Tuple } from "../Types.sol";
 import { div } from "../Utils.sol";
+import { System } from "@latticexyz/world/src/System.sol";
 
 int128 constant _0 = 0; // 0 * 2**64
 int128 constant _0_3 = 5534023222112865484; // 0.3 * 2**64
@@ -31,12 +32,7 @@ int128 constant _5 = 5 * 2**64;
 int128 constant _10 = 10 * 2**64;
 int128 constant _16 = 16 * 2**64;
 
-struct Tuple {
-  int128 x;
-  int128 y;
-}
-
-library LibTerrain {
+contract LibTerrainSystem is System {
   function getTerrainBlock(VoxelCoord memory coord) public pure returns (uint256) {
     int128[4] memory biome = getBiome(coord.x, coord.z);
     int32 height = getHeight(coord.x, coord.z, biome);
@@ -146,12 +142,12 @@ library LibTerrain {
     int128[4] memory biome
   ) public pure returns (int32) {
     // Compute perlin height
-    int128 perlin999 = Perlin.noise2d(x - 550, z + 550, 999, 64);
+    int128 perlin999 = world.noise2d(x - 550, z + 550, 999, 64);
     int128 continentalHeight = continentalness(perlin999);
     int128 terrainHeight = Math.mul(perlin999, _10);
-    int128 perlin49 = Perlin.noise2d(x, z, 49, 64);
+    int128 perlin49 = world.noise2d(x, z, 49, 64);
     terrainHeight = Math.add(terrainHeight, Math.mul(perlin49, _5));
-    terrainHeight = Math.add(terrainHeight, Perlin.noise2d(x, z, 13, 64));
+    terrainHeight = Math.add(terrainHeight, world.noise2d(x, z, 13, 64));
     terrainHeight = Math.div(terrainHeight, _16);
 
     // Compute biome height
@@ -164,7 +160,7 @@ library LibTerrain {
     height = Math.add(continentalHeight, Math.div(height, _2));
 
     // Create valleys
-    int128 valley = valleys(Math.div(Math.add(Math.mul(Perlin.noise2d(x, z, 333, 64), _2), perlin49), _3));
+    int128 valley = valleys(Math.div(Math.add(Math.mul(world.noise2d(x, z, 333, 64), _2), perlin49), _3));
     height = Math.mul(height, valley);
 
     // Scale height
@@ -172,8 +168,8 @@ library LibTerrain {
   }
 
   function getBiome(int32 x, int32 z) public pure returns (int128[4] memory) {
-    int128 heat = Perlin.noise2d(x + 222, z + 222, 444, 64);
-    int128 humidity = Perlin.noise(z, x, 999, 333, 64);
+    int128 heat = world.noise2d(x + 222, z + 222, 444, 64);
+    int128 humidity = world.noise(z, x, 999, 333, 64);
 
     Tuple memory biomeVector = Tuple(humidity, heat);
     int128[4] memory biome;
@@ -295,7 +291,7 @@ library LibTerrain {
     }
 
     int128 t = Math.div(Math.sub(x, points[0].x), Math.sub(points[1].x, points[0].x));
-    return Perlin.lerp(t, points[0].y, points[1].y);
+    return world.lerp(t, points[0].y, points[1].y);
   }
 
   function continentalness(int128 x) public pure returns (int128) {

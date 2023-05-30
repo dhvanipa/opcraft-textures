@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {ABDKMath64x64 as Math} from "./ABDKMath64x64.sol";
+import {ABDKMath64x64 as Math} from "../libraries/ABDKMath64x64.sol";
+import { System } from "@latticexyz/world/src/System.sol";
+import "../codegen/world/IOccurrenceSystem.sol";
 
 // Commonly used numbers as 64.64 fixed point
 int128 constant _1 = 2**64;
@@ -57,13 +59,13 @@ int128 constant _15 = 15 * 2**64;
 /// @title Perlin noise library
 /// @author alvarius
 /// @notice Ported from perlin reference implementation (https://cs.nyu.edu/~perlin/noise/)
-library Perlin {
+contract PerlinSystem is System {
     function noise2d(
         int256 _x,
         int256 _y,
         int256 denom,
         uint8 precision
-    ) internal pure returns (int128) {
+    ) public pure returns (int128) {
         H2 memory h = H2(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
         // Convert fraction into 64.64 fixed point number
@@ -109,7 +111,7 @@ library Perlin {
         int256 _z,
         int256 denom,
         uint8 precision
-    ) internal pure returns (int128) {
+    ) public pure returns (int128) {
         H memory h = H(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
         // Convert fraction into 64.64 fixed point number
@@ -188,7 +190,7 @@ library Perlin {
         int128 t,
         int128 a,
         int128 b
-    ) internal pure returns (int128) {
+    ) public pure returns (int128) {
         return Math.add(a, Math.mul(t, (Math.sub(b, a))));
     }
 

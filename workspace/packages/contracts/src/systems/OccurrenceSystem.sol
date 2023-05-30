@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.8.0;
-import { IWorld } from "@latticexyz/solecs/src/interfaces/IWorld.sol";
+import { IWorld } from "@latticexyz/solecs/src/interfaces/Iworld.sol";
 import { getAddressById, addressToEntity } from "solecs/utils.sol";
-import { LibTerrain } from "../libraries/LibTerrain.sol";
 import { AirID, GrassID, DirtID, LogID, StoneID, SandID, WaterID, CobblestoneID, CoalID, CraftingID, IronID, GoldID, DiamondID, LeavesID, PlanksID, RedFlowerID, GrassPlantID, OrangeFlowerID, MagentaFlowerID, LightBlueFlowerID, LimeFlowerID, PinkFlowerID, GrayFlowerID, LightGrayFlowerID, CyanFlowerID, PurpleFlowerID, BlueFlowerID, GreenFlowerID, BlackFlowerID, KelpID, WoolID, SnowID, ClayID, BedrockID } from "../prototypes/Blocks.sol";
 import { VoxelCoord } from "../utils.sol";
 import { System } from "@latticexyz/world/src/System.sol";
@@ -13,6 +12,11 @@ uint256 constant ID = uint256(keccak256("system.Occurrence"));
 // For blocks added after deployment of the core contracts, a new contract with a function
 // returning the occurrence of that block can be deployed and linked with the block's Occurrence component.
 contract OccurrenceSystem is System {
+  IWorld private world;
+  constructor() {
+    world = IWorld(worldAddress);
+  }
+
   function execute(bytes memory arguments) public pure returns (bytes memory) {
     (uint256 blockType, VoxelCoord memory coord) = abi.decode(arguments, (uint256, VoxelCoord));
 
@@ -54,114 +58,114 @@ contract OccurrenceSystem is System {
   // Occurence functions
 
   function Grass(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.Grass(coord);
+    return world.Grass(coord);
   }
 
   function Dirt(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.Dirt(coord);
+    return world.Dirt(coord);
   }
 
   function Log(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.Structure(coord);
+    return world.Structure(coord);
   }
 
   function Stone(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.Stone(coord);
+    return world.Stone(coord);
   }
 
   function Sand(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.Sand(coord);
+    return world.Sand(coord);
   }
 
   function Water(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.Water(coord);
+    return world.Water(coord);
   }
 
   function Diamond(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.Diamond(coord);
+    return world.Diamond(coord);
   }
 
   function Coal(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.Coal(coord);
+    return world.Coal(coord);
   }
 
   function Leaves(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.Structure(coord);
+    return world.Structure(coord);
   }
 
   function RedFlower(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.SmallPlant(coord);
+    return world.SmallPlant(coord);
   }
 
   function GrassPlant(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.SmallPlant(coord);
+    return world.SmallPlant(coord);
   }
 
   function OrangeFlower(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.SmallPlant(coord);
+    return world.SmallPlant(coord);
   }
 
   function MagentaFlower(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.SmallPlant(coord);
+    return world.SmallPlant(coord);
   }
 
   function LightBlueFlower(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.SmallPlant(coord);
+    return world.SmallPlant(coord);
   }
 
   function LimeFlower(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.SmallPlant(coord);
+    return world.SmallPlant(coord);
   }
 
   function PinkFlower(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.SmallPlant(coord);
+    return world.SmallPlant(coord);
   }
 
   function GrayFlower(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.SmallPlant(coord);
+    return world.SmallPlant(coord);
   }
 
   function LightGrayFlower(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.SmallPlant(coord);
+    return world.SmallPlant(coord);
   }
 
   function CyanFlower(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.SmallPlant(coord);
+    return world.SmallPlant(coord);
   }
 
   function PurpleFlower(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.SmallPlant(coord);
+    return world.SmallPlant(coord);
   }
 
   function BlueFlower(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.SmallPlant(coord);
+    return world.SmallPlant(coord);
   }
 
   function GreenFlower(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.SmallPlant(coord);
+    return world.SmallPlant(coord);
   }
 
   function BlackFlower(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.SmallPlant(coord);
+    return world.SmallPlant(coord);
   }
 
   function Kelp(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.SmallPlant(coord);
+    return world.SmallPlant(coord);
   }
 
   function Wool(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.Structure(coord);
+    return world.Structure(coord);
   }
 
   function Snow(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.Snow(coord);
+    return world.Snow(coord);
   }
 
   function Clay(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.Clay(coord);
+    return world.Clay(coord);
   }
 
   function Bedrock(VoxelCoord memory coord) public pure returns (uint256) {
-    return LibTerrain.Bedrock(coord);
+    return world.Bedrock(coord);
   }
 }

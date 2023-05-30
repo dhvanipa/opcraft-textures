@@ -13,3 +13,9 @@ import { VoxelCoord } from "@latticexyz/std-contracts/src/components/VoxelCoordC
 //    int32 y;
 //    int32 z;
 //}
+
+struct Tuple {
+    int128 x;
+    int128 y;
+}
+
