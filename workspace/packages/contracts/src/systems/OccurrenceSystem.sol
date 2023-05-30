@@ -6,8 +6,6 @@ import { AirID, GrassID, DirtID, LogID, StoneID, SandID, WaterID, CobblestoneID,
 import { VoxelCoord } from "../types.sol";
 import { System } from "@latticexyz/world/src/System.sol";
 
-uint256 constant ID = uint256(keccak256("system.Occurrence"));
-
 // This system is used to check whether a given block occurs at a given location.
 // For blocks added after deployment of the core contracts, a new contract with a function
 // returning the occurrence of that block can be deployed and linked with the block's Occurrence component.
