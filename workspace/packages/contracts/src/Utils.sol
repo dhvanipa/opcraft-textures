@@ -5,6 +5,10 @@ import { CHUNK } from "./constants.sol";
 import { Coord, VoxelCoord } from "./types.sol";
 import {BlockDirection } from "./codegen/types.sol";
 
+function addressToEntityKey(address addr) pure returns (bytes32) {
+  return bytes32(uint256(uint160(addr)));
+}
+
 // Divide with rounding down like Math.floor(a/b), not rounding towards zero
 function div(int32 a, int32 b) pure returns (int32) {
     int32 result = a / b;
