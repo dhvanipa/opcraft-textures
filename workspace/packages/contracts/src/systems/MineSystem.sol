@@ -8,8 +8,14 @@ import { VoxelCoord } from "../types.sol";
 import { OwnedBy, Position, PositionTableId, Item } from "../codegen/Tables.sol";
 import { AirID, WaterID } from "../prototypes/Blocks.sol";
 import { addressToEntityKey } from "../utils.sol";
+import { IWorld } from "../codegen/world/IWorld.sol";
+import { Occurrence } from "../codegen/Tables.sol";
 
 contract MineSystem is System {
+  IWorld private world;
+  constructor() {
+    world = IWorld(_world());
+  }
 
   function mine(VoxelCoord memory coord, bytes32 blockType) public returns (bytes32) {
     require(blockType != AirID, "can not mine air");
@@ -25,14 +31,14 @@ contract MineSystem is System {
 
     if (entitiesAtPosition.length == 0) {
       // TODO: If there is no entity at this position, try mining the terrain block at this position
-      // (bool success, bytes memory occurrence) = staticcallFunctionSelector(
-      //   occurrenceComponent.getValue(blockType),
-      //   abi.encode(coord)
-      // );
-      // require(
-      //   success && occurrence.length > 0 && abi.decode(occurrence, (uint256)) == blockType,
-      //   "invalid terrain block type"
-      // );
+       (bool success, bytes memory occurrence) = staticcallFunctionSelector(
+         Occurrence.get(blockType),
+         abi.encode(coord)
+       );
+       require(
+         success && occurrence.length > 0 && abi.decode(occurrence, (bytes32)) == blockType,
+         "invalid terrain block type"
+       );
 
       // Create an ECS block from this coord's terrain block
       entity = getUniqueEntity();
@@ -56,4 +62,7 @@ contract MineSystem is System {
     return entity;
   }
 
+  function staticcallFunctionSelector(bytes4 functionPointer, bytes memory args) private view returns (bool, bytes memory){
+    return address(world).staticcall(bytes.concat(functionPointer, args));
+  }
 }
