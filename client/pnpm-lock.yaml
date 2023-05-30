@@ -157,8 +157,8 @@ importers:
         specifier: ^18.15.11
         version: 18.15.11
       abdk-libraries-solidity:
-        specifier: github:curtischong/abdk-libraries-solidity
-        version: github.com/curtischong/abdk-libraries-solidity/9818a9269dbde3327ed69f99118011fa2c5a8ddd
+        specifier: ^3.2.0
+        version: 3.2.0
       ds-test:
         specifier: https://github.com/dapphub/ds-test.git#c9ce3f25bde29fc5eb9901842bf02850dfd2d084
         version: github.com/dapphub/ds-test/c9ce3f25bde29fc5eb9901842bf02850dfd2d084
@@ -191,6 +191,9 @@ importers:
         version: 8.1.1(typescript@5.0.4)
 
 packages:
+  /abdk-libraries-solidity@3.2.0:
+    resolution: { integrity: sha512-JyedKxyqsszb9qCTX+YCOQHA4m0YAq9p77Qvumiy8LJLLrm1FfA9D3pdSAZN5wrmi3PSv0y3Svy8c/C+8S9K8g== }
+    dev: true
 
   /@adraffy/ens-normalize@1.9.0:
     resolution: {integrity: sha512-iowxq3U30sghZotgl4s/oJRci6WPBfNO5YYgk2cIOMCHr3LeGPcsZjCEr+33Q4N+oV3OABDAtA+pyvWjbvBifQ==}
@@ -5091,12 +5094,6 @@ packages:
     resolution: {tarball: https://codeload.github.com/brockelmore/memmove/tar.gz/52761dceb3b565ba3ef572ef81f30564d1a411e2}
     name: memmove
     version: 0.0.0
-    dev: true
-
-  github.com/curtischong/abdk-libraries-solidity/9818a9269dbde3327ed69f99118011fa2c5a8ddd:
-    resolution: {tarball: https://codeload.github.com/curtischong/abdk-libraries-solidity/tar.gz/9818a9269dbde3327ed69f99118011fa2c5a8ddd}
-    name: abdk-libraries-solidity
-    version: 1.0.0
     dev: true
 
   github.com/dapphub/ds-test/c9ce3f25bde29fc5eb9901842bf02850dfd2d084:
