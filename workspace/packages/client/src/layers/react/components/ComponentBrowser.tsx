@@ -19,7 +19,6 @@ export function registerComponentBrowser() {
       return show ? (
         <Browser
           world={world}
-          entities={world.entities}
           layers={layers}
           devHighlightComponent={dev.DevHighlightComponent}
           hoverHighlightComponent={dev.HoverHighlightComponent}

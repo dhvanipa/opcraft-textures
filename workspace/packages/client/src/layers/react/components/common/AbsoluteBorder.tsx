@@ -1,7 +1,7 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import styled from "styled-components";
 
-export const AbsoluteBorder: React.FC<{ borderColor: string; borderWidth: number }> = ({
+export const AbsoluteBorder: React.FC<{ children: ReactNode, borderColor: string; borderWidth: number }> = ({
   children,
   borderColor,
   borderWidth,

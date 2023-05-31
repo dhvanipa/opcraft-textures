@@ -119,8 +119,7 @@ export function registerInventory() {
           return;
         }
 
-        const blockID = world.entities[holdingBlock];
-        const blockType = BlockIdToKey[blockID];
+        const blockType = BlockIdToKey[holdingBlock];
         const icon = getBlockIconUrl(blockType);
         document.body.style.cursor = `url(${icon}) 12 12, auto`;
       }, [holdingBlock]);
@@ -138,13 +137,12 @@ export function registerInventory() {
       }
 
       function moveItems(slot: number) {
-        const blockAtSlot = [...getEntitiesWithValue(InventoryIndex, { value: slot })][0];
-        const blockIDAtSlot = blockAtSlot == null ? null : layers.noa.world.entities[blockAtSlot];
-        const ownedEntitiesOfType = blockIDAtSlot && ownedByMe[blockIDAtSlot];
+        const blockIdAtSlot = [...getEntitiesWithValue(InventoryIndex, { value: slot })][0];
+        const ownedEntitiesOfType = blockIdAtSlot && ownedByMe[blockIdAtSlot];
 
         // If not currently holding a block, grab the block at this slot
         if (holdingBlock == null) {
-          if (ownedEntitiesOfType) setHoldingBlock(blockAtSlot);
+          if (ownedEntitiesOfType) setHoldingBlock(blockIdAtSlot);
           return;
         }
 
@@ -152,26 +150,24 @@ export function registerInventory() {
         const holdingBlockSlot = getComponentValue(InventoryIndex, holdingBlock)?.value;
         if (holdingBlockSlot == null) {
           console.warn("holding block has no slot", holdingBlock);
-          setHoldingBlock(undefined);
           return;
         }
         setComponent(InventoryIndex, holdingBlock, { value: slot });
-        blockAtSlot && setComponent(InventoryIndex, blockAtSlot, { value: holdingBlockSlot });
+        blockIdAtSlot && setComponent(InventoryIndex, blockIdAtSlot, { value: holdingBlockSlot });
         setHoldingBlock(undefined);
       }
 
       // Map each inventory slot to the corresponding block type at this slot index
       const Slots = [...range(INVENTORY_HEIGHT * INVENTORY_WIDTH)].map((i) => {
-        const blockIndex: Entity | undefined = [...getEntitiesWithValue(InventoryIndex, { value: i })][0];
-        const blockID = blockIndex != null ? world.entities[blockIndex] : undefined;
-        const quantity = blockID && ownedByMe[blockID];
+        const blockId = [...getEntitiesWithValue(InventoryIndex, { value: i })][0];
+        const quantity = blockId && ownedByMe[blockId];
         return (
           <Slot
             key={"slot" + i}
-            blockID={quantity ? blockID : undefined}
+            blockID={quantity ? blockId : undefined}
             quantity={quantity || undefined}
             onClick={() => moveItems(i)}
-            disabled={blockIndex === holdingBlock}
+            disabled={blockId === holdingBlock}
             selected={i === selectedSlot}
           />
         );
@@ -201,10 +197,12 @@ export function registerInventory() {
       );
 
       const { claim } = stakeAndClaim;
-      const claimer =
-        (claim?.claimer && getName(claim.claimer)) ||
-        claim?.claimer.substring(0, 6) + "..." + claim?.claimer.substring(36, 42);
-      const canBuild = claim && connectedAddress ? claim.claimer === formatEntityID(connectedAddress) : true;
+      // const claimer =
+      //   (claim?.claimer && getName(claim.claimer)) ||
+      //   claim?.claimer.substring(0, 6) + "..." + claim?.claimer.substring(36, 42);
+      // const canBuild = claim && connectedAddress ? claim.claimer === formatEntityID(connectedAddress) : true;
+      const claimer = "todo: remove claiming";
+      const canBuild = true;
 
       const notification =
         balance === 0 ? (
