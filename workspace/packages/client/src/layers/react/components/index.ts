@@ -17,6 +17,6 @@ export function registerUIComponents() {
   registerBlockExplorer();
   registerInventory();
   registerSidebar();
-  registerComponentBrowser();
+  // registerComponentBrowser();
   registerPlugins();
 }

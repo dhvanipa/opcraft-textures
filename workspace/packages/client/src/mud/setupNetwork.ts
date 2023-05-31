@@ -20,6 +20,7 @@ import {
   getEntityAtPosition as getEntityAtPositionApi,
   getBiome,
 } from "../layers/network/api";
+import { setupDevSystems } from "../layers/network/setup";
 
 export type SetupNetworkResult = Awaited<ReturnType<typeof setupNetwork>>;
 
@@ -182,10 +183,8 @@ export async function setupNetwork() {
     return getEntityAtPositionApi(terrainContext, position);
   }
 
-  function getName(address: Entity): string | undefined {
-    // const entityIndex = world.entityToIndex.get(address);
-    const entityIndex = address;
-    return entityIndex != null ? getComponentValue(components.Name, entityIndex)?.value : undefined;
+  function getName(entity: Entity): string | undefined {
+    return getComponentValue(contractComponents.Name, entity)?.value;
   }
 
   function build(entity: Entity, coord: VoxelCoord) {
@@ -201,9 +200,9 @@ export async function setupNetwork() {
       metadata: { actionType: "build", coord, blockType },
       requirement: () => true,
       components: { Position: contractComponents.Position, Item: contractComponents.Item, OwnedBy: contractComponents.OwnedBy },
-      execute: () =>
-      // TODO: do we need BigNumber? I don't think so
-        worldSend("build", [BigNumber.from(entity), coord]),
+      execute: () => {
+        const tx = worldSend("build", [entity, coord]);
+      },
       updates: () => [
         // {
         //   component: "OwnedBy",
@@ -219,13 +218,13 @@ export async function setupNetwork() {
     });
   }
 
-  function stake(chunkCoord: Coord) {
-    return 0;
-  }
-
-  function claim(chunkCoord: Coord) {
-    return 0;
-  }
+  // function stake(chunkCoord: Coord) {
+  //   return 0;
+  // }
+  //
+  // function claim(chunkCoord: Coord) {
+  //   return 0;
+  // }
 
   // --- STREAMS --------------------------------------------------------------------
   const balanceGwei$ = new BehaviorSubject<number>(1);
@@ -258,13 +257,14 @@ export async function setupNetwork() {
       getBlockAtPosition,
       getEntityAtPosition,
       build,
-      stake,
-      claim,
+      // stake,
+      // claim,
       getName,
     }, // TODO: populate?
     worldSend: worldSend,
     fastTxExecutor,
     // dev: setupDevSystems(world, encoders as Promise<any>, systems),
+    // dev: setupDevSystems(world),
     streams: { connectedClients$, balanceGwei$ },
     config: networkConfig,
     relay,
