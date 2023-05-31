@@ -218,6 +218,44 @@ export async function setupNetwork() {
     });
   }
 
+  async function mine(coord: VoxelCoord) {
+    const ecsBlock = getECSBlockAtPosition(coord);
+    const blockId = ecsBlock ?? getTerrainBlockAtPosition(coord);
+
+    if (blockId == null) throw new Error("entity has no block type");
+    const blockType = BlockIdToKey[blockId];
+    const blockEntity = getEntityAtPosition(coord);
+    const airEntity = world.registerEntity();
+
+    actions.add({
+      id: `mine+${coord.x}/${coord.y}/${coord.z}` as Entity,
+      metadata: { actionType: "mine", coord, blockType },
+      requirement: () => true,
+      components: { Position: contractComponents.Position, OwnedBy: contractComponents.OwnedBy, Item: contractComponents.Item },
+      execute: () => {
+        const tx = worldSend("mine", [coord, blockId]);
+        // systems["system.Mine"].executeTyped(coord, blockId, { gasLimit: ecsBlock ? 400_000 : 1_000_000 })
+      },
+      updates: () => [
+        {
+          component: "Position",
+          entity: airEntity,
+          value: coord,
+        },
+        {
+          component: "Item",
+          entity: airEntity,
+          value: { value: BlockType.Air },
+        },
+        {
+          component: "Position",
+          entity: blockEntity || (Number.MAX_SAFE_INTEGER.toString() as Entity),
+          value: null,
+        },
+      ],
+    });
+  }
+
   function stake(chunkCoord: Coord) {
     return 0;
   }
@@ -257,6 +295,7 @@ export async function setupNetwork() {
       getBlockAtPosition,
       getEntityAtPosition,
       build,
+      mine,
       stake,
       claim,
       getName,
