@@ -10,6 +10,22 @@ export default defineConfig({
     },
   },
   build: {
+    outDir: "../dist",
+    emptyOutDir: true,
+    sourcemap: true,
+    assetsInlineLimit: 0,
     target: "es2022",
+  },
+  resolve: {
+    dedupe: ["proxy-deep", "styled-components"],
+  },
+  define: {
+    global: "globalThis",
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: "es2022",
+    },
+    exclude: ["@latticexyz/noise", "buffer"],
   },
 });
