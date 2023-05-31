@@ -10,10 +10,10 @@ import { System } from "@latticexyz/world/src/System.sol";
 // For blocks added after deployment of the core contracts, a new contract with a function
 // returning the occurrence of that block can be deployed and linked with the block's Occurrence component.
 contract OccurrenceSystem is System {
-  IWorld private world;
-  constructor() {
-    world = IWorld(_world());
-  }
+  // IWorld private world;
+  // constructor() {
+  //   world = IWorld(_world());
+  // }
 
   function execute(bytes memory arguments) public view returns (bytes memory) {
     (bytes32 blockType, VoxelCoord memory coord) = abi.decode(arguments, (bytes32, VoxelCoord));
@@ -55,114 +55,114 @@ contract OccurrenceSystem is System {
 
   // Occurence functions
   function OGrass(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.Grass(coord);
+    return IWorld(_world()).Grass(coord);
   }
 
   function ODirt(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.Dirt(coord);
+    return IWorld(_world()).Dirt(coord);
   }
 
   function OLog(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.Structure(coord);
+    return IWorld(_world()).Structure(coord);
   }
 
   function OStone(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.Stone(coord);
+    return IWorld(_world()).Stone(coord);
   }
 
   function OSand(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.Sand(coord);
+    return IWorld(_world()).Sand(coord);
   }
 
   function OWater(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.Water(coord);
+    return IWorld(_world()).Water(coord);
   }
 
   function ODiamond(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.Diamond(coord);
+    return IWorld(_world()).Diamond(coord);
   }
 
   function OCoal(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.Coal(coord);
+    return IWorld(_world()).Coal(coord);
   }
 
   function OLeaves(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.Structure(coord);
+    return IWorld(_world()).Structure(coord);
   }
 
   function ORedFlower(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.SmallPlant(coord);
+    return IWorld(_world()).SmallPlant(coord);
   }
 
   function OGrassPlant(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.SmallPlant(coord);
+    return IWorld(_world()).SmallPlant(coord);
   }
 
   function OOrangeFlower(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.SmallPlant(coord);
+    return IWorld(_world()).SmallPlant(coord);
   }
 
   function OMagentaFlower(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.SmallPlant(coord);
+    return IWorld(_world()).SmallPlant(coord);
   }
 
   function OLightBlueFlower(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.SmallPlant(coord);
+    return IWorld(_world()).SmallPlant(coord);
   }
 
   function OLimeFlower(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.SmallPlant(coord);
+    return IWorld(_world()).SmallPlant(coord);
   }
 
   function OPinkFlower(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.SmallPlant(coord);
+    return IWorld(_world()).SmallPlant(coord);
   }
 
   function OGrayFlower(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.SmallPlant(coord);
+    return IWorld(_world()).SmallPlant(coord);
   }
 
   function OLightGrayFlower(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.SmallPlant(coord);
+    return IWorld(_world()).SmallPlant(coord);
   }
 
   function OCyanFlower(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.SmallPlant(coord);
+    return IWorld(_world()).SmallPlant(coord);
   }
 
   function OPurpleFlower(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.SmallPlant(coord);
+    return IWorld(_world()).SmallPlant(coord);
   }
 
   function OBlueFlower(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.SmallPlant(coord);
+    return IWorld(_world()).SmallPlant(coord);
   }
 
   function OGreenFlower(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.SmallPlant(coord);
+    return IWorld(_world()).SmallPlant(coord);
   }
 
   function OBlackFlower(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.SmallPlant(coord);
+    return IWorld(_world()).SmallPlant(coord);
   }
 
   function OKelp(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.SmallPlant(coord);
+    return IWorld(_world()).SmallPlant(coord);
   }
 
   function OWool(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.Structure(coord);
+    return IWorld(_world()).Structure(coord);
   }
 
   function OSnow(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.Snow(coord);
+    return IWorld(_world()).Snow(coord);
   }
 
   function OClay(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.Clay(coord);
+    return IWorld(_world()).Clay(coord);
   }
 
   function OBedrock(VoxelCoord memory coord) public view returns (bytes32) {
-    return world.Bedrock(coord);
+    return IWorld(_world()).Bedrock(coord);
   }
 }

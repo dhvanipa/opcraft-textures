@@ -5,12 +5,12 @@ import { IWorld } from "../codegen/world/IWorld.sol";
 import { defineBlocks } from "../prototypes/Blocks.sol";
 
 contract InitSystem is System {
-    IWorld private world;
-    constructor() {
-        world = IWorld(_world());
-    }
+    // IWorld private world;
+    // constructor() {
+    //     world = IWorld(_world());
+    // }
 
     function init() public {
-        defineBlocks(world);
+        defineBlocks(IWorld(_world()));
     }
 }

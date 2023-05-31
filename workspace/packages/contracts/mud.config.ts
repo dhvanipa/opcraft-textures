@@ -45,6 +45,18 @@ export default mudConfig({
   //     name: "PerlinSystem",
   //     openAccess: true,
   //   },
+  //   InitSystem: {
+  //     name: "InitSystem",
+  //     openAccess: true,
+  //   },
+  //   MineSystem: {
+  //     name: "MineSystem",
+  //     openAccess: true,
+  //   },
+  //   BuildSystem: {
+  //     name: "BuildSystem",
+  //     openAccess: true,
+  //   },
   // },
   enums: {
     BlockDirection: ["None", "Up", "Down", "North", "South", "East", "West"]

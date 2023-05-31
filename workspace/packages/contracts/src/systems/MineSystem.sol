@@ -13,12 +13,10 @@ import { Occurrence } from "../codegen/Tables.sol";
 import { console } from "forge-std/console.sol";
 
 contract MineSystem is System {
-  IWorld private world;
-  constructor() {
-    world = IWorld(_world());
-  }
 
   function mine(VoxelCoord memory coord, bytes32 blockType) public returns (bytes32) {
+    IWorld world = IWorld(_world());
+
     require(blockType != AirID, "can not mine air");
     require(blockType != WaterID, "can not mine water");
     require(coord.y < 256 && coord.y >= -63, "out of chunk bounds");
@@ -36,12 +34,6 @@ contract MineSystem is System {
          Occurrence.get(blockType),
          abi.encode(coord)
        );
-       require(success, "success");
-       console.log("occurrence");
-       console.logBytes(occurrence);
-       console.logUint(occurrence.length);
-       console.logBytes32(abi.decode(occurrence, (bytes32)));
-       require(occurrence.length > 0, "length");
        require(
          success && occurrence.length > 0 && abi.decode(occurrence, (bytes32)) == blockType,
          "invalid terrain block type"
@@ -70,6 +62,6 @@ contract MineSystem is System {
   }
 
   function staticcallFunctionSelector(bytes4 functionPointer, bytes memory args) private view returns (bool, bytes memory){
-    return address(world).staticcall(bytes.concat(functionPointer, args));
+    return _world().staticcall(bytes.concat(functionPointer, args));
   }
 }
