@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { GodID } from "@latticexyz/network";
+import { SingletonID } from "@latticexyz/network";
 import { Entity, getComponentValue, runQuery, HasValue } from "@latticexyz/recs";
 import { range } from "@latticexyz/utils";
 import styled from "styled-components";
@@ -91,7 +91,7 @@ export const Crafting: React.FC<{
     OptimisticOwnedBy.removeOverride(getOverrideId(i));
     OptimisticOwnedBy.addOverride(getOverrideId(i), {
       entity: ownedEntityOfType,
-      value: { value: GodID },
+      value: { value: SingletonID },
     });
 
     // Place the held block on the crafting table

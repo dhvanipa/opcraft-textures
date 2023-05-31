@@ -119,7 +119,8 @@ export function registerBlockExplorer() {
 
               // Position component updates correspond to a mined or placed ECS block
               if (componentKey === "Position") {
-                const entityIndex = world.entityToIndex.get(entity);
+                // const entityIndex = world.entityToIndex.get(entity);
+                const entityIndex = entity;
                 const blockTypeId = entityIndex != null ? getComponentValue(Item, entityIndex)?.value : undefined;
                 if (!blockTypeId) {
                   return;

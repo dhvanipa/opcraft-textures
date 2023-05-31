@@ -55,7 +55,7 @@ import { setupDayNightCycle } from "./engine/dayNightCycle";
 import { getNoaPositionStrict, setNoaPosition } from "./engine/components/utils";
 import { registerTargetedPositionComponent } from "./engine/components/targetedPositionComponent";
 import { defaultAbiCoder as abi, keccak256 } from "ethers/lib/utils";
-import { GodID, SyncState } from "@latticexyz/network";
+import { SingletonID, SyncState } from "@latticexyz/network";
 import { getChunkCoord, getChunkEntity } from "../../utils/chunk";
 import { BehaviorSubject, map, throttleTime, timer } from "rxjs";
 // import { getStakeEntity } from "../../utils/stake"; // commented cause we aren't using it
@@ -78,7 +78,7 @@ export function createNoaLayer(network: NetworkLayer) {
   } = network;
   const uniqueWorldId = chainId + worldAddress;
 
-  const SingletonEntity = world.registerEntity({ id: GodID });
+  const SingletonEntity = world.registerEntity({ id: SingletonID });
 
   // --- COMPONENTS -----------------------------------------------------------------
   const components = {
@@ -284,7 +284,7 @@ export function createNoaLayer(network: NetworkLayer) {
     // const stakeEntityIndex = world.entityToIndex.get(getStakeEntity(chunk, connectedAddress.get() || "0x00"));
     // const stake = stakeEntityIndex == null ? undefined : getComponentValue(Stake, getStakeEntity(chunk, connectedAddress.get() || "0x00"));
     // const stake = getComponentValue(Stake, getStakeEntity(chunk, connectedAddress.get() || "0x00"));
-    const stake = "";
+    const stake = getComponentValue(Stake, "0x00" as Entity);
     return { claim, stake };
   }
 

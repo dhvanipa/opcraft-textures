@@ -219,6 +219,6 @@ function bootReact() {
 
 export async function boot(network: NetworkLayer) {
   bootReact();
-  const game = await bootGame(network);
-  setLayers.current(game.layers as Layers);
+  // const game = await bootGame(network);
+  // setLayers.current(game.layers as Layers);
 }

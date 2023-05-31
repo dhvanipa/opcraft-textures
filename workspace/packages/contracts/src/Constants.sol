@@ -9,7 +9,7 @@ enum Biome {
   Savanna
 }
 
-uint256 constant GodID = 0x60D;
+uint256 constant SingletonID = 0x60D;
 
 int32 constant STRUCTURE_CHUNK = 5;
 int32 constant STRUCTURE_CHUNK_CENTER = STRUCTURE_CHUNK / 2 + 1;

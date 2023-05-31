@@ -2,7 +2,7 @@ import React from "react";
 import { BootScreen, registerUIComponent } from "../engine";
 import { concat, map } from "rxjs";
 import { getComponentValue } from "@latticexyz/recs";
-import { GodID, SyncState } from "@latticexyz/network";
+import { SingletonID, SyncState } from "@latticexyz/network";
 import styled from "styled-components";
 import { LoadingBar } from "./common";
 
@@ -30,7 +30,8 @@ export function registerLoadingState() {
     },
 
     ({ LoadingState, world }) => {
-      const GodEntityIndex = world.entityToIndex.get(GodID);
+      // const GodEntityIndex = world.entityToIndex.get(SingletonID);
+      const GodEntityIndex = SingletonID;
 
       const loadingState = GodEntityIndex == null ? null : getComponentValue(LoadingState, GodEntityIndex);
       if (loadingState == null) {

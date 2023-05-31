@@ -182,12 +182,18 @@ export async function setupNetwork() {
     return getEntityAtPositionApi(terrainContext, position);
   }
 
+  function getName(address: Entity): string | undefined {
+    // const entityIndex = world.entityToIndex.get(address);
+    const entityIndex = address;
+    return entityIndex != null ? getComponentValue(components.Name, entityIndex)?.value : undefined;
+  }
+
   function build(entity: Entity, coord: VoxelCoord) {
     // const entityIndex = world.entityToIndex.get(entity);
     // if (entityIndex == null) return console.warn("trying to place unknown entity", entity);
     const blockId = getComponentValue(contractComponents.Item, entity)?.value;
     const blockType = blockId != null ? BlockIdToKey[blockId as Entity] : undefined;
-    // const godIndex = world.entityToIndex.get(GodID);
+    // const godIndex = world.entityToIndex.get(SingletonID);
     // const creativeMode = godIndex != null && getComponentValue(components.GameConfig, godIndex)?.creativeMode;
 
     actions.add({
@@ -202,7 +208,7 @@ export async function setupNetwork() {
         // {
         //   component: "OwnedBy",
         //   entity: entityIndex,
-        //   value: { value: GodID },
+        //   value: { value: SingletonID },
         // },
         // {
         //   component: "Position",
@@ -211,6 +217,14 @@ export async function setupNetwork() {
         // },
       ],
     });
+  }
+
+  function stake(chunkCoord: Coord) {
+    return 0;
+  }
+
+  function claim(chunkCoord: Coord) {
+    return 0;
   }
 
   // --- STREAMS --------------------------------------------------------------------
@@ -244,6 +258,9 @@ export async function setupNetwork() {
       getBlockAtPosition,
       getEntityAtPosition,
       build,
+      stake,
+      claim,
+      getName,
     }, // TODO: populate?
     worldSend: worldSend,
     fastTxExecutor,

@@ -48,7 +48,7 @@
 // } from "./api";
 // import { createPerlin } from "@latticexyz/noise";
 // import { BlockIdToKey, BlockType } from "./constants";
-// import { createFaucetService, createRelayStream, GodID } from "@latticexyz/network";
+// import { createFaucetService, createRelayStream, SingletonID } from "@latticexyz/network";
 // import { SystemTypes } from "contracts/types/SystemTypes";
 // import { SystemAbis } from "contracts/types/SystemAbis.mjs";
 // import { map, timer, combineLatest, BehaviorSubject } from "rxjs";
@@ -209,7 +209,7 @@
 //     if (entityIndex == null) return console.warn("trying to place unknown entity", entity);
 //     const blockId = getComponentValue(components.Item, entityIndex)?.value;
 //     const blockType = blockId != null ? BlockIdToKey[blockId as EntityID] : undefined;
-//     const godIndex = world.entityToIndex.get(GodID);
+//     const godIndex = world.entityToIndex.get(SingletonID);
 //     // const creativeMode = godIndex != null && getComponentValue(components.GameConfig, godIndex)?.creativeMode;
 //     // lol this is so sus
 
@@ -229,7 +229,7 @@
 //         // {
 //         //   component: "OwnedBy",
 //         //   entity: entityIndex,
-//         //   value: { value: GodID },
+//         //   value: { value: SingletonID },
 //         // },
 //         // {
 //         //   component: "Position",
@@ -289,7 +289,7 @@
 //         entities.map((entity) => ({
 //           component: "OwnedBy",
 //           entity,
-//           value: { value: GodID },
+//           value: { value: SingletonID },
 //         })),
 //     });
 
@@ -317,7 +317,7 @@
 //         {
 //           component: "OwnedBy",
 //           entity: diamondEntityIndex,
-//           value: { value: GodID },
+//           value: { value: SingletonID },
 //         },
 //       ],
 //     });
@@ -453,7 +453,7 @@
 //         {
 //           component: "OwnedBy",
 //           entity: entityIndex,
-//           value: { value: GodID },
+//           value: { value: SingletonID },
 //         },
 //       ],
 //     });
