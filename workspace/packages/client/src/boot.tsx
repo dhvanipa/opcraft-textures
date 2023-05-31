@@ -13,7 +13,7 @@ import {
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Time } from "./utils/time";
-import { createNetworkLayer as createNetworkLayerImport, GameConfig, NetworkLayer } from "./layers/network";
+// import { createNetworkLayer as createNetworkLayerImport, GameConfig, NetworkLayer } from "./layers/network";
 import { createNoaLayer as createNoaLayerImport } from "./layers/noa";
 import { Layers } from "./types";
 // import { Engine as EngineImport } from "./layers/react/engine/Engine";
