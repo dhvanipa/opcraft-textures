@@ -177,7 +177,6 @@ async function bootGame(network: NetworkLayer) {
 }
 
 const mountReact: { current: (mount: boolean) => void } = { current: () => void 0 };
-const setLayers: { current: (layers: Layers) => void } = { current: () => void 0 };
 
 async function remountReact() {
   mountReact.current(false);
@@ -217,7 +216,7 @@ function bootReact() {
   }
 }
 
-export async function boot(network: NetworkLayer) {
+export async function boot(network: NetworkLayer, setLayers: any) {
   bootReact();
   const game = await bootGame(network);
   setLayers.current(game.layers as Layers);

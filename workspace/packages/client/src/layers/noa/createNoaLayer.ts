@@ -319,10 +319,15 @@ export function createNoaLayer(network: NetworkLayer) {
 
   // Pause noa until initial loading is done
   setTimeout(() => {
-    if (getComponentValue(LoadingState, SingletonEntity)?.state !== SyncState.LIVE) noa.setPaused(true);
+    if (getComponentValue(LoadingState, SingletonEntity)?.state !== SyncState.LIVE){
+      console.log("pausing noa until loaded");
+      noa.setPaused(true);
+    }
   }, 1000);
-  awaitStreamValue(LoadingState.update$, ({ value }) => value[0]?.state === SyncState.LIVE).then(() =>
+  awaitStreamValue(LoadingState.update$, ({ value }) => value[0]?.state === SyncState.LIVE).then(() => {
+    console.log("unpausing noa");
     noa.setPaused(false)
+  }
   );
 
   // --- SETUP STREAMS --------------------------------------------------------------

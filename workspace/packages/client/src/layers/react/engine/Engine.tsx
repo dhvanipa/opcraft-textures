@@ -16,11 +16,17 @@ export const Engine: React.FC<{
   const [layers, _setLayers] = useState<Layers | undefined>();
 
   useEffect(() => {
-    mountReact.current = (mounted: boolean) => setMounted(mounted);
+    // mountReact.current = (mounted: boolean) => setMounted(mounted);
+    console.log(layers);
     setLayers.current = (layers: Layers) => _setLayers(layers);
   }, []);
 
+  console.log("Engine 1");
+  console.log(layers);
+
   if (!mounted || !layers) return customBootScreen || <BootScreen />;
+
+  console.log("Engine 2");
 
   return (
     <LayerContext.Provider value={layers}>

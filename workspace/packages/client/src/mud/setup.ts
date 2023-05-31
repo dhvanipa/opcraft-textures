@@ -5,7 +5,7 @@ import {boot} from "../boot";
 
 export type SetupResult = Awaited<ReturnType<typeof setup>>;
 
-export async function setup() {
+export async function setup(setLayers: any) {
   console.log("Starting setup");
   const network = await setupNetwork();
   console.log("Finished setup network");
@@ -13,7 +13,7 @@ export async function setup() {
   console.log("Finished setup components");
   const systemCalls = createSystemCalls(network, components);
 
-  boot(network);
+  boot(network, setLayers);
 
   console.log("Finished setup");
 
