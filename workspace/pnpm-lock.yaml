@@ -33,8 +33,8 @@ importers:
   packages/client:
     dependencies:
       '@babylonjs/core':
-        specifier: ^5.0.0-alpha.48
-        version: 5.0.0-alpha.48
+        specifier: ^5.30.0
+        version: 5.30.0
       '@ethersproject/providers':
         specifier: ^5.7.2
         version: 5.7.2
@@ -103,7 +103,7 @@ importers:
         version: 3.4.3(mobx@6.9.0)(react-dom@18.2.0)(react@18.2.0)
       noa-engine:
         specifier: git+https://github.com/latticexyz/noa.git
-        version: github.com/latticexyz/noa/a8e20fe4d94bbcce16f0933ba4733518288a44af(@babylonjs/core@5.0.0-alpha.48)
+        version: github.com/latticexyz/noa/a8e20fe4d94bbcce16f0933ba4733518288a44af(@babylonjs/core@5.30.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -460,10 +460,8 @@ packages:
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
 
-  /@babylonjs/core@5.0.0-alpha.48:
-    resolution: {integrity: sha512-NFOIZp+yj1Q+ziogK7I6mbKy+tqh/qTXJrHAcU29CPtNXhxda487ATdWmdlRUOWwbFqE7DY8J1HKGteTEmA/4Q==}
-    dependencies:
-      tslib: 2.5.2
+  /@babylonjs/core@5.30.0:
+    resolution: {integrity: sha512-RNRjNXeZ3kMxUGfvgs4Kj07i8eXCfGWojZZBN4X8mxOEawsAeqX6reOXkxqd0G0qjv5saPTWI1K+OlIvdg/A3A==}
     dev: false
 
   /@emotion/is-prop-valid@1.2.1:
@@ -5256,7 +5254,7 @@ packages:
     name: forge-std
     version: 1.2.0
 
-  github.com/latticexyz/noa/a8e20fe4d94bbcce16f0933ba4733518288a44af(@babylonjs/core@5.0.0-alpha.48):
+  github.com/latticexyz/noa/a8e20fe4d94bbcce16f0933ba4733518288a44af(@babylonjs/core@5.30.0):
     resolution: {tarball: https://codeload.github.com/latticexyz/noa/tar.gz/a8e20fe4d94bbcce16f0933ba4733518288a44af}
     id: github.com/latticexyz/noa/a8e20fe4d94bbcce16f0933ba4733518288a44af
     name: noa-engine
@@ -5264,7 +5262,7 @@ packages:
     peerDependencies:
       '@babylonjs/core': ^5.0.0-alpha.48
     dependencies:
-      '@babylonjs/core': 5.0.0-alpha.48
+      '@babylonjs/core': 5.30.0
       aabb-3d: github.com/fenomas/aabb-3d/c5698961161884397c711e8fb533611642a8a487
       box-intersect: github.com/fenomas/box-intersect/383cb9bef2cf7140ca6ca9b705669fb108d1357f
       ent-comp: 0.10.1
