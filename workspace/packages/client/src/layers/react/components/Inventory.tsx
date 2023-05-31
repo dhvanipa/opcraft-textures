@@ -16,7 +16,7 @@ import {
 } from "@latticexyz/recs";
 import { getBlockIconUrl } from "../../noa/constants";
 import { BlockIdToKey } from "../../network/constants";
-import { formatEntityID } from "@latticexyz/network";
+import { formatEntityID } from "../../../utils/entity"
 import { Sounds } from "./Sounds";
 
 // This gives us 36 inventory slots. As of now there are 34 types of items, so it should fit.

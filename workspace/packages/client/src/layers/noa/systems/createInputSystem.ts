@@ -1,4 +1,3 @@
-// import { formatEntityID } from "@latticexyz/network";
 import { getComponentValue, HasValue, runQuery, setComponent, updateComponent } from "@latticexyz/recs";
 import { sleep, VoxelCoord } from "@latticexyz/utils";
 import { NetworkLayer, BlockType } from "../../network";
