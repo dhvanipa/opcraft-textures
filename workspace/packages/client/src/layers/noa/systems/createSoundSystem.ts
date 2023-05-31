@@ -96,14 +96,15 @@ export function createSoundSystem(network: NetworkLayer, context: NoaLayer) {
     newSound?.play();
   });
 
+  // TODO: re-enable music. I muted the music cause it's annoying
   // Set a new `playingTheme` in random intervals if none is playing
-  defineRxSystem(world, timer(0, 60000), () => {
-    const currentlyPlaying = getComponentValue(Sounds, SingletonEntity)?.playingTheme;
-    if (!currentlyPlaying && Math.random() < 0.5) {
-      const playingTheme = (isNotEmpty(themes) && pickRandom(themes)) || undefined;
-      updateComponent(Sounds, SingletonEntity, { playingTheme });
-    }
-  });
+  // defineRxSystem(world, timer(0, 60000), () => {
+  //   const currentlyPlaying = getComponentValue(Sounds, SingletonEntity)?.playingTheme;
+  //   if (!currentlyPlaying && Math.random() < 0.5) {
+  //     const playingTheme = (isNotEmpty(themes) && pickRandom(themes)) || undefined;
+  //     updateComponent(Sounds, SingletonEntity, { playingTheme });
+  //   }
+  // });
 
   defineSystem(
     world,
