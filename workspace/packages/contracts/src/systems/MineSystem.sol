@@ -10,6 +10,7 @@ import { AirID, WaterID } from "../prototypes/Blocks.sol";
 import { addressToEntityKey } from "../utils.sol";
 import { IWorld } from "../codegen/world/IWorld.sol";
 import { Occurrence } from "../codegen/Tables.sol";
+import { console } from "forge-std/console.sol";
 
 contract MineSystem is System {
   IWorld private world;
@@ -35,6 +36,12 @@ contract MineSystem is System {
          Occurrence.get(blockType),
          abi.encode(coord)
        );
+       require(success, "success");
+       console.log("occurrence");
+       console.logBytes(occurrence);
+       console.logUint(occurrence.length);
+       console.logBytes32(abi.decode(occurrence, (bytes32)));
+       require(occurrence.length > 0, "length");
        require(
          success && occurrence.length > 0 && abi.decode(occurrence, (bytes32)) == blockType,
          "invalid terrain block type"
