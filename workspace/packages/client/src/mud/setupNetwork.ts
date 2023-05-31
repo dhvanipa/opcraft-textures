@@ -34,7 +34,6 @@ export async function setupNetwork() {
     storeConfig,
     worldAbi: IWorld__factory.abi,
   });
-  console.log("Finished setupMUDV2Network");
 
   const signer = result.network.signer.get();
   const playerAddress = result.network.connectedAddress.get();
@@ -42,7 +41,6 @@ export async function setupNetwork() {
   // Relayer setup
   let relay: Awaited<ReturnType<typeof createRelayStream>> | undefined;
   try {
-    console.log("Starting relay setup");
     // relay =
     // networkConfig.relayServiceUrl && playerAddress && signer
     //     ? await createRelayStream(signer, networkConfig.relayServiceUrl, playerAddress)
@@ -54,8 +52,6 @@ export async function setupNetwork() {
 
   relay && world.registerDisposer(relay.dispose);
   if (relay) console.info("[Relayer] Relayer connected: " + networkConfig.relayServiceUrl);
-  console.log("Finished relay setup");
-
 
   // Request drip from faucet
   let faucet: any = undefined;
@@ -148,8 +144,6 @@ export async function setupNetwork() {
 
   const worldSend = bindFastTxExecute(worldContract);
 
-  console.log("till here 1");
-
   // --- ACTION SYSTEM --------------------------------------------------------------
   const actions = createActionSystem<{
     actionType: string;
@@ -166,10 +160,7 @@ export async function setupNetwork() {
 
   // --- API ------------------------------------------------------------------------
 
-  console.log("till here 2");
-
   const perlin = await createPerlin();
-  console.log("till here 2.1");
 
   const terrainContext = {
     Position: contractComponents.Position,
@@ -222,8 +213,6 @@ export async function setupNetwork() {
     });
   }
 
-  console.log("till here 2.5");
-
   // --- STREAMS --------------------------------------------------------------------
   const balanceGwei$ = new BehaviorSubject<number>(1);
   world.registerDisposer(
@@ -239,14 +228,10 @@ export async function setupNetwork() {
       .subscribe(balanceGwei$)?.unsubscribe
   );
 
-  console.log("till here 3");
-
   const connectedClients$ = timer(0, 5000).pipe(
     map(async () => relay?.countConnected() || 0),
     awaitPromise()
   );
-
-  console.log("till here return");
 
   return {
     ...result,

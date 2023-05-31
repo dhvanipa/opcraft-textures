@@ -13,7 +13,7 @@ export async function setup() {
   console.log("Finished setup components");
   const systemCalls = createSystemCalls(network, components);
 
-  // boot(network);
+  boot(network);
 
   console.log("Finished setup");
 
