@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@latticexyz/std-client@2.0.0-alpha.1.197':
+    hash: ad7eibhiuryq6uguimkfjxdn3m
+    path: patches/@latticexyz__std-client@2.0.0-alpha.1.197.patch
+
 importers:
 
   .:
@@ -70,7 +75,7 @@ importers:
         version: 2.0.0-alpha.1.197
       '@latticexyz/std-client':
         specifier: 2.0.0-alpha.1.197+5e6cc0f5
-        version: 2.0.0-alpha.1.197(@ethersproject/bytes@5.7.0)(google-protobuf@3.21.2)(typescript@5.0.4)(zod@3.21.4)
+        version: 2.0.0-alpha.1.197(patch_hash=ad7eibhiuryq6uguimkfjxdn3m)(@ethersproject/bytes@5.7.0)(google-protobuf@3.21.2)(typescript@5.0.4)(zod@3.21.4)
       '@latticexyz/std-contracts':
         specifier: 2.0.0-alpha.1.197+5e6cc0f5
         version: 2.0.0-alpha.1.197
@@ -1142,7 +1147,7 @@ packages:
     dependencies:
       '@latticexyz/network': 2.0.0-alpha.1.197(google-protobuf@3.21.2)(typescript@5.0.4)(zod@3.21.4)
       '@latticexyz/react': 2.0.0-alpha.1.197(typescript@5.0.4)(zod@3.21.4)
-      '@latticexyz/std-client': 2.0.0-alpha.1.197(@ethersproject/bytes@5.7.0)(google-protobuf@3.21.2)(typescript@5.0.4)(zod@3.21.4)
+      '@latticexyz/std-client': 2.0.0-alpha.1.197(patch_hash=ad7eibhiuryq6uguimkfjxdn3m)(@ethersproject/bytes@5.7.0)(google-protobuf@3.21.2)(typescript@5.0.4)(zod@3.21.4)
       '@latticexyz/utils': 2.0.0-alpha.1.197
       '@latticexyz/world': 2.0.0-alpha.1.197(typescript@5.0.4)
       abitype: 0.8.4(typescript@5.0.4)(zod@3.21.4)
@@ -1166,7 +1171,7 @@ packages:
     resolution: {integrity: sha512-dqBsSR+DdEut6X/amG6HCVxtzWkpQX3WSla2oeuYzyUgorvhMfgOylBC5link+IlMLP2SmRrP589kgSrcTEVzA==}
     dependencies:
       '@latticexyz/recs': 2.0.0-alpha.1.197(typescript@5.0.4)(zod@3.21.4)
-      '@latticexyz/std-client': 2.0.0-alpha.1.197(@ethersproject/bytes@5.7.0)(google-protobuf@3.21.2)(typescript@5.0.4)(zod@3.21.4)
+      '@latticexyz/std-client': 2.0.0-alpha.1.197(patch_hash=ad7eibhiuryq6uguimkfjxdn3m)(@ethersproject/bytes@5.7.0)(google-protobuf@3.21.2)(typescript@5.0.4)(zod@3.21.4)
       '@latticexyz/utils': 2.0.0-alpha.1.197
       goober: 2.1.13(csstype@3.1.2)
       lodash: 4.17.21
@@ -1310,7 +1315,7 @@ packages:
       - bufferutil
       - utf-8-validate
 
-  /@latticexyz/std-client@2.0.0-alpha.1.197(@ethersproject/bytes@5.7.0)(google-protobuf@3.21.2)(typescript@5.0.4)(zod@3.21.4):
+  /@latticexyz/std-client@2.0.0-alpha.1.197(patch_hash=ad7eibhiuryq6uguimkfjxdn3m)(@ethersproject/bytes@5.7.0)(google-protobuf@3.21.2)(typescript@5.0.4)(zod@3.21.4):
     resolution: {integrity: sha512-sQfCCMuf83ME+yUSeaB5xB1YtofUMuddNYPAFn2Gl5p7U7ThQYbzX7IsP1Gk0sYK5MDPQuRo+hPSbflKGxkkdw==}
     dependencies:
       '@ethersproject/providers': 5.7.2
@@ -1340,6 +1345,7 @@ packages:
       - utf-8-validate
       - zod
     dev: false
+    patched: true
 
   /@latticexyz/std-contracts@2.0.0-alpha.1.197:
     resolution: {integrity: sha512-tKofwuyWhMsc+HCBQJtJ0IHaMaCfc3AtTQIZB14rQM+vBcWFAj73Yg3rUp3WxLm59Uaf3v8XgmxMDRDEo00VqQ==}
