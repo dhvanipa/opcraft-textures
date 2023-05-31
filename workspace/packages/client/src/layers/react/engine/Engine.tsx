@@ -8,18 +8,18 @@ import { useState } from "react";
 import { Layers } from "../../../types";
 
 export const Engine: React.FC<{
-  setLayers: { current: (layers: Layers) => void };
+  layers: any;
   mountReact: { current: (mount: boolean) => void };
   customBootScreen?: React.ReactElement;
-}> = observer(({ mountReact, setLayers, customBootScreen }) => {
+}> = observer(({ mountReact, layers, customBootScreen }) => {
   const [mounted, setMounted] = useState(true);
-  const [layers, _setLayers] = useState<Layers | undefined>();
+  // const [layers, _setLayers] = useState<Layers | undefined>();
 
-  useEffect(() => {
-    // mountReact.current = (mounted: boolean) => setMounted(mounted);
-    console.log(layers);
-    setLayers.current = (layers: Layers) => _setLayers(layers);
-  }, []);
+  // useEffect(() => {
+  //   // mountReact.current = (mounted: boolean) => setMounted(mounted);
+  //   // console.log(layers);
+  //   // setLayers.current = (layers: Layers) => _setLayers(layers);
+  // }, []);
 
   if (!mounted || !layers) return customBootScreen || <BootScreen />;
 

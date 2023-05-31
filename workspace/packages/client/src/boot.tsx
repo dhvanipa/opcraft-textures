@@ -13,7 +13,7 @@ import {
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Time } from "./utils/time";
-// import { createNetworkLayer as createNetworkLayerImport, GameConfig, NetworkLayer } from "./layers/network";
+import { NetworkLayer } from "./layers/network";
 import { createNoaLayer as createNoaLayerImport } from "./layers/noa";
 import { Layers } from "./types";
 // import { Engine as EngineImport } from "./layers/react/engine/Engine";
@@ -61,6 +61,8 @@ export const ecs = {
  * It creates all the layers and their hierarchy.
  * Add new layers here.
  */
+export type GameType = Awaited<ReturnType<typeof bootGame>>;
+
 async function bootGame(network: NetworkLayer) {
   const layers: Partial<Layers> = {};
   // let initialBoot = true;
@@ -216,8 +218,10 @@ function bootReact() {
   }
 }
 
-export async function boot(network: NetworkLayer, setLayers: any) {
+export type BootType = Awaited<ReturnType<typeof boot>>;
+
+export async function boot(network: NetworkLayer){
   bootReact();
   const game = await bootGame(network);
-  setLayers.current(game.layers as Layers);
+  return game;
 }

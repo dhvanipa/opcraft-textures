@@ -9,13 +9,11 @@ const rootElement = document.getElementById("react-root");
 if (!rootElement) throw new Error("React root not found");
 const root = ReactDOM.createRoot(rootElement);
 
-const setLayers: { current: (layers: Layers) => void } = { current: () => undefined };
-
 // TODO: figure out if we actually want this to be async or if we should render something else in the meantime
-setup(setLayers).then((result) => {
+setup().then((result) => {
   root.render(
     <MUDProvider value={result}>
-      <App setLayers={setLayers} />
+      <App />
     </MUDProvider>
   );
   mountDevTools();

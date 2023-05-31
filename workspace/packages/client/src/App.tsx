@@ -5,16 +5,17 @@ import { Layers } from "./types";
 
 
 const mountReact: { current: (mount: boolean) => void } = { current: () => undefined};
-export const App = (setLayers: any) => {
+export const App = () => {
   const {
     components: { },
     systemCalls: { increment },
     network: { singletonEntity },
+    game: { layers },
   } = useMUD();
 
   return (
     <>
-      <Engine setLayers={setLayers} mountReact={mountReact} />
+      <Engine layers={layers} mountReact={mountReact} />
     </>
   );
 };
