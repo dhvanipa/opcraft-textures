@@ -58,7 +58,7 @@ import { defaultAbiCoder as abi, keccak256 } from "ethers/lib/utils";
 import { GodID, SyncState } from "@latticexyz/network";
 import { getChunkCoord, getChunkEntity } from "../../utils/chunk";
 import { BehaviorSubject, map, throttleTime, timer } from "rxjs";
-import { getStakeEntity } from "../../utils/stake";
+// import { getStakeEntity } from "../../utils/stake"; // commented cause we aren't using it
 import { createCreativeModeSystem } from "./systems/createCreativeModeSystem";
 import { createSpawnPlayerSystem } from "./systems/createSpawnPlayerSystem";
 import { definePlayerMeshComponent } from "./components/PlayerMesh";
@@ -283,7 +283,8 @@ export function createNoaLayer(network: NetworkLayer) {
     const claim = getComponentValue(Claim, getChunkEntity(chunk));
     // const stakeEntityIndex = world.entityToIndex.get(getStakeEntity(chunk, connectedAddress.get() || "0x00"));
     // const stake = stakeEntityIndex == null ? undefined : getComponentValue(Stake, getStakeEntity(chunk, connectedAddress.get() || "0x00"));
-    const stake = getComponentValue(Stake, getStakeEntity(chunk, connectedAddress.get() || "0x00"));
+    // const stake = getComponentValue(Stake, getStakeEntity(chunk, connectedAddress.get() || "0x00"));
+    const stake = "";
     return { claim, stake };
   }
 

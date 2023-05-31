@@ -63,7 +63,7 @@ export const ecs = {
  */
 async function bootGame(network: NetworkLayer) {
   const layers: Partial<Layers> = {};
-  let initialBoot = true;
+  // let initialBoot = true;
 
   async function rebootGame(network: NetworkLayer): Promise<Layers> {
     // const params = new URLSearchParams(window.location.search);
@@ -120,10 +120,10 @@ async function bootGame(network: NetworkLayer) {
     });
 
     // Start syncing once all systems have booted
-    if (initialBoot) {
-      initialBoot = false;
-      layers.network.startSync();
-    }
+    // if (initialBoot) {
+    //   initialBoot = false;
+    //   layers.network.startSync();
+    // }
 
     // Remount react when rebooting layers
     mountReact.current(false);
@@ -143,30 +143,30 @@ async function bootGame(network: NetworkLayer) {
   (window as any).ecs = ecs;
   (window as any).time = Time.time;
 
-  let reloadingNetwork = false;
+  // let reloadingNetwork = false;
   let reloadingNoa = false;
 
   if (import.meta.hot) {
-    import.meta.hot.accept("./layers/network/index.ts", async (module) => {
-      if (reloadingNetwork) return;
-      reloadingNetwork = true;
-      createNetworkLayer = module.createNetworkLayer;
-      dispose("network");
-      dispose("noa");
-      await rebootGame();
-      console.log("HMR Network");
-      layers.network?.startSync();
-      reloadingNetwork = false;
-    });
+    // import.meta.hot.accept("./layers/network/index.ts", async (module) => {
+    //   if (reloadingNetwork) return;
+    //   reloadingNetwork = true;
+    //   createNetworkLayer = module?.createNetworkLayer;
+    //   dispose("network");
+    //   dispose("noa");
+    //   await rebootGame(network);
+    //   console.log("HMR Network");
+    //   layers.network?.startSync();
+    //   reloadingNetwork = false;
+    // });
 
     import.meta.hot.accept("./layers/noa/index.ts", async (module) => {
       if (reloadingNoa) return;
       reloadingNoa = true;
-      createNoaLayer = module.createNoaLayer;
+      createNoaLayer = module?.createNoaLayer;
       dispose("noa");
       document.getElementById("noa_fps")?.remove();
       document.getElementById("noa-container")?.remove();
-      await rebootGame();
+      await rebootGame(network);
       console.log("HMR Noa");
       reloadingNoa = false;
     });
