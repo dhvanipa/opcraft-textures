@@ -1,4 +1,5 @@
 import { setupMUDV2Network, createActionSystem } from "@latticexyz/std-client";
+import { Entity ,getComponentValue } from "@latticexyz/recs";
 import { createFastTxExecutor, createFaucetService, getSnapSyncRecords, createRelayStream } from "@latticexyz/network";
 import { getNetworkConfig } from "./getNetworkConfig";
 import { defineContractComponents } from "./contractComponents";
@@ -139,6 +140,8 @@ export async function setupNetwork() {
     };
   }
 
+  const worldSend = bindFastTxExecute(worldContract);
+
   // --- ACTION SYSTEM --------------------------------------------------------------
   const actions = createActionSystem<{
     actionType: string;
@@ -170,6 +173,37 @@ export async function setupNetwork() {
     return getECSBlock(terrainContext, position);
   }
 
+  function build(entity: Entity, coord: VoxelCoord) {
+    // const entityIndex = world.entityToIndex.get(entity);
+    // if (entityIndex == null) return console.warn("trying to place unknown entity", entity);
+    const blockId = getComponentValue(contractComponents.Item, entity)?.value;
+    const blockType = blockId != null ? BlockIdToKey[blockId as Entity] : undefined;
+    // const godIndex = world.entityToIndex.get(GodID);
+    // const creativeMode = godIndex != null && getComponentValue(components.GameConfig, godIndex)?.creativeMode;
+
+    actions.add({
+      id: `build+${coord.x}/${coord.y}/${coord.z}` as Entity,
+      metadata: { actionType: "build", coord, blockType },
+      requirement: () => true,
+      components: { Position: contractComponents.Position, Item: contractComponents.Item, OwnedBy: contractComponents.OwnedBy },
+      execute: () =>
+      // TODO: do we need BigNumber? I don't think so
+        worldSend("build", [BigNumber.from(entity), coord]),
+      updates: () => [
+        // {
+        //   component: "OwnedBy",
+        //   entity: entityIndex,
+        //   value: { value: GodID },
+        // },
+        // {
+        //   component: "Position",
+        //   entity: entityIndex,
+        //   value: coord,
+        // },
+      ],
+    });
+  }
+
   // --- STREAMS --------------------------------------------------------------------
   const balanceGwei$ = new BehaviorSubject<number>(1);
   world.registerDisposer(
@@ -197,8 +231,9 @@ export async function setupNetwork() {
     api: {
       getTerrainBlockAtPosition,
       getECSBlockAtPosition,
+      build,
     }, // TODO: populate?
-    worldSend: bindFastTxExecute(worldContract),
+    worldSend: worldSend,
     fastTxExecutor,
     // dev: setupDevSystems(world, encoders as Promise<any>, systems),
     streams: { connectedClients$, balanceGwei$ },

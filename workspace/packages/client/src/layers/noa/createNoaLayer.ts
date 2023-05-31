@@ -10,6 +10,8 @@ import {
   runQuery,
   HasValue,
   Entity,
+  getEntityString,
+  getEntitySymbol,
 } from "@latticexyz/recs";
 import { awaitStreamValue, Coord, isNotEmpty, pickRandom, random, VoxelCoord } from "@latticexyz/utils";
 import { NetworkLayer } from "../network";
@@ -122,21 +124,23 @@ export function createNoaLayer(network: NetworkLayer) {
       moving: true,
       teleport: true,
     });
-  setComponent(components.VoxelSelection, SingletonEntity, { points: [] });
+
+  // TODO: reenable when we add selecting voxels
+  // setComponent(components.VoxelSelection, SingletonEntity, { points: [] });
 
   // --- API ------------------------------------------------------------------------
-  function setCraftingTable(entities: EntityID[][]) {
+  function setCraftingTable(entities: Entity[][]) {
     setComponent(components.CraftingTable, SingletonEntity, { value: entities.flat().slice(0, 9) });
   }
 
   // Get a 2d representation of the current crafting table
   // -1 corresponds to empty slots
-  function getCraftingTable(): EntityID[][] {
+  function getCraftingTable(): Entity[][] {
     const flatCraftingTable = (getComponentValue(components.CraftingTable, SingletonEntity)?.value || [
       ...EMPTY_CRAFTING_TABLE,
-    ]) as EntityID[];
+    ]) as Entity[];
 
-    const craftingTable: EntityID[][] = [];
+    const craftingTable: Entity[][] = [];
     for (let i = 0; i < CRAFTING_SIDE; i++) {
       craftingTable.push([]);
       for (let j = 0; j < CRAFTING_SIDE; j++) {
@@ -148,9 +152,9 @@ export function createNoaLayer(network: NetworkLayer) {
   }
 
   // Set 2d representation of crafting table
-  function setCraftingTableIndex(index: [number, number], entity: EntityID | undefined) {
+  function setCraftingTableIndex(index: [number, number], entity: Entity | undefined) {
     const craftingTable = getCraftingTable();
-    craftingTable[index[0]][index[1]] = entity ?? (-1 as EntityID);
+    craftingTable[index[0]][index[1]] = entity ?? ("-1" as Entity);
     setCraftingTable(craftingTable);
   }
 
@@ -169,7 +173,7 @@ export function createNoaLayer(network: NetworkLayer) {
 
     for (let x = 0; x < CRAFTING_SIDE; x++) {
       for (let y = 0; y < CRAFTING_SIDE; y++) {
-        if (craftingTable[x][y] !== -1) {
+        if (getEntityString(getEntitySymbol(craftingTable[x][y])) !== "-1"){
           if (minX === -1) minX = x;
           if (minY === -1) minY = y;
           maxX = x;
@@ -186,9 +190,9 @@ export function createNoaLayer(network: NetworkLayer) {
       trimmedCraftingTableItems.push([]);
       trimmedCraftingTableTypes.push([]);
       for (let y = 0; y <= maxY - minY; y++) {
-        const blockIndex = craftingTable[x + minX][y + minY];
-        const blockID = ((blockIndex !== -1 && world.entities[blockIndex]) || "0x00") as Entity;
-        const blockType = ((blockIndex !== -1 && getComponentValue(Item, blockIndex)?.value) || "0x00") as Entity;
+        const blockEntity = craftingTable[x + minX][y + minY];
+        const blockID = ((getEntityString(getEntitySymbol(blockEntity)) !== "-1" && blockEntity) || "0x00") as Entity;
+        const blockType = ((getEntityString(getEntitySymbol(blockEntity)) !== "-1" && getComponentValue(Item, blockEntity)?.value) || "0x00") as Entity;
         trimmedCraftingTableItems[x].push(blockID);
         trimmedCraftingTableTypes[x].push(blockType);
       }
@@ -205,8 +209,8 @@ export function createNoaLayer(network: NetworkLayer) {
     const hash = keccak256(abi.encode(["uint256[][]"], [types]));
 
     // Check for block types with this recipe hash
-    const resultIndex = [...getEntitiesWithValue(Recipe, { value: hash })][0];
-    const resultID = resultIndex == null ? undefined : world.entities[resultIndex];
+    const resultID = [...getEntitiesWithValue(Recipe, { value: hash })][0];
+    // const resultID = resultIndex == null ? undefined : world.entities[resultIndex];
     return resultID;
   }
 
@@ -246,8 +250,8 @@ export function createNoaLayer(network: NetworkLayer) {
   function getSelectedBlockType(): Entity | undefined {
     const selectedSlot = getComponentValue(components.SelectedSlot, SingletonEntity)?.value;
     if (selectedSlot == null) return;
-    const blockIndex = [...getEntitiesWithValue(components.InventoryIndex, { value: selectedSlot })][0];
-    const blockID = blockIndex != null && world.entities[blockIndex];
+    const blockID = [...getEntitiesWithValue(components.InventoryIndex, { value: selectedSlot })][0];
+    // const blockID = blockIndex != null && world.entities[blockIndex];
     if (!blockID) return;
     return blockID;
   }
@@ -259,7 +263,8 @@ export function createNoaLayer(network: NetworkLayer) {
       ...runQuery([HasValue(OwnedBy, { value: connectedAddress.get() }), HasValue(Item, { value: blockID })]),
     ][0];
     if (ownedEntityOfSelectedType == null) return console.warn("No owned item of type", blockID);
-    const itemEntity = world.entities[ownedEntityOfSelectedType];
+    // const itemEntity = world.entities[ownedEntityOfSelectedType];
+    const itemEntity = ownedEntityOfSelectedType;
     network.api.build(itemEntity, coord);
   }
 
@@ -273,10 +278,12 @@ export function createNoaLayer(network: NetworkLayer) {
   }
 
   function getStakeAndClaim(chunk: Coord) {
-    const chunkEntityIndex = world.entityToIndex.get(getChunkEntity(chunk));
-    const claim = chunkEntityIndex == null ? undefined : getComponentValue(Claim, chunkEntityIndex);
-    const stakeEntityIndex = world.entityToIndex.get(getStakeEntity(chunk, connectedAddress.get() || "0x00"));
-    const stake = stakeEntityIndex == null ? undefined : getComponentValue(Stake, stakeEntityIndex);
+    // const chunkEntityIndex = world.entityToIndex.get(getChunkEntity(chunk));
+    // const claim = chunkEntityIndex == null ? undefined : getComponentValue(Claim, chunkEntityIndex);
+    const claim = getComponentValue(Claim, getChunkEntity(chunk));
+    // const stakeEntityIndex = world.entityToIndex.get(getStakeEntity(chunk, connectedAddress.get() || "0x00"));
+    // const stake = stakeEntityIndex == null ? undefined : getComponentValue(Stake, getStakeEntity(chunk, connectedAddress.get() || "0x00"));
+    const stake = getComponentValue(Stake, getStakeEntity(chunk, connectedAddress.get() || "0x00"));
     return { claim, stake };
   }
 
