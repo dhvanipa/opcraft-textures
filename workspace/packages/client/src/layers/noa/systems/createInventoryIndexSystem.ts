@@ -39,7 +39,8 @@ export function createInventoryIndexSystem(network: NetworkLayer, context: NoaLa
 
   defineRxSystem(world, update$, (update) => {
     const blockID = getComponentValue(Item, update.entity)?.value as Entity;
-    const blockIndex = blockID && world.entityToIndex.get(blockID);
+    // const blockIndex = blockID && world.entityToIndex.get(blockID);
+    const blockIndex = blockID;
 
     if (blockIndex == null) return;
 

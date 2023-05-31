@@ -1,4 +1,4 @@
-import { formatEntityID } from "@latticexyz/network";
+// import { formatEntityID } from "@latticexyz/network";
 import { getComponentValue, HasValue, runQuery, setComponent, updateComponent } from "@latticexyz/recs";
 import { sleep, VoxelCoord } from "@latticexyz/utils";
 import { NetworkLayer, BlockType } from "../../network";
@@ -19,8 +19,8 @@ export function createInputSystem(network: NetworkLayer, context: NoaLayer) {
   } = context;
 
   const {
-    components: { Item, Position, GameConfig },
-    api: { stake, claim },
+    components: { Item, Position },
+    // api: { stake, claim },
     network: { connectedAddress },
     streams: { balanceGwei$ },
   } = network;
@@ -34,7 +34,8 @@ export function createInputSystem(network: NetworkLayer, context: NoaLayer) {
     const playerAddress = connectedAddress.get();
     if (!playerAddress) return false;
     if (!claim) return true;
-    return claim.claimer === formatEntityID(playerAddress);
+    return true;
+    // return claim.claimer === formatEntityID(playerAddress);
   }
 
   function mineTargetedBlock() {
@@ -47,7 +48,8 @@ export function createInputSystem(network: NetworkLayer, context: NoaLayer) {
         noa.playerEntity,
         MINING_BLOCK_COMPONENT
       );
-      const creativeMode = getComponentValue(GameConfig, SingletonEntity)?.creativeMode;
+      // const creativeMode = getComponentValue(GameConfig, SingletonEntity)?.creativeMode;
+      const creativeMode = false;
       const handComponent = getNoaComponentStrict<HandComponent>(noa, noa.playerEntity, HAND_COMPONENT);
       if (miningComponent.active) {
         return;
@@ -162,19 +164,19 @@ export function createInputSystem(network: NetworkLayer, context: NoaLayer) {
     updateComponent(Tutorial, SingletonEntity, { inventory: false });
   });
 
-  noa.inputs.bind("stake", "X");
-  noa.inputs.down.on("stake", () => {
-    if (!noa.container.hasPointerLock) return;
-    const chunk = getCurrentChunk();
-    chunk && stake(chunk);
-  });
+  // noa.inputs.bind("stake", "X");
+  // noa.inputs.down.on("stake", () => {
+  //   if (!noa.container.hasPointerLock) return;
+  //   const chunk = getCurrentChunk();
+  //   chunk && stake(chunk);
+  // });
 
-  noa.inputs.bind("claim", "C");
-  noa.inputs.down.on("claim", () => {
-    if (!noa.container.hasPointerLock) return;
-    const chunk = getCurrentChunk();
-    chunk && claim(chunk);
-  });
+  // noa.inputs.bind("claim", "C");
+  // noa.inputs.down.on("claim", () => {
+  //   if (!noa.container.hasPointerLock) return;
+  //   const chunk = getCurrentChunk();
+  //   chunk && claim(chunk);
+  // });
 
   noa.inputs.bind("blockexplorer", "B");
   noa.inputs.down.on("blockexplorer", () => {

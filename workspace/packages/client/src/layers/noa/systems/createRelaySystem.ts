@@ -3,7 +3,6 @@ import { map, timer } from "rxjs";
 import {
   defineRxSystem,
   Entity,
-  Entity,
   getComponentValueStrict,
   Has,
   HasValue,

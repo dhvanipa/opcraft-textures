@@ -50,7 +50,8 @@ export function createPlayerPositionSystem(network: NetworkLayer, context: NoaLa
   } = network;
 
   async function spawnPlayer(entity: Entity) {
-    const address = world.entities[entity];
+    // const address = world.entities[entity];
+    const address = entity;
     const name = getComponentValue(Name, entity)?.value ?? address.substring(0, 10);
     const isMappingStored = mudToNoaId.has(entity);
     const noaEntity: number = mudToNoaId.get(entity) ?? noa.entities.add();
@@ -73,7 +74,8 @@ export function createPlayerPositionSystem(network: NetworkLayer, context: NoaLa
   }
 
   function updateNameTag(entity: Entity) {
-    const address = world.entities[entity];
+    // const address = world.entities[entity];
+    const address = entity;
     const name = getComponentValue(Name, entity)?.value ?? address.substring(0, 10);
     const isMappingStored = mudToNoaId.has(entity);
     const noaEntity: number = mudToNoaId.get(entity) ?? noa.entities.add();

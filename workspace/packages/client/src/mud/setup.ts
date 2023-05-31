@@ -6,11 +6,16 @@ import {boot} from "../boot";
 export type SetupResult = Awaited<ReturnType<typeof setup>>;
 
 export async function setup() {
+  console.log("Starting setup");
   const network = await setupNetwork();
+  console.log("Finished setup network");
   const components = createClientComponents(network);
+  console.log("Finished setup components");
   const systemCalls = createSystemCalls(network, components);
 
-  boot(network);
+  // boot(network);
+
+  console.log("Finished setup");
 
   return {
     network,

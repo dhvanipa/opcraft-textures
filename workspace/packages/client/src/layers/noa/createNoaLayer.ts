@@ -103,7 +103,7 @@ export function createNoaLayer(network: NetworkLayer) {
 
   // Because NOA and RECS currently use different ECS libraries we need to maintain a mapping of RECS ID to Noa ID
   // A future version of OPCraft will remove the NOA ECS library and use pure RECS only
-  const mudToNoaId = new Map<number, number>();
+  const mudToNoaId = new Map<Entity, number>();
 
   // Set initial values
   setComponent(components.UI, SingletonEntity, {
@@ -373,13 +373,13 @@ export function createNoaLayer(network: NetworkLayer) {
   // --- SYSTEMS --------------------------------------------------------------------
   createInputSystem(network, context);
   createBlockSystem(network, context);
-  createSignalSystem(network, context);
-  createInvertedSignalSystem(network, context);
+  // createSignalSystem(network, context);
+  // createInvertedSignalSystem(network, context);
   createPlayerPositionSystem(network, context);
   createRelaySystem(network, context);
   createInventoryIndexSystem(network, context);
   createSyncLocalPlayerPositionSystem(network, context);
-  createCreativeModeSystem(network, context);
+  // createCreativeModeSystem(network, context);
   createSpawnPlayerSystem(network, context);
   createTutorialSystem(network, context);
   createSoundSystem(network, context);

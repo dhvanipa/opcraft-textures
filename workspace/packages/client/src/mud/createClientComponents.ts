@@ -5,6 +5,7 @@ import { world } from "./world";
 export type ClientComponents = ReturnType<typeof createClientComponents>;
 
 export function createClientComponents({ components }: SetupNetworkResult) {
+  console.log("Starting createClientComponents");
   return {
     ...components,
     // add your client components or overrides here,

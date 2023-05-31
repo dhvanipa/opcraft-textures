@@ -141,7 +141,8 @@ export function createSoundSystem(network: NetworkLayer, context: NoaLayer) {
       // When mining a terrain block, we get an ECS update for an entering air block instead
       // Hack: entity id is the same as entity index for optimistic updates
       if (update.type == UpdateType.Enter && itemType === BlockType.Air) {
-        const isOptimisticUpdate = world.entities[update.entity] == (update.entity as unknown);
+        // const isOptimisticUpdate = world.entities[update.entity] == (update.entity as unknown);
+        const isOptimisticUpdate = update.entity == (update.entity as unknown);
         if (!isOptimisticUpdate) return;
         itemKey = BlockIdToKey[getTerrainBlockAtPosition(position)];
         updateType = UpdateType.Exit;

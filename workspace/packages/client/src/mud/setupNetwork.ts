@@ -16,6 +16,8 @@ import {
   getECSBlock,
   getTerrain,
   getTerrainBlock,
+  getBlockAtPosition as getBlockAtPositionApi,
+  getEntityAtPosition as getEntityAtPositionApi,
   getBiome,
 } from "../layers/network/api";
 
@@ -32,6 +34,7 @@ export async function setupNetwork() {
     storeConfig,
     worldAbi: IWorld__factory.abi,
   });
+  console.log("Finished setupMUDV2Network");
 
   const signer = result.network.signer.get();
   const playerAddress = result.network.connectedAddress.get();
@@ -39,16 +42,19 @@ export async function setupNetwork() {
   // Relayer setup
   let relay: Awaited<ReturnType<typeof createRelayStream>> | undefined;
   try {
-    relay =
-    networkConfig.relayServiceUrl && playerAddress && signer
-        ? await createRelayStream(signer, networkConfig.relayServiceUrl, playerAddress)
-        : undefined;
+    console.log("Starting relay setup");
+    // relay =
+    // networkConfig.relayServiceUrl && playerAddress && signer
+    //     ? await createRelayStream(signer, networkConfig.relayServiceUrl, playerAddress)
+    //     : undefined;
+    relay = undefined;
   } catch (e) {
     console.error(e);
   }
 
   relay && world.registerDisposer(relay.dispose);
   if (relay) console.info("[Relayer] Relayer connected: " + networkConfig.relayServiceUrl);
+  console.log("Finished relay setup");
 
 
   // Request drip from faucet
@@ -142,6 +148,8 @@ export async function setupNetwork() {
 
   const worldSend = bindFastTxExecute(worldContract);
 
+  console.log("till here 1");
+
   // --- ACTION SYSTEM --------------------------------------------------------------
   const actions = createActionSystem<{
     actionType: string;
@@ -158,7 +166,11 @@ export async function setupNetwork() {
 
   // --- API ------------------------------------------------------------------------
 
+  console.log("till here 2");
+
   const perlin = await createPerlin();
+  console.log("till here 2.1");
+
   const terrainContext = {
     Position: contractComponents.Position,
     Item: contractComponents.Item,
@@ -171,6 +183,12 @@ export async function setupNetwork() {
 
   function getECSBlockAtPosition(position: VoxelCoord) {
     return getECSBlock(terrainContext, position);
+  }
+  function getBlockAtPosition(position: VoxelCoord) {
+    return getBlockAtPositionApi(terrainContext, perlin, position);
+  }
+  function getEntityAtPosition(position: VoxelCoord) {
+    return getEntityAtPositionApi(terrainContext, position);
   }
 
   function build(entity: Entity, coord: VoxelCoord) {
@@ -204,6 +222,8 @@ export async function setupNetwork() {
     });
   }
 
+  console.log("till here 2.5");
+
   // --- STREAMS --------------------------------------------------------------------
   const balanceGwei$ = new BehaviorSubject<number>(1);
   world.registerDisposer(
@@ -219,18 +239,25 @@ export async function setupNetwork() {
       .subscribe(balanceGwei$)?.unsubscribe
   );
 
+  console.log("till here 3");
+
   const connectedClients$ = timer(0, 5000).pipe(
     map(async () => relay?.countConnected() || 0),
     awaitPromise()
   );
 
+  console.log("till here return");
+
   return {
     ...result,
     world,
     worldContract,
+    actions,
     api: {
       getTerrainBlockAtPosition,
       getECSBlockAtPosition,
+      getBlockAtPosition,
+      getEntityAtPosition,
       build,
     }, // TODO: populate?
     worldSend: worldSend,
