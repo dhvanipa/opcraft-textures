@@ -8,7 +8,7 @@ import { createPerlin } from "@latticexyz/noise";
 import { BigNumber, Contract, Signer, utils } from "ethers";
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { IWorld__factory } from "contracts/types/ethers-contracts/factories/IWorld__factory";
-import { getTableIds, awaitPromise, computedToStream, VoxelCoord } from "@latticexyz/utils";
+import { getTableIds, awaitPromise, computedToStream, VoxelCoord, Coord } from "@latticexyz/utils";
 import { map, timer, combineLatest, BehaviorSubject } from "rxjs";
 import storeConfig from "contracts/mud.config";
 import { BlockIdToKey, BlockType } from "../layers/network/constants"
@@ -218,13 +218,13 @@ export async function setupNetwork() {
     });
   }
 
-  // function stake(chunkCoord: Coord) {
-  //   return 0;
-  // }
-  //
-  // function claim(chunkCoord: Coord) {
-  //   return 0;
-  // }
+  function stake(chunkCoord: Coord) {
+    return 0;
+  }
+
+  function claim(chunkCoord: Coord) {
+    return 0;
+  }
 
   // --- STREAMS --------------------------------------------------------------------
   const balanceGwei$ = new BehaviorSubject<number>(1);
@@ -257,8 +257,8 @@ export async function setupNetwork() {
       getBlockAtPosition,
       getEntityAtPosition,
       build,
-      // stake,
-      // claim,
+      stake,
+      claim,
       getName,
     }, // TODO: populate?
     worldSend: worldSend,
