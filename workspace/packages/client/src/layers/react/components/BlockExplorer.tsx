@@ -112,8 +112,10 @@ export function registerBlockExplorer() {
 
               // Item component updates correspond to a mined terrain block
               if (componentKey === "Item") {
-                const { value: Entity } = value as ComponentValue<SchemaOf<typeof Item>>;
-                const blockType = BlockIdToKey[Entity as Entity];
+                // TODO: Dhvani added this because value was undefined, should prob understand why
+                const entityId = getComponentValue(Item, entity)?.value;
+                // const { value: entityId } = value as ComponentValue<SchemaOf<typeof Item>>;
+                const blockType = BlockIdToKey[entityId as Entity];
                 return { blockNumber, blockType, action: "remove" };
               }
 

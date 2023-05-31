@@ -73,5 +73,15 @@ export default mudConfig({
       root: true,
       args: [resolveTableId("Position")],
     },
+    {
+      name: "KeysWithValueModule",
+      root: true,
+      args: [resolveTableId("OwnedBy")],
+    },
+    {
+      name: "KeysWithValueModule",
+      root: true,
+      args: [resolveTableId("Item")],
+    },
   ],
 });

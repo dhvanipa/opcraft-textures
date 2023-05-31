@@ -26,6 +26,8 @@ export function createInventoryIndexSystem(network: NetworkLayer, context: NoaLa
     components: { InventoryIndex },
   } = context;
 
+  console.log(connectedAddress);
+  console.log("createInventoryIndexSystem");
   const connectedAddress$ = computedToStream(connectedAddress);
 
   const update$ = connectedAddress$.pipe(
@@ -38,7 +40,9 @@ export function createInventoryIndexSystem(network: NetworkLayer, context: NoaLa
   );
 
   defineRxSystem(world, update$, (update) => {
+    console.log("inventory update called");
     const blockId = getComponentValue(Item, update.entity)?.value as Entity;
+    console.log(blockId);
 
     if (blockId == null) return;
 

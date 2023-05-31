@@ -137,6 +137,7 @@ export function registerInventory() {
       }
 
       function moveItems(slot: number) {
+        console.log("moveItems");
         const blockIdAtSlot = [...getEntitiesWithValue(InventoryIndex, { value: slot })][0];
         const ownedEntitiesOfType = blockIdAtSlot && ownedByMe[blockIdAtSlot];
 
@@ -160,6 +161,9 @@ export function registerInventory() {
       // Map each inventory slot to the corresponding block type at this slot index
       const Slots = [...range(INVENTORY_HEIGHT * INVENTORY_WIDTH)].map((i) => {
         const blockId = [...getEntitiesWithValue(InventoryIndex, { value: i })][0];
+        // console.log("getting slots");
+        // console.log(InventoryIndex);
+        // console.log(blockId);
         const quantity = blockId && ownedByMe[blockId];
         return (
           <Slot
