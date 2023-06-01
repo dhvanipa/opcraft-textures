@@ -14,6 +14,7 @@ import { computedToStream } from "@latticexyz/utils";
 import { switchMap } from "rxjs";
 import { NetworkLayer } from "../../network";
 import { NoaLayer } from "../types";
+import { toQueryAddress } from "../../../utils/entity";
 
 export function createInventoryIndexSystem(network: NetworkLayer, context: NoaLayer) {
   const {
@@ -29,18 +30,17 @@ export function createInventoryIndexSystem(network: NetworkLayer, context: NoaLa
   const connectedAddress$ = computedToStream(connectedAddress);
 
   const update$ = connectedAddress$.pipe(
-    switchMap(
-      (address) =>
-        defineQuery([HasValue(OwnedBy, { value: address }), Has(Item)], {
+    switchMap((address) =>
+          defineQuery([HasValue(OwnedBy, { value: toQueryAddress(address) }), Has(Item)], {
           runOnInit: true,
         }).update$
     )
   );
 
   defineRxSystem(world, update$, (update) => {
-    console.log("inventory update called");
+    // console.log("inventory update called");
     const blockId = getComponentValue(Item, update.entity)?.value as Entity;
-    console.log(blockId);
+    // console.log(blockId);
 
     if (blockId == null) return;
 
