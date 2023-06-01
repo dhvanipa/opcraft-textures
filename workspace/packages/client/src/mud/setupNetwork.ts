@@ -21,6 +21,7 @@ import {
   getBiome,
 } from "../layers/network/api";
 import { setupDevSystems } from "../layers/network/setup";
+import { toQueryAddress } from "../utils/entity";
 
 export type SetupNetworkResult = Awaited<ReturnType<typeof setupNetwork>>;
 
@@ -201,7 +202,7 @@ export async function setupNetwork() {
       requirement: () => true,
       components: { Position: contractComponents.Position, Item: contractComponents.Item, OwnedBy: contractComponents.OwnedBy },
       execute: () => {
-        const tx = worldSend("build", [entity, coord, { gasLimit: 1_000_000 }]);
+        const tx = worldSend("build", [toQueryAddress(entity), coord, { gasLimit: 1_000_000 }]);
       },
       updates: () => [
         // {
