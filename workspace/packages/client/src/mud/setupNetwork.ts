@@ -21,7 +21,8 @@ import {
   getBiome,
 } from "../layers/network/api";
 import { setupDevSystems } from "../layers/network/setup";
-import { toQueryAddress } from "../utils/entity";
+import { to64CharAddress } from "../utils/entity";
+import { SingletonID } from "@latticexyz/network";
 
 export type SetupNetworkResult = Awaited<ReturnType<typeof setupNetwork>>;
 
@@ -202,19 +203,19 @@ export async function setupNetwork() {
       requirement: () => true,
       components: { Position: contractComponents.Position, Item: contractComponents.Item, OwnedBy: contractComponents.OwnedBy },
       execute: () => {
-        const tx = worldSend("build", [toQueryAddress(entity), coord, { gasLimit: 1_000_000 }]);
+        const tx = worldSend("build", [to64CharAddress(entity), coord, { gasLimit: 1_000_000 }]);
       },
       updates: () => [
-        // {
-        //   component: "OwnedBy",
-        //   entity: entityIndex,
-        //   value: { value: SingletonID },
-        // },
-        // {
-        //   component: "Position",
-        //   entity: entityIndex,
-        //   value: coord,
-        // },
+        {
+          component: "OwnedBy",
+          entity: entity,
+          value: { value: SingletonID },
+        },
+        {
+          component: "Position",
+          entity: entity,
+          value: coord,
+        },
       ],
     });
   }

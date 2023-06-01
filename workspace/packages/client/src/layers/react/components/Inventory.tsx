@@ -16,7 +16,7 @@ import {
 } from "@latticexyz/recs";
 import { getBlockIconUrl } from "../../noa/constants";
 import { BlockIdToKey } from "../../network/constants";
-import { formatEntityID, toQueryAddress } from "../../../utils/entity";
+import { formatEntityID, to64CharAddress } from "../../../utils/entity";
 import { Sounds } from "./Sounds";
 
 // This gives us 36 inventory slots. As of now there are 34 types of items, so it should fit.
@@ -45,7 +45,7 @@ export function registerInventory() {
         },
       } = layers;
 
-      const ownedByMeQuery = defineQuery([HasValue(OwnedBy, { value: toQueryAddress(connectedAddress.get()) }), Has(Item)], {
+      const ownedByMeQuery = defineQuery([HasValue(OwnedBy, { value: to64CharAddress(connectedAddress.get()) }), Has(Item)], {
         runOnInit: true,
       });
 

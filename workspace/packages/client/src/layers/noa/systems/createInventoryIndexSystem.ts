@@ -14,7 +14,7 @@ import { computedToStream } from "@latticexyz/utils";
 import { switchMap } from "rxjs";
 import { NetworkLayer } from "../../network";
 import { NoaLayer } from "../types";
-import { toQueryAddress } from "../../../utils/entity";
+import { to64CharAddress } from "../../../utils/entity";
 
 export function createInventoryIndexSystem(network: NetworkLayer, context: NoaLayer) {
   const {
@@ -31,7 +31,7 @@ export function createInventoryIndexSystem(network: NetworkLayer, context: NoaLa
 
   const update$ = connectedAddress$.pipe(
     switchMap((address) =>
-          defineQuery([HasValue(OwnedBy, { value: toQueryAddress(address) }), Has(Item)], {
+          defineQuery([HasValue(OwnedBy, { value: to64CharAddress(address) }), Has(Item)], {
           runOnInit: true,
         }).update$
     )

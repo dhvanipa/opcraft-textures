@@ -8,14 +8,14 @@ export const formatEntityID = (entityID:string) => {
   return entityID;
 }
 
-// we need to convert the address to a 256 bit-long string when doing a query
+// we need to convert the address to a 64 char-long hex string (256 bits) when doing a query
 // since queries look for 0x0000002kj32klj4, but this string won't match the address if we pass just the rightmost 42 chars of the eth address
 // since a hex value takes 4 bits to represent, the final address is 64 characters long
-export const toQueryAddress = (hexAddress: string | undefined) => {
+export const to64CharAddress = (hexAddress: string | undefined) => {
   if (!hexAddress) {
     console.error("trying to run a query on an undefined address");
     return undefined;
   }
-  const address = hexAddress.substring(2);
-  return "0x" + address.padStart(64, "0");
+  const addressWithout0x = hexAddress.substring(2);
+  return "0x" + addressWithout0x.padStart(64, "0");
 }
