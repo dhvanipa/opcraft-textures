@@ -64,6 +64,7 @@ import { createSpawnPlayerSystem } from "./systems/createSpawnPlayerSystem";
 import { definePlayerMeshComponent } from "./components/PlayerMesh";
 import { Engine } from "@babylonjs/core";
 import { defineVoxelRulesComponent } from "../network/components";
+import { toQueryAddress } from "../../utils/entity";
 
 export function createNoaLayer(network: NetworkLayer) {
   const world = namespaceWorld(network.world, "noa");
@@ -260,7 +261,7 @@ export function createNoaLayer(network: NetworkLayer) {
     const blockID = getSelectedBlockType();
     if (!blockID) return console.warn("No item at selected slot");
     const ownedEntityOfSelectedType = [
-      ...runQuery([HasValue(OwnedBy, { value: connectedAddress.get() }), HasValue(Item, { value: blockID })]),
+      ...runQuery([HasValue(OwnedBy, { value: toQueryAddress(connectedAddress.get()) }), HasValue(Item, { value: blockID })]),
     ][0];
     if (ownedEntityOfSelectedType == null) return console.warn("No owned item of type", blockID);
     // const itemEntity = world.entities[ownedEntityOfSelectedType];

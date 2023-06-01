@@ -45,8 +45,7 @@ export function registerInventory() {
         },
       } = layers;
 
-      const myAddress = connectedAddress.get()
-      const ownedByMeQuery = defineQuery([HasValue(OwnedBy, { value: toQueryAddress(myAddress) }), Has(Item)], {
+      const ownedByMeQuery = defineQuery([HasValue(OwnedBy, { value: toQueryAddress(connectedAddress.get()) }), Has(Item)], {
         runOnInit: true,
       });
 

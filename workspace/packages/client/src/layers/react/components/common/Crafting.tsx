@@ -5,6 +5,7 @@ import { range } from "@latticexyz/utils";
 import styled from "styled-components";
 import { Layers } from "../../../../types";
 import { Slot } from "./Slot";
+import { toQueryAddress } from "../../../../utils/entity";
 
 export const Crafting: React.FC<{
   layers: Layers;
@@ -77,7 +78,7 @@ export const Crafting: React.FC<{
     // Check if we still own an entity of the held block type
     const blockID = world.entities[holdingBlock];
     const ownedEntitiesOfType = [
-      ...runQuery([HasValue(OptimisticOwnedBy, { value: connectedAddress.get() }), HasValue(Item, { value: blockID })]),
+      ...runQuery([HasValue(OptimisticOwnedBy, { value: toQueryAddress(connectedAddress.get()) }), HasValue(Item, { value: blockID })]),
     ];
 
     // If we don't own a block of the held block type, ignore this click

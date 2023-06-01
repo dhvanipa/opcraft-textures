@@ -141,6 +141,7 @@ export async function createRelaySystem(network: NetworkLayer, context: NoaLayer
       position: [x, y, z],
       direction: [qx, qy, qz, qw],
     } = decodeMessage(message.data);
+    // TODO: do we need to use toQueryAddress? This is broken rn, so we didn't test it
     if (address === connectedAddress.get()) return;
     const playerChunk = toChunkCoord({ x, y: z }, RELAY_CHUNK_SIZE);
     if (!visibleChunks.current.has(playerChunk) || !visibleChunks.current.get(playerChunk)) return;
