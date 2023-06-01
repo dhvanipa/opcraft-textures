@@ -26,8 +26,6 @@ export function createInventoryIndexSystem(network: NetworkLayer, context: NoaLa
     components: { InventoryIndex },
   } = context;
 
-  console.log(connectedAddress);
-  console.log("createInventoryIndexSystem");
   const connectedAddress$ = computedToStream(connectedAddress);
 
   const update$ = connectedAddress$.pipe(

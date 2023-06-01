@@ -233,7 +233,7 @@ export async function setupNetwork() {
       requirement: () => true,
       components: { Position: contractComponents.Position, OwnedBy: contractComponents.OwnedBy, Item: contractComponents.Item },
       execute: () => {
-        const tx = worldSend("mine", [coord, blockId, { gasLimit: 1_000_000 }]);
+        const tx = worldSend("mine", [coord, blockId, { gasLimit: 5_000_000 }]);
       },
       updates: () => [
         {
