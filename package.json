@@ -1,5 +1,7 @@
 {
-  "name": "mud-template-react",
+  "name": "opcraft-mud2",
+  "version": "0.0.0",
+  "description": "An infinite, unstoppable World",
   "private": true,
   "scripts": {
     "build": "pnpm recursive run build",
