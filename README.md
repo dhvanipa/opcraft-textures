@@ -5,7 +5,6 @@ This is a port of OPCraft to MUD2.
 Note: Not everything is ported over, in particular:
 - tutorial components
 - plugins
-- optimistic updates
 - staking / claiming land
 - background music (turned off intentionally)
 - creative mode
