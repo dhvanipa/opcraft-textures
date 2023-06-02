@@ -6,16 +6,10 @@ import styled from "styled-components";
 import { Balance } from "./Balance";
 import { ChunkExplorer } from "./ChunkExplorer";
 import { JoinSocial } from "./JoinSocial";
-import { RegisterVoxelType } from "./RegisterVoxelType";
 import { filterNullish } from "@latticexyz/utils";
 import { ComponentValue, getComponentValue, SchemaOf, updateComponent } from "@latticexyz/recs";
 import { Hint } from "./Hint";
 import { Gold } from "./common";
-import {RegisterCreation} from "./RegisterCreation";
-import {SubmitAndTest} from "./SubmitAndTest";
-import {SubmitHalfAdderTest} from "./SubmitHalfAdderTest";
-import {SpawnCreation} from "./SpawnCreation";
-import {SubmitNandTest} from "./SubmitNandTest";
 
 type ObservableType<S extends Observable<unknown>> = S extends Observable<infer T> ? T : never;
 
@@ -90,13 +84,6 @@ export function registerSidebar() {
           <Balance {...balance} />
           <ChunkExplorer {...chunk} />
           {/*{tutorial?.community && <JoinSocial onClose={() => updateTutorial({ community: false })} />}*/}
-          {/*{<RegisterVoxelType layers={layers} onClose={() => updateTutorial({ community: false })} />}*/}
-          {/* { <RegisterCreation layers={layers} onClose={() => {console.log("closed")}} />} */}
-          {/* { <SubmitAndTest layers={layers} onClose={() => {console.log("closed")}} />} */}
-          {/* {<SubmitNandTest layers={layers} onClose={() => {console.log("closed")}} />} */}
-          {/*{(voxelSelection?.points ?? []).length >= 4 && <SubmitHalfAdderTest layers={layers} onClose={() => {console.log("closed")}} />}*/}
-          {/* { <SpawnCreation layers={layers} onClose={() => {console.log("closed")}} />} */}
-          {/*{tutorial?.moving && (*/}
           {/*  <Hint onClose={() => updateTutorial({ moving: false })}>*/}
           {/*    <Gold>Hint</Gold>: press <Gold>W, A, S, or D</Gold> to move around*/}
           {/*  </Hint>*/}

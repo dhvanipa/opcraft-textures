@@ -44,8 +44,6 @@ import {
   createSoundSystem,
   createSyncLocalPlayerPositionSystem,
   createTutorialSystem,
-  createSignalSystem,
-  createInvertedSignalSystem,
 } from "./systems";
 import { registerHandComponent } from "./engine/components/handComponent";
 import { registerModelComponent } from "./engine/components/modelComponent";
@@ -63,7 +61,6 @@ import { createCreativeModeSystem } from "./systems/createCreativeModeSystem";
 import { createSpawnPlayerSystem } from "./systems/createSpawnPlayerSystem";
 import { definePlayerMeshComponent } from "./components/PlayerMesh";
 import { Engine } from "@babylonjs/core";
-import { defineVoxelRulesComponent } from "../network/components";
 import { to64CharAddress } from "../../utils/entity";
 
 export function createNoaLayer(network: NetworkLayer) {
@@ -379,8 +376,6 @@ export function createNoaLayer(network: NetworkLayer) {
   // --- SYSTEMS --------------------------------------------------------------------
   createInputSystem(network, context);
   createBlockSystem(network, context);
-  // createSignalSystem(network, context);
-  // createInvertedSignalSystem(network, context);
   createPlayerPositionSystem(network, context);
   createRelaySystem(network, context);
   createInventoryIndexSystem(network, context);
