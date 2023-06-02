@@ -1,4 +1,3 @@
-import { registerComponentBrowser } from "./ComponentBrowser";
 import { registerActionQueue } from "./ActionQueue";
 import { registerCrosshairs } from "./Crosshairs";
 import { registerLoadingState } from "./LoadingState";
@@ -17,6 +16,5 @@ export function registerUIComponents() {
   registerBlockExplorer();
   registerInventory();
   registerSidebar();
-  // registerComponentBrowser();
   // registerPlugins();
 }
