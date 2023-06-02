@@ -19,7 +19,8 @@ import { NoaLayer } from "../types";
 
 export function createSoundSystem(network: NetworkLayer, context: NoaLayer) {
   const {
-    components: { Item, Position, LoadingState },
+    components: { LoadingState },
+    contractComponents: { Item, Position },
     api: { getTerrainBlockAtPosition },
   } = network;
   const {

@@ -15,7 +15,7 @@ export const Crafting: React.FC<{
 }> = ({ layers, holdingBlock, setHoldingBlock, sideLength }) => {
   const {
     network: {
-      components: { OwnedBy, Item },
+      contractComponents: { OwnedBy, Item },
       actions: { withOptimisticUpdates },
       network: { connectedAddress },
       api: { craft },

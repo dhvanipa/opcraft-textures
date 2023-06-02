@@ -18,7 +18,7 @@ import { to64CharAddress } from "../../../utils/entity";
 
 export function createInventoryIndexSystem(network: NetworkLayer, context: NoaLayer) {
   const {
-    components: { OwnedBy, Item },
+    contractComponents: { OwnedBy, Item },
     network: { connectedAddress },
   } = network;
 

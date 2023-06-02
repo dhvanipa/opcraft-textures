@@ -1,5 +1,5 @@
-import { setupMUDV2Network, createActionSystem } from "@latticexyz/std-client";
-import { Entity ,getComponentValue } from "@latticexyz/recs";
+import { setupMUDV2Network, createActionSystem, } from "@latticexyz/std-client";
+import { Entity ,getComponentValue, createIndexer } from "@latticexyz/recs";
 import { createFastTxExecutor, createFaucetService, getSnapSyncRecords, createRelayStream } from "@latticexyz/network";
 import { getNetworkConfig } from "./getNetworkConfig";
 import { defineContractComponents } from "./contractComponents";
@@ -8,7 +8,7 @@ import { createPerlin } from "@latticexyz/noise";
 import { BigNumber, Contract, Signer, utils } from "ethers";
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { IWorld__factory } from "contracts/types/ethers-contracts/factories/IWorld__factory";
-import { getTableIds, awaitPromise, computedToStream, VoxelCoord, Coord } from "@latticexyz/utils";
+import { getTableIds, awaitPromise, computedToStream, VoxelCoord, Coord, awaitStreamValue } from "@latticexyz/utils";
 import { map, timer, combineLatest, BehaviorSubject } from "rxjs";
 import storeConfig from "contracts/mud.config";
 import { BlockIdToKey, BlockType } from "../layers/network/constants"
@@ -28,6 +28,12 @@ export type SetupNetworkResult = Awaited<ReturnType<typeof setupNetwork>>;
 
 export async function setupNetwork() {
   const contractComponents = defineContractComponents(world);
+
+  // Give components a Human-readable ID
+  Object.entries(contractComponents).forEach(([name, component]) => {
+    component.id = name;
+  });
+
   const networkConfig = await getNetworkConfig();
   const result = await setupMUDV2Network<typeof contractComponents, typeof storeConfig>({
     networkConfig,
@@ -156,10 +162,10 @@ export async function setupNetwork() {
 
   // TODO: How do you do this in MUD2?
   // Add indexers and optimistic updates
-  // const { withOptimisticUpdates } = actions;
-  // components.Position = createIndexer(withOptimisticUpdates(components.Position));
-  // components.OwnedBy = createIndexer(withOptimisticUpdates(components.OwnedBy));
-  // components.Item = withOptimisticUpdates(components.Item);
+  const { withOptimisticUpdates } = actions;
+  contractComponents.Position = withOptimisticUpdates(contractComponents.Position);
+  contractComponents.OwnedBy = withOptimisticUpdates(contractComponents.OwnedBy);
+  contractComponents.Item = withOptimisticUpdates(contractComponents.Item);
 
   // --- API ------------------------------------------------------------------------
 
@@ -189,6 +195,11 @@ export async function setupNetwork() {
     return getComponentValue(contractComponents.Name, entity)?.value;
   }
 
+  async function buildSystem(entity: Entity, coord: VoxelCoord){
+    const tx = await worldSend("build", [to64CharAddress(entity), coord, { gasLimit: 5_000_000 }]);
+    return tx;
+  }
+
   function build(entity: Entity, coord: VoxelCoord) {
     // const entityIndex = world.entityToIndex.get(entity);
     // if (entityIndex == null) return console.warn("trying to place unknown entity", entity);
@@ -203,7 +214,7 @@ export async function setupNetwork() {
       requirement: () => true,
       components: { Position: contractComponents.Position, Item: contractComponents.Item, OwnedBy: contractComponents.OwnedBy },
       execute: () => {
-        const tx = worldSend("build", [to64CharAddress(entity), coord, { gasLimit: 1_000_000 }]);
+        return buildSystem(entity, coord);
       },
       updates: () => [
         {
@@ -218,6 +229,11 @@ export async function setupNetwork() {
         },
       ],
     });
+  }
+
+  async function mineSystem(coord: VoxelCoord, blockId: Entity){
+    const tx = await worldSend("mine", [coord, blockId, { gasLimit: 5_000_000 }]);
+    return tx;
   }
 
   async function mine(coord: VoxelCoord) {
@@ -235,7 +251,7 @@ export async function setupNetwork() {
       requirement: () => true,
       components: { Position: contractComponents.Position, OwnedBy: contractComponents.OwnedBy, Item: contractComponents.Item },
       execute: () => {
-        const tx = worldSend("mine", [coord, blockId, { gasLimit: 5_000_000 }]);
+        return mineSystem(coord, blockId);
       },
       updates: () => [
         {
@@ -287,6 +303,7 @@ export async function setupNetwork() {
 
   return {
     ...result,
+    contractComponents,
     world,
     worldContract,
     actions,

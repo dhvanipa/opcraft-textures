@@ -35,7 +35,7 @@ export function registerInventory() {
     (layers) => {
       const {
         network: {
-          components: { OwnedBy, Item },
+          contractComponents: { OwnedBy, Item },
           streams: { connectedClients$, balanceGwei$ },
           network: { connectedAddress },
         },

@@ -92,7 +92,7 @@ export function registerBlockExplorer() {
         network: {
           ecsEvent$,
           mappings,
-          components: { Item },
+          contractComponents: { Item },
           network: { blockNumber$ },
           world,
           config: { blockExplorer },

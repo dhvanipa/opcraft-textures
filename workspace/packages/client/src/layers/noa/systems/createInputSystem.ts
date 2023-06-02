@@ -18,7 +18,7 @@ export function createInputSystem(network: NetworkLayer, context: NoaLayer) {
   } = context;
 
   const {
-    components: { Item, Position },
+    contractComponents: { Item, Position },
     // api: { stake, claim },
     network: { connectedAddress },
     streams: { balanceGwei$ },

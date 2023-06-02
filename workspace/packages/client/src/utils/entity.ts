@@ -14,7 +14,7 @@ export const formatEntityID = (entityID:string) => {
 export const to64CharAddress = (hexAddress: string | undefined) => {
   if (!hexAddress) {
     console.error("trying to run a query on an undefined address");
-    return undefined;
+    return "";
   }
   const addressWithout0x = hexAddress.substring(2);
   return "0x" + addressWithout0x.padStart(64, "0");

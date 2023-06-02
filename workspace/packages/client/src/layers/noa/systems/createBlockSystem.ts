@@ -11,7 +11,8 @@ export async function createBlockSystem(network: NetworkLayer, context: NoaLayer
 
   const {
     world,
-    components: { Item, Position, LoadingState },
+    components: { LoadingState },
+    contractComponents: { Item, Position },
     actions: { withOptimisticUpdates },
     api: { getBlockAtPosition },
   } = network;

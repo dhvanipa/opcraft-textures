@@ -46,7 +46,7 @@ export function createPlayerPositionSystem(network: NetworkLayer, context: NoaLa
 
   const {
     world,
-    components: { Name },
+    contractComponents: { Name },
   } = network;
 
   async function spawnPlayer(entity: Entity) {
