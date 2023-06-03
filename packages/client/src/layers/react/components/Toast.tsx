@@ -2,19 +2,20 @@ import React from "react";
 import { registerUIComponent } from "../engine";
 import { concat, map, of } from "rxjs";
 import {ToastContainer, toast, Slide} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function registerToast() {
 	registerUIComponent(
-		"Crosshairs",
+		"Toast",
 		{
 			rowStart: 2,
 			rowEnd: 13,
 			colStart: 1,
 			colEnd: 13,
 		},
-		(layers) => concat(of(1)),
+		(layers) => of(1),
 		() => {
-			return <ToastContainer toastStyle={{marginTop: 2, marginLeft: 20}} newestOnTop={true} autoClose={1000} hideProgressBar={true}/>
+			return <ToastContainer position="top-left" toastStyle={{marginTop: 2, marginLeft: 20}} newestOnTop={true} autoClose={3500} hideProgressBar={true} theme="dark"/>
 		}
 	);
 }

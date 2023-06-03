@@ -3,7 +3,7 @@ import { mount as mountDevTools } from "@latticexyz/dev-tools";
 import { App } from "./App";
 import { setup } from "./mud/setup";
 import { MUDProvider } from "./MUDContext";
-import { Layers } from "./types";
+import React from "react";
 
 const rootElement = document.getElementById("react-root");
 if (!rootElement) throw new Error("React root not found");

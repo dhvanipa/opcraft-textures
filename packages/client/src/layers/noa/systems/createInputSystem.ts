@@ -221,7 +221,6 @@ export function createInputSystem(network: NetworkLayer, context: NoaLayer) {
       z,
     });
     toast(`Selected block at ${x}, ${y}, ${z}`);
-
-    updateComponent(VoxelSelection, SingletonEntity, { points: points as any });
+    setComponent(VoxelSelection, SingletonEntity, { points: points as any });
   });
 }
