@@ -25,7 +25,6 @@ import {
   definePlayerRelayerChunkPositionComponent,
   defineLocalPlayerPositionComponent,
   defineTutorialComponent,
-  defineVoxelSelectionComponent,
   definePreTeleportPositionComponent,
   defineSoundComponent,
 } from "./components";
@@ -91,7 +90,6 @@ export function createNoaLayer(network: NetworkLayer) {
     UI: defineUIComponent(world),
     InventoryIndex: createLocalCache(createIndexer(defineInventoryIndexComponent(world)), uniqueWorldId),
     Tutorial: createLocalCache(defineTutorialComponent(world), uniqueWorldId),
-    VoxelSelection: createLocalCache(defineVoxelSelectionComponent(world), uniqueWorldId),
     PreTeleportPosition: definePreTeleportPositionComponent(world),
     Sounds: defineSoundComponent(world),
   };
@@ -317,15 +315,10 @@ export function createNoaLayer(network: NetworkLayer) {
 
   // Pause noa until initial loading is done
   setTimeout(() => {
-    if (getComponentValue(LoadingState, SingletonEntity)?.state !== SyncState.LIVE){
-      console.log("pausing noa until loaded");
-      noa.setPaused(true);
-    }
+    if (getComponentValue(LoadingState, SingletonEntity)?.state !== SyncState.LIVE) noa.setPaused(true);
   }, 1000);
-  awaitStreamValue(LoadingState.update$, ({ value }) => value[0]?.state === SyncState.LIVE).then(() => {
-    console.log("unpausing noa");
+  awaitStreamValue(LoadingState.update$, ({ value }) => value[0]?.state === SyncState.LIVE).then(() =>
     noa.setPaused(false)
-  }
   );
 
   // --- SETUP STREAMS --------------------------------------------------------------

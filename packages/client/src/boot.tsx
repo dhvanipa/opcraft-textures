@@ -10,13 +10,10 @@ import {
   runQuery,
   setComponent,
 } from "@latticexyz/recs";
-import React from "react";
-import ReactDOM from "react-dom/client";
 import { Time } from "./utils/time";
 import { NetworkLayer } from "./layers/network";
 import { createNoaLayer as createNoaLayerImport } from "./layers/noa";
 import { Layers } from "./types";
-// import { Engine as EngineImport } from "./layers/react/engine/Engine";
 import { registerUIComponents as registerUIComponentsImport } from "./layers/react/components";
 // import { Wallet } from "ethers";
 import { enableLogger, sleep } from "@latticexyz/utils";
@@ -27,22 +24,6 @@ enableLogger();
 // let createNetworkLayer = createNetworkLayerImport;
 let createNoaLayer = createNoaLayerImport;
 let registerUIComponents = registerUIComponentsImport;
-// let Engine = EngineImport;
-
-// const defaultParams = {
-//   chainId: "4242",
-//   worldAddress: "0xc1c15CCE34E16684d36B0F76B9fa4f74b3a279f4",
-//   rpc: "https://follower.testnet-chain.linfra.xyz",
-//   wsRpc: "wss://follower.testnet-chain.linfra.xyz",
-//   initialBlockNumber: "1443526",
-//   snapshot: "https://ecs-snapshot.testnet-mud-services.linfra.xyz",
-//   stream: "https://ecs-stream.testnet-mud-services.linfra.xyz",
-//   relay: "https://ecs-relay.testnet-mud-services.linfra.xyz",
-//   faucet: "https://faucet.testnet-mud-services.linfra.xyz",
-//   blockTime: "1000",
-//   blockExplorer: "https://explorer.testnet-chain.linfra.xyz",
-//   dev: "false",
-// };
 
 export const ecs = {
   setComponent,
@@ -128,8 +109,8 @@ async function bootGame(network: NetworkLayer) {
     // }
 
     // Remount react when rebooting layers
-    mountReact.current(false);
-    mountReact.current(true);
+    // mountReact.current(false);
+    // mountReact.current(true);
 
     return layers as Layers;
   }
@@ -178,15 +159,15 @@ async function bootGame(network: NetworkLayer) {
   return { layers, ecs };
 }
 
-const mountReact: { current: (mount: boolean) => void } = { current: () => void 0 };
+// const mountReact: { current: (mount: boolean) => void } = { current: () => void 0 };
 
-async function remountReact() {
-  mountReact.current(false);
-  await sleep(0);
-  mountReact.current(true);
-}
+// async function remountReact() {
+//   mountReact.current(false);
+//   await sleep(0);
+//   mountReact.current(true);
+// }
 
-(window as any).remountReact = remountReact;
+// (window as any).remountReact = remountReact;
 
 function bootReact() {
   //  aconst rootElement = document.getElementById("react-root");

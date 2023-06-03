@@ -8,7 +8,7 @@ import { createPerlin } from "@latticexyz/noise";
 import { BigNumber, Contract, Signer, utils } from "ethers";
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { IWorld__factory } from "contracts/types/ethers-contracts/factories/IWorld__factory";
-import { getTableIds, awaitPromise, computedToStream, VoxelCoord, Coord, awaitStreamValue } from "@latticexyz/utils";
+import { getTableIds, awaitPromise, computedToStream, VoxelCoord, Coord } from "@latticexyz/utils";
 import { map, timer, combineLatest, BehaviorSubject } from "rxjs";
 import storeConfig from "contracts/mud.config";
 import { BlockIdToKey, BlockType } from "../layers/network/constants"
@@ -18,9 +18,7 @@ import {
   getTerrainBlock,
   getBlockAtPosition as getBlockAtPositionApi,
   getEntityAtPosition as getEntityAtPositionApi,
-  getBiome,
 } from "../layers/network/api";
-import { setupDevSystems } from "../layers/network/setup";
 import { to64CharAddress } from "../utils/entity";
 import { SingletonID } from "@latticexyz/network";
 
@@ -317,7 +315,7 @@ export async function setupNetwork() {
       stake,
       claim,
       getName,
-    }, // TODO: populate?
+    },
     worldSend: worldSend,
     fastTxExecutor,
     // dev: setupDevSystems(world, encoders as Promise<any>, systems),

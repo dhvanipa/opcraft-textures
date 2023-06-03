@@ -5,16 +5,15 @@ import { registerBlockExplorer } from "./BlockExplorer";
 import { registerInventory } from "./Inventory";
 import { registerSidebar } from "./Sidebar";
 import { registerPlugins } from "./Plugins";
-import { registerToast } from "./Toast";
 export * from "./common";
 
 export function registerUIComponents() {
   registerLoadingState();
   registerActionQueue();
   registerCrosshairs();
-  registerToast();
   registerBlockExplorer();
   registerInventory();
   registerSidebar();
+  // TODO: Need to make sure plugin structure works with MUD2 before renabling
   // registerPlugins();
 }
