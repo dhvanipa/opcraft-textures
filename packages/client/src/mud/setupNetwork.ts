@@ -48,11 +48,10 @@ export async function setupNetwork() {
   // Relayer setup
   let relay: Awaited<ReturnType<typeof createRelayStream>> | undefined;
   try {
-    // relay =
-    // networkConfig.relayServiceUrl && playerAddress && signer
-    //     ? await createRelayStream(signer, networkConfig.relayServiceUrl, playerAddress)
-    //     : undefined;
-    relay = undefined;
+    relay =
+    networkConfig.relayServiceUrl && playerAddress && signer
+        ? await createRelayStream(signer, networkConfig.relayServiceUrl, playerAddress)
+        : undefined;
   } catch (e) {
     console.error(e);
   }
@@ -158,8 +157,8 @@ export async function setupNetwork() {
     blockType?: keyof typeof BlockType;
   }>(world, result.txReduced$);
 
-  // TODO: How do you do this in MUD2?
-  // Add indexers and optimistic updates
+  // Add optimistic updates
+  // TODO: Fix indexer() not working in MUD2
   const { withOptimisticUpdates } = actions;
   contractComponents.Position = withOptimisticUpdates(contractComponents.Position);
   contractComponents.OwnedBy = withOptimisticUpdates(contractComponents.OwnedBy);

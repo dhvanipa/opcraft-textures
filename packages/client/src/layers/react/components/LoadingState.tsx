@@ -35,12 +35,10 @@ export function registerLoadingState() {
 
       const loadingState = GodEntityIndex == null ? null : getComponentValue(LoadingState, GodEntityIndex);
       if (loadingState == null) {
-        console.log("LoadingState is null");
         return <BootScreen initialOpacity={1}>Connecting</BootScreen>;
       }
 
       if (loadingState.state !== SyncState.LIVE) {
-        console.log("LoadingState is not live");
         return (
           <BootScreen initialOpacity={1}>
             {loadingState.msg}
@@ -50,8 +48,6 @@ export function registerLoadingState() {
           </BootScreen>
         );
       }
-
-      console.log("LoadingState is live");
 
       return null;
     }

@@ -112,7 +112,7 @@ export function registerBlockExplorer() {
 
               // Item component updates correspond to a mined terrain block
               if (componentKey === "Item") {
-                // TODO: Dhvani added this because value was undefined, should prob understand why
+                // TODO: We added this because value was undefined, should figure out why the original line (below) doesn't work
                 const entityId = getComponentValue(Item, entity)?.value;
                 // const { value: entityId } = value as ComponentValue<SchemaOf<typeof Item>>;
                 const blockType = BlockIdToKey[entityId as Entity];

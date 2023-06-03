@@ -27,7 +27,7 @@ contract MineSystem is System {
     bytes32 entity;
 
     if (entitiesAtPosition.length == 0) {
-      // TODO: If there is no entity at this position, try mining the terrain block at this position
+      // If there is no entity at this position, try mining the terrain block at this position
        (bool success, bytes memory occurrence) = staticcallFunctionSelector(
          Occurrence.get(blockType),
          abi.encode(coord)
