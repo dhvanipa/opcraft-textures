@@ -13,11 +13,10 @@ contract PostDeploy is Script {
     // Start broadcasting transactions from the deployer account
     vm.startBroadcast(deployerPrivateKey);
 
-    // ------------------ EXAMPLES ------------------
-
-    // Call increment on the world via the registered function selector
+    // Call world init function
     IWorld world = IWorld(worldAddress);
     world.init();
+
     vm.stopBroadcast();
   }
 }

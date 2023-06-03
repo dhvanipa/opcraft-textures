@@ -15,8 +15,6 @@ import { console } from "forge-std/console.sol";
 contract MineSystem is System {
 
   function mine(VoxelCoord memory coord, bytes32 blockType) public returns (bytes32) {
-    IWorld world = IWorld(_world());
-
     require(blockType != AirID, "can not mine air");
     require(blockType != WaterID, "can not mine water");
     require(coord.y < 256 && coord.y >= -63, "out of chunk bounds");

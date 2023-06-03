@@ -24,7 +24,6 @@ contract BuildSystem is System {
 
     // TODO: check claim in chunk
 
-
     // Remove block from inventory and place it in the world
     OwnedBy.deleteRecord(blockEntity);
     Position.set(blockEntity, coord.x, coord.y, coord.z);

@@ -34,10 +34,6 @@ int128 constant _10 = 10 * 2**64;
 int128 constant _16 = 16 * 2**64;
 
 contract LibTerrainSystem is System {
-  // IWorld private world;
-  // constructor() {
-  //   world = IWorld(_world());
-  // }
 
   function getTerrainBlock(VoxelCoord memory coord) public view returns (bytes32) {
     int128[4] memory biome = getBiome(coord.x, coord.z);

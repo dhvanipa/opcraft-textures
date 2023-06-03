@@ -10,10 +10,6 @@ import { System } from "@latticexyz/world/src/System.sol";
 // For blocks added after deployment of the core contracts, a new contract with a function
 // returning the occurrence of that block can be deployed and linked with the block's Occurrence component.
 contract OccurrenceSystem is System {
-  // IWorld private world;
-  // constructor() {
-  //   world = IWorld(_world());
-  // }
 
   function execute(bytes memory arguments) public view returns (bytes memory) {
     (bytes32 blockType, VoxelCoord memory coord) = abi.decode(arguments, (bytes32, VoxelCoord));
