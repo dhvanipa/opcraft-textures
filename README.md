@@ -1,13 +1,16 @@
-# opcraft-mud2
+# OPCraft w/ MUD v2
 
-This is a port of OPCraft to MUD2.
+This is a port of [OPCraft](https://github.com/latticexyz/opcraft) to MUD V2.
 
-Note: Not everything is ported over, in particular:
-- tutorial components
+**Note:** Not everything is ported over, in particular:
 - plugins
 - staking / claiming land
-- background music (turned off intentionally)
+- crafting, recipes
 - creative mode
-- crafting
-- The block explorer (shows you how many blocks you placed/mined in every block transaction on the chain)
-- The component browser (the sidebar that appears when you press ~. mud2 has a much nicer “component browser”)
+- the component browser (the sidebar that appears when you press `~` in MUD V2 has a much nicer "component browser")
+
+### Running locally
+
+1. Run `pnpm install` to install dependencies
+2. Run `pnpmm run dev`
+
