@@ -12,5 +12,5 @@ This is a port of [OPCraft](https://github.com/latticexyz/opcraft) to MUD V2.
 ### Running locally
 
 1. Run `pnpm install` to install dependencies
-2. Run `pnpmm run dev`
+2. Run `pnpm run dev`
 
