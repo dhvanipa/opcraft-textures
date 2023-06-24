@@ -1,17 +1,35 @@
-import {AbsoluteBorder, Crafting} from "./common";
+import {AbsoluteBorder, Crafting, Slot} from "./common";
 import {range} from "@latticexyz/utils";
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
 import {Layers} from "../../../types";
 import {NetworkLayer} from "../../network";
+import { useComponentValue } from "@latticexyz/react";
+import {getEntitiesWithValue} from "../../../../../../../mud/packages/recs";
 
+const NUM_COLS = 9;
+const NUM_ROWS = 4;
 export const CreativeInventory = (layers: any )  => {
+
+	const {
+		components: { ItemPrototype , Items},
+	} = layers.layers.network;
+
+const [ItemSlots, setItemSlots] = React.useState<React.ReactElement[]>([]);
+useEffect(() => {
+	const voxelTypes = getEntitiesWithValue(ItemPrototype, { value: true });
+	console.log("creative voxelTypes", voxelTypes);
+	// const slots = ItemSlots.
+}, [ItemPrototype])
 
 
 return (
 	<AbsoluteBorder borderColor={"#999999"} borderWidth={3}>
 		<ActionBarWrapper>
-			<div>hi</div>
+				{[...range(NUM_COLS * NUM_ROWS)]
+				.map((i) => i + NUM_COLS)
+				.map((i) => ItemSlots[i])
+			}
 		</ActionBarWrapper>
 	</AbsoluteBorder>
 )}
