@@ -14,10 +14,16 @@ export function Bedrock({ coord: { y } }: TerrainState): Entity | undefined {
 }
 
 
-export function Grass(state: TerrainState): Entity | undefined {
+export function Grass( state: TerrainState): Entity | undefined {
+  const {
+    coord: { y },
+  } = state;
   if (y == 20) return BlockType.Grass;
 }
 
-export function Dirt(state: TerrainState): Entity | undefined {
-  if (y < 20) return BlockType.Dirt;
+export function Dirt( state: TerrainState): Entity | undefined {
+  const {
+    coord: { y },
+  } = state;
+  if (y < 20 && y > -63) return BlockType.Dirt;
 }

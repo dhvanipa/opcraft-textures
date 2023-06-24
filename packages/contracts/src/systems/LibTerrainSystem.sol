@@ -51,7 +51,7 @@ contract LibTerrainSystem is System {
     if(y <= -63) return BedrockID;
     if(y <= 19) return DirtID;
     if(y <= 20) return GrassID;
-    return AirID
+    return AirID;
   }
 
   function getTerrainBlock(
