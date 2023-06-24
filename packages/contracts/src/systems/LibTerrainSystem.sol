@@ -66,15 +66,17 @@ contract LibTerrainSystem is System {
     blockID = Bedrock(y);
     if (blockID != 0) return blockID;
 
-    blockID = Air(y, height);
+    blockID = Air(y);
     if (blockID != 0) return blockID;
 
     uint8 biome = getMaxBiome(biomeValues);
 
-    blockID = Grass(y, height, biome);
+    int32 distanceFromHeight = height - y;
+
+    blockID = Grass(y);
     if (blockID != 0) return blockID;
 
-    blockID = Dirt(y, height, biome);
+    blockID = Dirt(y);
     if (blockID != 0) return blockID;
 
     return AirID;
@@ -294,13 +296,11 @@ contract LibTerrainSystem is System {
   //////////////////////////////////////////////////////////////////////////////////////
 
   function Air(VoxelCoord memory coord) public view returns (bytes32) {
-    int128[4] memory biomeValues = getBiome(coord.x, coord.z);
-    int32 height = getHeight(coord.x, coord.z, biomeValues);
-    return Air(coord.y, height);
+    return Air(coord.y);
   }
 
-  function Air(int32 y, int32 height) internal view returns (bytes32) {
-    if (y >= 21) return AirID;
+  function Air(int32 y) internal view returns (bytes32) {
+    if (y > 10) return AirID;
   }
 
   function Bedrock(VoxelCoord memory coord) public view returns (bytes32) {
@@ -311,35 +311,24 @@ contract LibTerrainSystem is System {
     if (y <= -63) return BedrockID;
   }
 
-
   function Grass(VoxelCoord memory coord) public view returns (bytes32) {
-    int128[4] memory biomeValues = getBiome(coord.x, coord.z);
-    int32 height = getHeight(coord.x, coord.z, biomeValues);
-    uint8 biome = getMaxBiome(biomeValues);
-    return Grass(coord.y, height, biome);
+    return Grass(coord.y);
   }
 
   function Grass(
-    int32 y,
-    int32 height,
-    uint8 biome
+    int32 y
   ) internal view returns (bytes32) {
-    if (y == 20) return GrassID;
+    if (y == 10) return GrassID;
   }
 
   function Dirt(VoxelCoord memory coord) public view returns (bytes32) {
-    int128[4] memory biomeValues = getBiome(coord.x, coord.z);
-    int32 height = getHeight(coord.x, coord.z, biomeValues);
-    uint8 biome = getMaxBiome(biomeValues);
-    return Dirt(coord.y, height, biome);
+    return Dirt(coord.y);
   }
 
   function Dirt(
-    int32 y,
-    int32 height,
-    uint8 biome
+    int32 y
   ) internal view returns (bytes32) {
-    if (y > -63 && y < 20 ) DirtID;
-    return 0;
+    if (y > -63 && y < 10) return DirtID;
   }
+
 }
