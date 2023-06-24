@@ -66,44 +66,15 @@ contract LibTerrainSystem is System {
     blockID = Bedrock(y);
     if (blockID != 0) return blockID;
 
-    blockID = Water(y, height);
-    if (blockID != 0) return blockID;
-
     blockID = Air(y, height);
     if (blockID != 0) return blockID;
 
     uint8 biome = getMaxBiome(biomeValues);
 
-    blockID = Diamond(x, y, z, height, biome);
-    if (blockID != 0) return blockID;
-
-    blockID = Coal(x, y, z, height, biome);
-    if (blockID != 0) return blockID;
-
-    int32 distanceFromHeight = height - y;
-
-    blockID = Sand(y, height, biome, distanceFromHeight);
-    if (blockID != 0) return blockID;
-
-    blockID = Snow(y, height, biomeValues[uint256(Biome.Mountains)]);
-    if (blockID != 0) return blockID;
-
     blockID = Grass(y, height, biome);
     if (blockID != 0) return blockID;
 
-    blockID = Stone(y, height, biome);
-    if (blockID != 0) return blockID;
-
-    blockID = Clay(y, height, biome, distanceFromHeight);
-    if (blockID != 0) return blockID;
-
     blockID = Dirt(y, height, biome);
-    if (blockID != 0) return blockID;
-
-    blockID = Structure(x, y, z, height, biome);
-    if (blockID != 0) return blockID;
-
-    blockID = SmallPlant(x, y, z, height, biome);
     if (blockID != 0) return blockID;
 
     return AirID;
@@ -329,17 +300,7 @@ contract LibTerrainSystem is System {
   }
 
   function Air(int32 y, int32 height) internal view returns (bytes32) {
-    if (y >= height + 2 * STRUCTURE_CHUNK) return AirID;
-  }
-
-  function Water(VoxelCoord memory coord) public view returns (bytes32) {
-    int128[4] memory biomeValues = getBiome(coord.x, coord.z);
-    int32 height = getHeight(coord.x, coord.z, biomeValues);
-    return Water(coord.y, height);
-  }
-
-  function Water(int32 y, int32 height) internal view returns (bytes32) {
-    if (y < 0 && y >= height) return WaterID;
+    if (y >= 21) return AirID;
   }
 
   function Bedrock(VoxelCoord memory coord) public view returns (bytes32) {
@@ -350,132 +311,6 @@ contract LibTerrainSystem is System {
     if (y <= -63) return BedrockID;
   }
 
-  function Sand(VoxelCoord memory coord) public view returns (bytes32) {
-    int128[4] memory biomeValues = getBiome(coord.x, coord.z);
-    int32 height = getHeight(coord.x, coord.z, biomeValues);
-    uint8 biome = getMaxBiome(biomeValues);
-    return Sand(coord.y, height, biome, height - coord.y);
-  }
-
-  function Sand(
-    int32 y,
-    int32 height,
-    uint8 biome,
-    int32 distanceFromHeight
-  ) internal view returns (bytes32) {
-    if (y >= height) return 0;
-
-    if (biome == uint8(Biome.Desert) && y >= -20) return SandID;
-
-    if (y >= 2) return 0;
-
-    if (biome == uint8(Biome.Savanna) && distanceFromHeight <= 4) return SandID;
-    if (biome == uint8(Biome.Forest) && distanceFromHeight <= 2) return SandID;
-  }
-
-  function Diamond(VoxelCoord memory coord) public view returns (bytes32) {
-    int128[4] memory biomeValues = getBiome(coord.x, coord.z);
-    int32 height = getHeight(coord.x, coord.z, biomeValues);
-    uint8 biome = getMaxBiome(biomeValues);
-    return Diamond(coord.x, coord.y, coord.z, height, biome);
-  }
-
-  function Diamond(
-    int32 x,
-    int32 y,
-    int32 z,
-    int32 height,
-    uint8 biome
-  ) internal view returns (bytes32) {
-    if (y >= height) return 0;
-
-    if ((biome == uint8(Biome.Savanna) || biome == uint8(Biome.Forest) || biome == uint8(Biome.Forest)) && y >= -20)
-      return 0;
-
-    uint16 hash = getCoordHash(x, z);
-    if (hash > 10) return 0;
-
-    hash = getCoordHash(y, x + z);
-    if (hash <= 10) return DiamondID;
-  }
-
-  function Coal(VoxelCoord memory coord) public view returns (bytes32) {
-    int128[4] memory biomeValues = getBiome(coord.x, coord.z);
-    int32 height = getHeight(coord.x, coord.z, biomeValues);
-    uint8 biome = getMaxBiome(biomeValues);
-    return Coal(coord.x, coord.y, coord.z, height, biome);
-  }
-
-  function Coal(
-    int32 x,
-    int32 y,
-    int32 z,
-    int32 height,
-    uint8 biome
-  ) internal view returns (bytes32) {
-    if (y >= height) return 0;
-
-    if ((biome == uint8(Biome.Savanna) || biome == uint8(Biome.Forest) || biome == uint8(Biome.Forest)) && y >= -20)
-      return 0;
-
-    uint16 hash = getCoordHash(x, z);
-    if (hash <= 10 || hash > 50) return 0;
-
-    hash = getCoordHash(y, x + z);
-    if (hash > 10 && hash <= 50) return CoalID;
-  }
-
-  function Snow(VoxelCoord memory coord) public view returns (bytes32) {
-    int128[4] memory biomeValues = getBiome(coord.x, coord.z);
-    int32 height = getHeight(coord.x, coord.z, biomeValues);
-    return Snow(coord.y, height, biomeValues[uint8(Biome.Mountains)]);
-  }
-
-  function Snow(
-    int32 y,
-    int32 height,
-    int128 mountainBiome
-  ) internal view returns (bytes32) {
-    if (y >= height) return 0;
-    if ((y > 55 || mountainBiome > _0_6) && y == height - 1) return SnowID;
-  }
-
-  function Stone(VoxelCoord memory coord) public view returns (bytes32) {
-    int128[4] memory biomeValues = getBiome(coord.x, coord.z);
-    int32 height = getHeight(coord.x, coord.z, biomeValues);
-    uint8 biome = getMaxBiome(biomeValues);
-    return Stone(coord.y, height, biome);
-  }
-
-  function Stone(
-    int32 y,
-    int32 height,
-    uint8 biome
-  ) internal view returns (bytes32) {
-    if (y >= height) return 0;
-
-    if ((biome == uint8(Biome.Savanna) || biome == uint8(Biome.Forest) || biome == uint8(Biome.Desert)) && y >= -20)
-      return 0;
-
-    return StoneID;
-  }
-
-  function Clay(VoxelCoord memory coord) public view returns (bytes32) {
-    int128[4] memory biomeValues = getBiome(coord.x, coord.z);
-    int32 height = getHeight(coord.x, coord.z, biomeValues);
-    uint8 biome = getMaxBiome(biomeValues);
-    return Clay(coord.y, height, biome, height - coord.y);
-  }
-
-  function Clay(
-    int32 y,
-    int32 height,
-    uint8 biome,
-    int32 distanceFromHeight
-  ) internal view returns (bytes32) {
-    if (y >= height) return 0;
-    if (biome == uint8(Biome.Savanna) && y < 2 && distanceFromHeight <= 6) return ClayID;
-  }
 
   function Grass(VoxelCoord memory coord) public view returns (bytes32) {
     int128[4] memory biomeValues = getBiome(coord.x, coord.z);
@@ -489,11 +324,7 @@ contract LibTerrainSystem is System {
     int32 height,
     uint8 biome
   ) internal view returns (bytes32) {
-    if (y >= height) return 0;
-    if (y < 0) return 0;
-
-    if ((biome == uint8(Biome.Savanna) || biome == uint8(Biome.Forest)) && y == height - 1) return GrassID;
-    if (biome == uint8(Biome.Mountains) && y < 40 && y == height - 1) return GrassID;
+    if (y == 20) return GrassID;
   }
 
   function Dirt(VoxelCoord memory coord) public view returns (bytes32) {
@@ -508,144 +339,7 @@ contract LibTerrainSystem is System {
     int32 height,
     uint8 biome
   ) internal view returns (bytes32) {
-    if (y >= height) return 0;
-    if (biome == uint8(Biome.Savanna) || biome == uint8(Biome.Forest)) return DirtID;
-  }
-
-  function SmallPlant(VoxelCoord memory coord) public view returns (bytes32) {
-    int128[4] memory biomeValues = getBiome(coord.x, coord.z);
-    int32 height = getHeight(coord.x, coord.z, biomeValues);
-    uint8 biome = getMaxBiome(biomeValues);
-    return SmallPlant(coord.x, coord.y, coord.z, height, biome);
-  }
-
-  function SmallPlant(
-    int32 x,
-    int32 y,
-    int32 z,
-    int32 height,
-    uint8 biome
-  ) internal view returns (bytes32) {
-    if (y != height) return 0;
-
-    uint16 hash = getCoordHash(x, z);
-
-    if (biome == uint8(Biome.Desert)) {
-      if (hash < 5) return GreenFlowerID;
-      if (hash > 990) return KelpID;
-    }
-
-    if (biome == uint8(Biome.Savanna)) {
-      if (hash < 5) return RedFlowerID;
-      if (hash < 10) return OrangeFlowerID;
-      if (hash < 15) return MagentaFlowerID;
-      if (hash < 20) return LimeFlowerID;
-      if (hash < 25) return PinkFlowerID;
-      if (hash < 30) return CyanFlowerID;
-      if (hash < 35) return PurpleFlowerID;
-      if (hash >= 900) return GrassPlantID;
-    }
-
-    if (biome == uint8(Biome.Forest)) {
-      if (hash < 5) return BlueFlowerID;
-      if (hash < 10) return LightGrayFlowerID;
-      if (hash < 15) return GrassPlantID;
-    }
-
-    if (biome == uint8(Biome.Mountains)) {
-      if (y > 55 && hash < 5) return GrayFlowerID;
-      if (y <= 55 && hash < 10) return LightBlueFlowerID;
-      if (y <= 55 && hash < 15) return BlackFlowerID;
-    }
-  }
-
-  function Structure(VoxelCoord memory coord) public view returns (bytes32) {
-    int128[4] memory biomeValues = getBiome(coord.x, coord.z);
-    int32 height = getHeight(coord.x, coord.z, biomeValues);
-    uint8 biome = getMaxBiome(biomeValues);
-    return Structure(coord.x, coord.y, coord.z, height, biome);
-  }
-
-  function Structure(
-    int32 x,
-    int32 y,
-    int32 z,
-    int32 height,
-    uint8 biome
-  ) internal view returns (bytes32) {
-    if (y < height || y < 0) return 0;
-
-    if (biome == uint8(Biome.Mountains) || biome == uint8(Biome.Desert)) return 0;
-
-    (int32 chunkX, int32 chunkZ) = getChunkCoord(x, z);
-    uint16 hash = getCoordHash(chunkX, chunkZ);
-
-    if (biome == uint8(Biome.Savanna) && hash < 50) {
-      (int32 chunkHeight, VoxelCoord memory chunkOffset) = getChunkOffsetAndHeight(x, y, z);
-      if (chunkHeight <= 0) return 0;
-      uint16 biomeHash = getBiomeHash(x, z, biome);
-      return hash < biomeHash / 40 ? WoolTree(chunkOffset) : Tree(chunkOffset);
-    }
-
-    if (biome == uint8(Biome.Forest) && hash < 200) {
-      (int32 chunkHeight, VoxelCoord memory chunkOffset) = getChunkOffsetAndHeight(x, y, z);
-      if (chunkHeight <= 0) return 0;
-      uint16 biomeHash = getBiomeHash(x, z, biome);
-      return hash < biomeHash / 10 ? WoolTree(chunkOffset) : Tree(chunkOffset);
-    }
-  }
-
-  function Tree(VoxelCoord memory offset) internal view returns (bytes32) {
-    // Trunk
-    if (coordEq(offset, [3, 0, 3])) return LogID;
-    if (coordEq(offset, [3, 1, 3])) return LogID;
-    if (coordEq(offset, [3, 2, 3])) return LogID;
-    if (coordEq(offset, [3, 3, 3])) return LogID;
-
-    // Leaves
-
-    if (coordEq(offset, [2, 3, 3])) return LeavesID;
-    if (coordEq(offset, [3, 3, 2])) return LeavesID;
-    if (coordEq(offset, [4, 3, 3])) return LeavesID;
-    if (coordEq(offset, [3, 3, 4])) return LeavesID;
-    if (coordEq(offset, [2, 3, 2])) return LeavesID;
-    if (coordEq(offset, [4, 3, 4])) return LeavesID;
-    if (coordEq(offset, [2, 3, 4])) return LeavesID;
-    if (coordEq(offset, [4, 3, 2])) return LeavesID;
-    if (coordEq(offset, [2, 4, 3])) return LeavesID;
-    if (coordEq(offset, [3, 4, 2])) return LeavesID;
-    if (coordEq(offset, [4, 4, 3])) return LeavesID;
-    if (coordEq(offset, [3, 4, 4])) return LeavesID;
-    if (coordEq(offset, [3, 4, 3])) return LeavesID;
-    return 0;
-  }
-
-  function WoolTree(VoxelCoord memory offset) internal view returns (bytes32) {
-    // Trunk
-    if (coordEq(offset, [3, 0, 3])) return LogID;
-    if (coordEq(offset, [3, 1, 3])) return LogID;
-    if (coordEq(offset, [3, 2, 3])) return LogID;
-    if (coordEq(offset, [3, 3, 3])) return LogID;
-
-    // Leaves
-    if (coordEq(offset, [2, 2, 3])) return WoolID;
-    if (coordEq(offset, [3, 2, 2])) return WoolID;
-    if (coordEq(offset, [4, 2, 3])) return WoolID;
-    if (coordEq(offset, [3, 2, 4])) return WoolID;
-    if (coordEq(offset, [2, 3, 3])) return WoolID;
-    if (coordEq(offset, [3, 3, 2])) return WoolID;
-    if (coordEq(offset, [4, 3, 3])) return WoolID;
-    if (coordEq(offset, [3, 3, 4])) return WoolID;
-    if (coordEq(offset, [2, 3, 2])) return WoolID;
-    if (coordEq(offset, [4, 3, 4])) return WoolID;
-    if (coordEq(offset, [2, 3, 4])) return WoolID;
-    if (coordEq(offset, [4, 3, 2])) return WoolID;
-    if (coordEq(offset, [2, 4, 3])) return WoolID;
-    if (coordEq(offset, [3, 4, 2])) return WoolID;
-    if (coordEq(offset, [4, 4, 3])) return WoolID;
-    if (coordEq(offset, [3, 4, 4])) return WoolID;
-    if (coordEq(offset, [3, 4, 3])) return WoolID;
-
+    if (y > -63 && y < 20 ) DirtID;
     return 0;
   }
 }
