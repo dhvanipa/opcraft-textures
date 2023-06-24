@@ -48,39 +48,10 @@ contract LibTerrainSystem is System {
     int32 height,
     int128[4] memory biome
   ) internal view returns (bytes32) {
-    if (y > height + 1) {
-      if (y >= 0) return AirID;
-      return WaterID;
-    }
-
-    int128 maxBiome;
-    uint256 maxBiomeIndex;
-    for (uint256 i; i < biome.length; i++) {
-      if (biome[i] > maxBiome) {
-        maxBiome = biome[i];
-        maxBiomeIndex = i;
-      }
-    }
-
-    if (maxBiome == 0) return DirtID;
-    if (maxBiomeIndex == uint256(Biome.Desert)) {
-      if (y == height + 1) {
-        return KelpID;
-      }
-      return SandID;
-    }
-
-    if (maxBiomeIndex == uint256(Biome.Mountains)) return StoneID;
-
-    if (maxBiomeIndex == uint256(Biome.Savanna)) {
-      if (y == height + 1) {
-        return RedFlowerID;
-      }
-      return GrassID;
-    }
-
-    if (maxBiomeIndex == uint256(Biome.Forest)) return LogID;
-    return AirID;
+    if(y <= -63) return BedrockID;
+    if(y <= 19) return DirtID;
+    if(y <= 20) return GrassID;
+    return AirID
   }
 
   function getTerrainBlock(
