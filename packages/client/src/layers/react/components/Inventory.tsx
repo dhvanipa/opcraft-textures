@@ -18,6 +18,7 @@ import { getBlockIconUrl } from "../../noa/constants";
 import { BlockIdToKey } from "../../network/constants";
 import { formatEntityID, to64CharAddress } from "../../../utils/entity";
 import { Sounds } from "./Sounds";
+import {CreativeInventory} from "./CreativeInventory";
 
 // This gives us 36 inventory slots. As of now there are 34 types of items, so it should fit.
 const INVENTORY_WIDTH = 9;
@@ -177,26 +178,47 @@ export function registerInventory() {
         );
       });
 
+      const SurvivalInventory = (
+        <div>
+            <Crafting
+              layers={layers}
+              holdingBlock={holdingBlock}
+              setHoldingBlock={setHoldingBlock}
+              sideLength={craftingSideLength}
+            />
+            <ActionBarWrapper>
+              {[...range(INVENTORY_WIDTH * (INVENTORY_HEIGHT - 1))]
+                .map((i) => i + INVENTORY_WIDTH)
+                .map((i) => Slots[i])}
+            </ActionBarWrapper>
+        </div>
+      )
+
+
+      const [isSurvival, setIsSurvival] = useState(true);
+      const UsedInventory = isSurvival ? SurvivalInventory : <CreativeInventory layers={layers} />;
+
       const Inventory = (
         <Absolute>
           <Center>
-            <Background onClick={close} />
-            <div>
-              <AbsoluteBorder borderColor={"#999999"} borderWidth={3}>
-                <Crafting
-                  layers={layers}
-                  holdingBlock={holdingBlock}
-                  setHoldingBlock={setHoldingBlock}
-                  sideLength={craftingSideLength}
-                />
-                <ActionBarWrapper>
-                  {[...range(INVENTORY_WIDTH * (INVENTORY_HEIGHT - 1))]
-                    .map((i) => i + INVENTORY_WIDTH)
-                    .map((i) => Slots[i])}
-                </ActionBarWrapper>
-              </AbsoluteBorder>
-            </div>
+            <AbsoluteBorder borderColor={"#999999"} borderWidth={3}>
+              <InventoryContainer>
+
+              {/*<div style={{padding: 10, backgroundColor: "white" , position: "relative"}}>*/}
+                <div style={{backgroundColor: "white",display: "inline-block"}}>
+                  <div onClick={(event) => {setIsSurvival(true);console.log("hi");event.stopPropagation();event.preventDefault()}} style={{ cursor: "pointer", padding: 10,zIndex: 10 }}>Survival</div>
+                  <div onClick={(event) => {setIsSurvival(false); event.stopPropagation();event.preventDefault()}} style={{ cursor: "pointer", padding: 10 , zIndex: 10 }} >Creative</div>
+                </div>
+                <div style={{ display: "inline-block"}}>
+                  {UsedInventory}
+                </div>
+              {/*</div>*/}
+              </InventoryContainer>
+            </AbsoluteBorder>
           </Center>
+          <Background onClick={() => {
+            close();
+          }} />
         </Absolute>
       );
 
@@ -251,6 +273,21 @@ export function registerInventory() {
     }
   );
 }
+
+const InventoryContainer = styled.div`
+  width: 100%;
+  background-color: lightgray;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  justify-content: center;
+  align-items: center;
+  grid-gap: 10px;
+  padding: 20px;
+  z-index: 11;
+  pointer-events: all;
+`;
+
+
 
 const NotificationWrapper = styled.div`
   position: absolute;
