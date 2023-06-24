@@ -5,10 +5,10 @@ import styled from "styled-components";
 import {Layers} from "../../../types";
 import {NetworkLayer} from "../../network";
 import { useComponentValue } from "@latticexyz/react";
-import {getEntitiesWithValue} from "../../../../../../../mud/packages/recs";
+import {getEntitiesWithValue, getEntityString, getEntitySymbol} from "../../../../../../../mud/packages/recs";
 
 const NUM_COLS = 9;
-const NUM_ROWS = 4;
+const NUM_ROWS = 5;
 export const CreativeInventory = (layers: any )  => {
 
 	const {
@@ -17,9 +17,12 @@ export const CreativeInventory = (layers: any )  => {
 
 const [ItemSlots, setItemSlots] = React.useState<React.ReactElement[]>([]);
 useEffect(() => {
-	const voxelTypes = getEntitiesWithValue(ItemPrototype, { value: true });
+	const voxelTypes = Array.from(getEntitiesWithValue(ItemPrototype, { value: true }));
 	console.log("creative voxelTypes", voxelTypes);
-	// const slots = ItemSlots.
+	const slots: React.ReactElement[] = voxelTypes.map((voxelType, i) => {
+		return <Slot key={i} blockID={voxelType as any}  />;
+	});
+	setItemSlots(slots);
 }, [ItemPrototype])
 
 
